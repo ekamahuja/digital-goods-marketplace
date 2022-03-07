@@ -1,7 +1,6 @@
 import {Country} from '../schemas/countrySchema.js'
 
 
-
 export async function addStock(req, res) {
     let { stock, countryCode } = req.body
 
@@ -44,18 +43,3 @@ export async function getStock(req, res) {
         return res.status(500).json({success: false, error: err.message, stack: err})
     }
 }
-
-
-
-
-
-
-
-// async function createCountry() {
-//     const bruh = await Country.create({
-//         name: "Australia",
-//         countryCode: "AU"
-//     })
-// }
-
-// createCountry()
