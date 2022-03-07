@@ -27,5 +27,36 @@ export async function generateKeys(req, res) {
         consola.error(err.message)
         return res.status(500).json({success: false, error: err.message, stack: err})
     }
+}
+
+
+
+export async function getKeyInfo(req, res) {
+    const key = req.query.key
+    if (!key) return res.status(400).json({success: false, error: 'Key missing'})
     
+    try {
+        const keyInfo = await Key.findOne({value: key}).select("-__v").select("-createdAt").select("-updatedAt")
+        if (!keyInfo) return res.status(404).json({success: false, error: 'Key not found'})
+
+        return res.status(200).json({ success: true, message: 'Successfully retrieved key', keyInfo})
+    } catch (err) {
+        consola.error(err)
+        return res.status(500).json({success: false, error: err.message, stack: err})
+    }
+}
+
+
+
+export async function getKeys(req, res) {
+    const page = parseInt(req.query.page) || 0
+
+    const documentPerLimit = parseInt(process.env.PAGE_LIMIT)
+    const totalKeys = await Key.countDocuments()
+    const totalPages = Math.floor(totalKeys / documentPerLimit)
+
+    const keys = await Key.find({}).limit(documentPerLimit).skip(documentPerLimit * page).select("-createdAt").select("-updatedAt").select("-__v")
+    if (!keys) return res.status(404).json({success: false, error: 'Keys could not be fetched'})
+
+    res.status(200).json({success: true, documentPerLimit, totalKeys, totalPages, keys})
 }
