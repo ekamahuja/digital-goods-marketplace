@@ -53,10 +53,35 @@ export async function getKeys(req, res) {
 
     const documentPerLimit = parseInt(process.env.PAGE_LIMIT)
     const totalKeys = await Key.countDocuments()
-    const totalPages = Math.floor(totalKeys / documentPerLimit)
+    const totalPages = Math.ceil(totalKeys / documentPerLimit)
 
     const keys = await Key.find({}).limit(documentPerLimit).skip(documentPerLimit * page).select("-createdAt").select("-updatedAt").select("-__v")
     if (!keys) return res.status(404).json({success: false, error: 'Keys could not be fetched'})
+    if (keys.length == 0) return res.status(404).json({ success: true, message: "No keys exist or Invalid page"})
 
-    res.status(200).json({success: true, documentPerLimit, totalKeys, totalPages, keys})
+    return res.status(200).json({success: true, keysOnThisPage: keys.length, totalKeys, totalPages, keys})
+}
+
+
+
+export async function unlockKey(req, res) {
+    const {key} = req.body
+    if (!key) return res.status(400).json({success: false, error: 'Key missing'})
+
+    try {
+        const keyInfo = await Key.findOne({value: key}).select("-__v").select("-createdAt").select("-updatedAt")
+        if (!keyInfo) return res.status(404).json({success: false, error: 'Key not found'})
+
+        if (keyInfo.replacementsClaimed <= 5) return res.status(200).json({success: false, message: "Key is not locked"})
+
+        keyInfo.replacementsClaimed = 0;
+        keyInfo.amountOfResets++ 
+
+        const resetKey = await keyInfo.save()
+        
+        return res.status(200).json({ success: true, message: 'Key successfully unlock', key: resetKey})
+    } catch (err) {
+        consola.error(err)
+        return res.status(500).json({success: false, error: err.message, stack: err})
+    }
 }

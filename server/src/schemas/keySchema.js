@@ -23,6 +23,11 @@ export const keySchema = mongoose.Schema({
         type: Number,
         required: true,
         default: 0
+    },
+    amountOfResets: {
+        type: Number,
+        required: true,
+        default: 0
     }
 }, {
     timestamps: true
