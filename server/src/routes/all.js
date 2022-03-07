@@ -16,7 +16,7 @@ function routes(app) {
   
     app.use('/api/auth', authRoutes);
 
-    app.use('/api/stock', stockRoutes);
+    app.use('/api/data', stockRoutes);
 }
 
 

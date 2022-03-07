@@ -2,7 +2,7 @@ import {Country} from '../schemas/countrySchema.js'
 
 
 
-export async function addStock(req, res, next) {
+export async function addStock(req, res) {
     let { stock, countryCode } = req.body
 
     if (!stock || !stock.length) return res.status(403).json({success: false, error: 'Must provide an array of stock'})
@@ -26,12 +26,36 @@ export async function addStock(req, res, next) {
 
 
 
+export async function getStock(req, res) {
+    try {
+        const countries = await Country.find({}).select("-_id").select("-createdAt").select("-updatedAt").select("-__v").select("-stock._id")
+        if (!countries) return res.status(500).json({ success: false, error: "No countries found"})
+
+        const stock = countries.map((country) => ({
+            name: country.name,
+            countryCode: country.countryCode,
+            stock: country.stock.length
+        }))
+
+        return res.status(200).json({ success: true, totalCountries: countries.length, data: (req.user) ? countries : stock})
+      
+    } catch (err) {
+        consola.error(err.message)
+        return res.status(500).json({success: false, error: err.message, stack: err})
+    }
+}
+
+
+
+
+
+
+
 // async function createCountry() {
 //     const bruh = await Country.create({
-//         name: "United States",
-//         countryCode: "US"
+//         name: "Australia",
+//         countryCode: "AU"
 //     })
-//     console.log(bruh)
 // }
 
 // createCountry()
