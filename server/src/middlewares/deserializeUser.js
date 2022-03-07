@@ -29,7 +29,7 @@ async function deserializeUser(req, res, next) {
     if (!session) {
         return next();
     }
-
+    
     const newAccessToken = signJwt(session, process.env.JWT_ACCESS_TOKEN_EXPIRY)
 
     res.cookie("accessToken", newAccessToken, {

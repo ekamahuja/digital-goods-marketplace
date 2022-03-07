@@ -1,7 +1,7 @@
 // Import packages and files
 import express from 'express';
 import authRoutes from './authRoutes.js'
-
+import stockRoutes from './countryRoutes.js'
 
 const app = express();
 
@@ -13,7 +13,10 @@ function routes(app) {
             requestIp: req.headers['x-forwarded-for'] || req.socket.remoteAddress,
         })
     })
+  
     app.use('/api/auth', authRoutes);
+
+    app.use('/api/stock', stockRoutes);
 }
 
 

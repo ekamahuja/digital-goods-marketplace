@@ -13,4 +13,6 @@ userAuth.get('/session', requireUser, getSession)
 userAuth.delete('/session', requireUser, deleteSession)
 
 
+
+// exporting auth routes
 export default userAuth

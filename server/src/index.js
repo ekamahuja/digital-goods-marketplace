@@ -18,7 +18,7 @@ const app = express()
 app.use(cookieParser())
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))
-
+app.use(deserializeUser)
 
 
 app.use(cors({
@@ -44,7 +44,7 @@ async function startApp() {
     // Intialize server routes from routes folder
     routes(app)
 }
-app.use(deserializeUser)
+
 
 
 // Start application

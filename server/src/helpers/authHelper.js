@@ -15,8 +15,7 @@ export function createMemorySession(name, username) {
     const session = { sessionId, name, username, valid: true }
 
     sessions[sessionId] = session;
-    console.log(sessions)
-
+    
     return session;
 }       
 

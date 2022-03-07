@@ -1,5 +1,5 @@
 import {User} from '../schemas/userSchema.js'
-import {signJwt, verifyJwt} from '../utils/jwt.js'
+import {signJwt} from '../utils/jwt.js'
 import {createMemorySession, deleteMemorySession} from '../helpers/authHelper.js'
 
 export async function createSession(req, res) {
@@ -15,12 +15,12 @@ export async function createSession(req, res) {
     
     
         res.cookie('accessToken', accessToken, {
-            maxAge: 30000, // 5 mins
+            maxAge: 300000, // 5 mins
             httpOnly: true
         })
 
         res.cookie('refreshToken', refreshToken, {
-            maxAge: 2.592e+8, // 3 days
+            maxAge: 4.32e+8, // 5 days
             httpOnly: true
         })
     
@@ -40,6 +40,8 @@ export function getSession(req, res) {
     return res.send(req.user)
 }
 
+
+
 export async function deleteSession(req, res) {
     res.cookie("accessToken", null, {
         maxAge: 0,
@@ -52,7 +54,7 @@ export async function deleteSession(req, res) {
     })
 
     const session = await deleteMemorySession(req.user.sessionId)
-    console.log(session)
+
     res.send({sucess: true, message: "Sucessfully logged out", session})
 }
 
