@@ -1,6 +1,24 @@
 import {Country} from '../schemas/countrySchema.js'
 
 
+export async function createCountry(req, res) {
+    const {name, countryCode} = req.body
+
+    if (!name || !countryCode) return res.status(400).json({success: false, message: "Missing params"})
+    if (!name.length || !countryCode.length || countryCode.length !== 2) return res.status(400).json({success: false, message: "Invalid params"})
+
+    try {
+        const newCountry = await Country.create({name, countryCode})
+
+        return res.status(201).json({success: true, message: "Country succesfully created", country: {_id: newCountry._id, name: newCountry.name, countryCode: newCountry.countryCode}})
+    } catch (err) {
+        consola.error(err.message)
+        return res.status(500).json({success: false, error: err.message, stack: err})
+    }
+
+}
+
+
 export async function addStock(req, res) {
     let { stock, countryCode } = req.body
 

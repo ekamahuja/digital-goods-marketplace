@@ -4,12 +4,12 @@ export const countrySchema = mongoose.Schema({
     name: {
         type: String,
         required: true,
-        unique: true
+        unique: "The name of this country already exists"
     },
     countryCode: {
         type: String,
         required: true,
-        unique: true
+        unique: "The countryCode of this country already exists"
     },
     stock: [{
         inviteLink: {
