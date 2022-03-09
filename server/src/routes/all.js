@@ -3,6 +3,7 @@ import express from 'express';
 import authRoutes from './authRoutes.js'
 import stockRoutes from './countryRoutes.js'
 import keyRoutes from './keyRoutes.js'
+import upgradeRoutes from './upgradeRoutes.js'
 
 const app = express();
 
@@ -20,6 +21,8 @@ function routes(app) {
     app.use('/api/data', stockRoutes);
 
     app.use('/api/', keyRoutes);
+
+    app.use('/api/', upgradeRoutes);
 }
 
 

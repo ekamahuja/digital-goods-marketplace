@@ -16,7 +16,7 @@ const app = express()
 
 // Middlewares
 app.use(cookieParser())
-app.use(express.json())
+app.use(express.json({limit: '50mb'}))
 app.use(express.urlencoded({extended: false}))
 app.use(deserializeUser)
 
@@ -46,6 +46,6 @@ async function startApp() {
 }
 
 
-
 // Start application
 startApp();
+
