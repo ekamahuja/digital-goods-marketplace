@@ -1,6 +1,6 @@
 import randomKey from 'random-key'
 import { Key } from '../schemas/keySchema.js'
-
+import { upgradeLog } from '../schemas/upgradeLogSchema.js'
 
 export async function generateKeys(req, res) {
     const {prefix, type, amount} = req.body

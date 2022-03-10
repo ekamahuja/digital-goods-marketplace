@@ -29,6 +29,7 @@
     "puppeteer-extra-plugin-recaptcha": "^3.5.0",
     "puppeteer-screen-recorder": "^2.0.2",
     "random-key": "^0.3.2",
+    "spotify-web-api-node": "^5.0.2",
     "validator": "^13.7.0"
   },
   "devDependencies": {
