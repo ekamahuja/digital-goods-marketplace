@@ -79,7 +79,7 @@ export async function getReplacement(req, res) {
     })
 
   } catch (err) {
-    consola.error(err)
+    // consola.error(err)
     return res.status(500).json({success: false, error: err.message})
   }
 } 

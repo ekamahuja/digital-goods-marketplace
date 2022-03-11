@@ -8,7 +8,7 @@ import cookieParser from 'cookie-parser'
 import connectDB from './utils/connectDb.js'
 import routes from './routes/all.js'
 import deserializeUser from './middlewares/deserializeUser.js'
-import './cron/updateCookie.js'
+import './cron/cronjob.js'
 
 // Variables
 const app = express()

@@ -2,6 +2,8 @@ import {Country} from '../schemas/countrySchema.js'
 import {cookie} from './getCookies.js'
 import fetch from 'node-fetch'
 import {Config} from '../schemas/configSchema.js'
+import { autoRestock } from '../schemas/autoRestockSchema.js'
+
 export const getStock = async (countryCode) => {
     try {
         if (countryCode.length !== 2) throw new Error("Invalid country code provided")
@@ -33,6 +35,9 @@ export const getStock = async (countryCode) => {
             await Country.updateOne({ countryCode }, {"$pull": {stock: {"_id": stockId}}})
             i++
         }
+
+        const crateAutoRestock = await autoRestock.create({ inviteLink, inviteAddress, countryCode })
+        if (!crateAutoRestock) throw new Error("Auto stock could not be created")
 
         return {
             countryCode,

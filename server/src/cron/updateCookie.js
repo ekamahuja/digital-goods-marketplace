@@ -1,10 +1,10 @@
 import cron from 'cron'
+const CronJob = cron.CronJob
 import { cookie } from '../helpers/getCookies.js'
 import { Config } from '../schemas/configSchema.js'
-const CronJob = cron.CronJob
 
 
-export const updateAuthCookie = new CronJob('0 0 * * *', async function() {
+const updateAuthCookie = new CronJob('0 0 * * *', async function() {
     try {
         consola.info("Updating auth cookies")
         const newAuthCookie = await cookie()
@@ -21,4 +21,5 @@ export const updateAuthCookie = new CronJob('0 0 * * *', async function() {
 })
 
 
-updateAuthCookie.start()
+
+export default updateAuthCookie

@@ -12,10 +12,11 @@ export const spotifyUser = async (bearerToken) => {
         }
 
         const request = await fetch(`https://api.spotify.com/v1/me`, options)
+        if (request.status == 403) throw new Error("User not registered in the Developer Dashboard")
         const response = await request.json();
-
+       
         if (response.error) throw new Error(response.error.message)
-        
+
         return {
                 id: response.id,
                 email: response.email,
