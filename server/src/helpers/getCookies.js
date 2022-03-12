@@ -13,10 +13,6 @@ import RecaptchaPlugin from 'puppeteer-extra-plugin-recaptcha'
   )
 
 
-
-const email = "jashdhioohi@gmail.com"
-const password = "jashdhioohi@gmail.com"
-
 export const getCookie = async () => {
     try {
         const browser = await puppeteer.launch();
@@ -26,10 +22,10 @@ export const getCookie = async () => {
         await page.goto('https://accounts.spotify.com/en/login/');
         await page.focus('#login-username')
 
-        await page.keyboard.type(email)
+        await page.keyboard.type(process.env.SPOTIFY_EMAIL)
 
         await page.focus('#login-password')
-        await page.keyboard.type(password)
+        await page.keyboard.type(process.env.SPOTIFY_EMAIL)
 
         // await page.solveRecaptchas()
 
