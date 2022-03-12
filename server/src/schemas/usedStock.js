@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
 
 
-export const autoRestockSchema = mongoose.Schema({
+export const usedStockSchema = mongoose.Schema({
     inviteLink: {
         type: String,
         required: true
@@ -20,4 +20,4 @@ export const autoRestockSchema = mongoose.Schema({
 
 
 
-export const autoRestock = mongoose.model("autoRestock", autoRestockSchema)
+export const usedStock = mongoose.model("usedStock", usedStockSchema)

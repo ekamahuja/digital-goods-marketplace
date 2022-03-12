@@ -25,6 +25,6 @@ export const spotifyUser = async (bearerToken) => {
             }
         
     } catch (err) {
-        return { success: false, error: err.message}
+        return { success: false, error: err.message, stack: err}
     }
 }

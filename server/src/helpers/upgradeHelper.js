@@ -2,7 +2,7 @@ import {Country} from '../schemas/countrySchema.js'
 import {cookie} from './getCookies.js'
 import fetch from 'node-fetch'
 import {Config} from '../schemas/configSchema.js'
-import { autoRestock } from '../schemas/autoRestockSchema.js'
+import { usedStock } from '../schemas/usedStock.js'
 
 export const getStock = async (countryCode) => {
     try {
@@ -36,8 +36,8 @@ export const getStock = async (countryCode) => {
             i++
         }
 
-        const crateAutoRestock = await autoRestock.create({ inviteLink, inviteAddress, countryCode })
-        if (!crateAutoRestock) throw new Error("Auto stock could not be created")
+        const createUsedStock = await usedStock.create({ inviteLink, inviteAddress, countryCode })
+        if (!createUsedStock) throw new Error("Auto stock could not be created")
 
         return {
             countryCode,

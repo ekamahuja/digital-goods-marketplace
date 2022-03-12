@@ -13,6 +13,9 @@ export async function upgradeUser(req, res) {
         if (!keyData) throw new Error(`Invalid key (${key})`)
         if (keyData.used) throw new Error(`This key is already used`)
 
+        const emailAlreadyUsed = await upgradeLog.find({email})
+        if (emailAlreadyUsed) throw new Error(`The email is already linked with another key`)
+
         const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress
 
         const countryCode = (countryC) ? countryC : await ipToCountryCode(ip)
