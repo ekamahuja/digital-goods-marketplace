@@ -39,7 +39,6 @@ export const getCookie = async () => {
         return `${authCookies[0].name}=${authCookies[0].value}`
         
     } catch (err) {
-        console.error(err)
         return null
     }
 }

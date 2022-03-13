@@ -1,5 +1,5 @@
 import {User} from '../schemas/userSchema.js'
-import {signJwt} from '../utils/jwt.js'
+import {signJwt, verifyJwt} from '../utils/jwt.js'
 import {createMemorySession, deleteMemorySession} from '../helpers/authHelper.js'
 
 export async function createSession(req, res) {
@@ -8,11 +8,10 @@ export async function createSession(req, res) {
     const user = await User.findOne({username})
 
     if (user && await user.matchPassword(password)) {
-        const session = createMemorySession(user.name, username)
-
-        const accessToken = signJwt({ name: user.name, username: user.username }, process.env.JWT_ACCESS_TOKEN_EXPIRY)
+        const session = createMemorySession(user.name, username, user.role)
+        const accessToken = signJwt({ name: user.name, username: user.username, role: user.role }, process.env.JWT_ACCESS_TOKEN_EXPIRY)
         const refreshToken = signJwt({ sessionId: session.sessionId }, process.env.JWT_REFRESH_TOKEN_EXPIRY)
-    
+
     
         res.cookie('accessToken', accessToken, {
             maxAge: 300000, // 5 mins
@@ -21,10 +20,10 @@ export async function createSession(req, res) {
 
         res.cookie('refreshToken', refreshToken, {
             maxAge: 4.32e+8, // 5 days
-            httpOnly: true
+            httpOnly: true              
         })
     
-        return res.send(session)
+        return res.send(verifyJwt(accessToken).payload)
     } else {
         return res.status(401).json({
             success: false,

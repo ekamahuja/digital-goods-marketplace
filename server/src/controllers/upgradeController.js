@@ -3,7 +3,7 @@ import { Key } from '../schemas/keySchema.js'
 import { getStock, ipToCountryCode } from '../helpers/upgradeHelper.js'
 import { upgradeLog } from '../schemas/upgradeLogSchema.js'
 
-export async function upgradeUser(req, res) {
+export async function upgradeUser(req, res, next) {
     try {
         const { email, key, countryC } = req.body
         if (!email || !key) throw new Error("Missing params")
@@ -13,7 +13,7 @@ export async function upgradeUser(req, res) {
         if (!keyData) throw new Error(`Invalid key (${key})`)
         if (keyData.used) throw new Error(`This key is already used`)
 
-        const emailAlreadyUsed = await upgradeLog.find({email})
+        const emailAlreadyUsed = await upgradeLog.findOne({email})
         if (emailAlreadyUsed) throw new Error(`The email is already linked with another key`)
 
         const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress
@@ -52,8 +52,7 @@ export async function upgradeUser(req, res) {
             }
         })
     } catch (err) {
-        consola.error(err)
-        return res.status(500).json({success: false, error: err.message})
+        return next(err)
     }
     
 }

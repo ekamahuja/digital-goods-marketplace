@@ -27,7 +27,7 @@ export async function createSpotifyAuthUrl(req, res) {
 }
 
 
-export async function getReplacement(req, res) {
+export async function getReplacement(req, res, next) {
   try {
     const { countryC } = req.body
     // const spotifyToken = req.query.access_token
@@ -79,7 +79,6 @@ export async function getReplacement(req, res) {
     })
 
   } catch (err) {
-    // consola.error(err)
-    return res.status(500).json({success: false, error: err.message})
+    next(err)
   }
 } 

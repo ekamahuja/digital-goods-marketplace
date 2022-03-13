@@ -9,10 +9,10 @@ export function getMemorySession(sessionId) {
 
 
 
-export function createMemorySession(name, username) {
+export function createMemorySession(name, username, role) {
     const sessionId = String(Object.keys(sessions).length + 1)  
 
-    const session = { sessionId, name, username, valid: true }
+    const session = { sessionId, name, username, role, valid: true }
 
     sessions[sessionId] = session;
     

@@ -8,7 +8,9 @@ import cookieParser from 'cookie-parser'
 import connectDB from './utils/connectDb.js'
 import routes from './routes/all.js'
 import deserializeUser from './middlewares/deserializeUser.js'
+import errorHandler from './middlewares/errorHandler.js'
 import './cron/cronjob.js'
+
 
 // Variables
 const app = express()
@@ -43,6 +45,7 @@ async function startApp() {
 
     // Intialize server routes from routes folder
     routes(app)
+    app.use(errorHandler)
 }
 
 

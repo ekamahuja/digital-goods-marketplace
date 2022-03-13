@@ -10,7 +10,6 @@ async function deserializeUser(req, res, next) {
 
     const {payload, expired} = verifyJwt(accessToken)
 
-
     // For a valid accessToken
     if (payload) {
         req.user = payload

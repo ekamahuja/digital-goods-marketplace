@@ -54,7 +54,7 @@ export async function getStock(req, res) {
             stock: country.stock.length
         }))
 
-        return res.status(200).json({ success: true, totalCountries: countries.length, data: (req.user) ? countries : stock})
+        return res.status(200).json({ success: true, totalCountries: countries.length, data: (req.user && req.user.role == "admin") ? countries : stock})
       
     } catch (err) {
         consola.error(err.message)
