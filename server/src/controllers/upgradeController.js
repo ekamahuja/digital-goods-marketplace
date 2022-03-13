@@ -44,6 +44,7 @@ export async function upgradeUser(req, res, next) {
 
         res.status(200).json({
             success: true,
+            message: "Successfully upgraded",
             key: keyData.value,
             upgradeData: {
                 inviteLink: upgradeInfo.inviteLink,

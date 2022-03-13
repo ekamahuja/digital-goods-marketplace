@@ -9,13 +9,13 @@ import replacementRoutes from './replacementRoutes.js'
 const app = express();
 
 function routes(app) {
-    app.get('/', function(req, res) {
-        res.json({
-            sucess: true,
-            message: "Sucessfully running",
-            requestIp: req.headers['x-forwarded-for'] || req.socket.remoteAddress,
-        })
-    })
+    // app.get('/', function(req, res) {
+    //     res.json({
+    //         sucess: true,
+    //         message: "Sucessfully running",
+    //         requestIp: req.headers['x-forwarded-for'] || req.socket.remoteAddress,
+    //     })
+    // })
   
     app.use('/api/auth', authRoutes);
 

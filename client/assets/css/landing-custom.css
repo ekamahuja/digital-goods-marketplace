@@ -1,0 +1,73 @@
+p.logo-txt {
+    color: white;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+li.disabled {
+	opacity: 0.6;
+    text-decoration: line-through;
+}
+
+b.automated-bold {
+    color: #ff8a00;
+}
+
+section.faq-section.padding-top {
+	margin-bottom: 125px;
+}
+
+
+/* Dark Mode */
+body.darkmode {
+    color: rgb(140, 157, 191);
+    background-image: initial;
+    background-color: rgb(29, 32, 33);
+  /*background-color: rgb(23, 25, 26); */
+}
+
+h1#intro-title.title.darkmode {
+    color: rgb(232, 230, 227);
+}
+
+p#intro-desc.darkmode {
+    color: rgba(232, 230, 227, 0.9);
+}
+
+#feature-title-h2-2.title.darkmode {
+    color: rgb(232, 230, 227);
+}
+
+h2.title.darkmode {
+    color: rgb(134, 160, 208);
+}
+
+
+.am-item.darkmode {
+    box-shadow: rgb(3 51 175 / 10%) 1.95px 15.881px 30px 0px !important;
+    background-color: rgb(24, 26, 27); */
+    /* background-color: #131516; */
+}
+
+h5.title {
+    color: rgb(134, 160, 208);
+}
+
+a.button-3.darkmode {
+    color: rgb(134, 160, 208);
+    border: 1px solid #cac7f6;
+}
+
+a.button-3.darkmode:hover {
+    color: white;
+    border: 1px solid #cac7f6;
+}
+
+a#howSectionPurchaseButton.darkmode {
+    color: white;
+    border: white;
+}
+
+a#howSectionPurchaseButton.darkmode:hover {
+    background: -webkit-linear-gradient(118deg, #c165dd 0%, #1153fc 100%);
+}

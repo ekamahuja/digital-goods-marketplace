@@ -44,7 +44,10 @@ async function startApp() {
 
 
     // Intialize server routes from routes folder
+    
     routes(app)
+    app.use('/', express.static('../client'))
+    app.use('/upgrade', express.static('../client/upgrade.html'))
     app.use(errorHandler)
 }
 
