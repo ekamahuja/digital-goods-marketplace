@@ -37,7 +37,7 @@ export async function getKeyInfo(req, res) {
     
     try {
         const keyInfo = await Key.findOne({value: key}).select("-__v").select("-createdAt").select("-upd atedAt")
-        if (!keyInfo) return res.status(404).json({success: false, error: 'Key not found'})
+        if (!keyInfo) return res.status(404).json({success: false, message: 'Key not found'})
 
         return res.status(200).json({ success: true, message: 'Successfully retrieved key', keyInfo})
     } catch (err) {

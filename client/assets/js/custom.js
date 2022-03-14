@@ -1,53 +1,102 @@
+let isValidKey = false;
+let isValidEmail = false;
+
 
 // Check valid upgrade key
 document.querySelector("#upgradeKey-input").addEventListener('input', async function() {
-    if (document.querySelector("#upgradeKey-input").value.length < 2) return 
+    if (document.querySelector("#upgradeKey-input").value.length < 4) return 
 
-    const keyValidation = await isValidKey(document.querySelector("#upgradeKey-input").value)
+    const request = await fetch(`http://localhost:12345/api/key?key=${document.querySelector("#upgradeKey-input").value}`)
+    const response = await request.json()
 
-    if (!keyValidation) {
-        return document.querySelector('#upgradeKey-input').style.border = '1px solid rgb(255 0 118 / 80%)'
-    } else {
-        document.querySelector("#upgradeKey-input").disabled = true
-        document.querySelector('#upgradeKey-input').style.border = '1px solid rgb(0 255 8 / 80%)'
+    if (request.status == 404) {
+        document.querySelector('#upgradeKey-input').style.border = '1px solid rgb(255 0 118 / 80%)'
     }
-    
+
+    if (response.success == false && request.status != 404) {
+        toastr.message(response.message, 'error', 3000);
+    }
+
+    if (response.keyInfo.used) {
+        toastr.message('Key already redeemed', 'error', 3000);
+        document.querySelector('#upgradeKey-input').style.border = '1px solid rgb(255 0 118 / 80%)'
+        return
+    }
+    if (request.status != 200) return document.querySelector('#upgradeKey-input').style.border = '1px solid rgb(255 0 118 / 80%)'
+  
+    document.querySelector("#upgradeKey-input").disabled = true
+    document.querySelector('#upgradeKey-input').style.border = '1px solid rgb(0 255 8 / 80%)'
+    isValidKey = true
 })
+
 
 // Check valid upgrade email 
 document.querySelector("#upgradeEmail-input").addEventListener('input', async function() {
     const regex = new RegExp('[a-z0-9]+@[a-z]+\.[a-z]{2,3}');
     if (regex.test(document.querySelector('#upgradeEmail-input').value.toLowerCase())) {
-        return document.querySelector('#upgradeEmail-input').style.border = '1px solid rgb(0 255 8 / 80%)'
+        document.querySelector('#upgradeEmail-input').style.border = '1px solid rgb(0 255 8 / 80%)'
+        isValidEmail = true
+        return
     } else {
-        return document.querySelector('#upgradeEmail-input').style.border = '1px solid rgb(255 0 118 / 80%)'
+        document.querySelector('#upgradeEmail-input').style.border = '1px solid rgb(255 0 118 / 80%)'
+        isValidEmail = false
+        return
     }
 
 })
 
 
 document.querySelector("#upgrade-btn").addEventListener('click', async function() {
-    document.querySelector("#upgrade-btn").disabled = true
-    document.querySelector("#upgrade-btn").innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Loading...'
-    await upgradeKey()
+    const keyInput = document.querySelector('#upgradeKey-input')
+    const emailInput = document.querySelector("#upgradeEmail-input")
+    const upgradeBtn = document.querySelector("#upgrade-btn")
+
+    if (!isValidKey) {
+        toastr.message("Please enter a valid key", 'error', 3000) 
+        keyInput.style.border = '1px solid rgb(255 0 118 / 80%)'
+        return
+    }
+
+    if (!isValidEmail) {
+        toastr.message("Please enter a valid email", 'error', 3000) 
+        document.querySelector('#upgradeEmail-input').style.border = '1px solid rgb(255 0 118 / 80%)'
+        return
+    }
+
+    upgradeBtn.disabled = true
+    upgradeBtn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Loading...'
+    emailInput.disabled = true
+
+    const upgradeData = await upgradeKey(document.querySelector('#upgradeKey-input').value, (document.querySelector('#upgradeEmail-input').value).toLowerCase())
+    if (!upgradeData.success) {
+        if (upgradeData.message.match("email")) {
+            emailInput.disabled = false
+            upgradeBtn.disabled = false
+            document.querySelector('#upgradeEmail-input').style.border = '1px solid rgb(255 0 118 / 80%)'
+            upgradeBtn.innerHTML = `<i class="fa-brands fa-spotify"></i> Upgrade`
+            toastr.message(upgradeData.message, 'error', 3000)
+            return
+        }
+        // keyInput.disabled = false
+        
+    }
+
+    if (upgradeData.upgradeData) {
+        toastr.message(upgradeData.message, "success", 3000)
+        document.querySelector('#upgrade-form').style.display = 'none'
+        document.querySelector('#success-upgrade').style.display = 'block'
+        document.querySelector("#inviteLink").href = `${upgradeData.upgradeData.inviteLink}`
+        document.querySelector("#inviteAddress").innerHTML = `${upgradeData.upgradeData.inviteAddress}`
+        document.querySelector("#inviteCountry").innerHTML = `${upgradeData.upgradeData.inviteCountry}`
+    }
 })
 
 
 
-
-
-async function isValidKey(upgradeKeyInput) {
-    const request = await fetch(`http://localhost:12345/api/key?key=${upgradeKeyInput}`)
-    const response = await request.json()
-    if (request.status != 200 || response.keyInfo.used) return false
-    return true
-}
-
-
-async function upgradeKey() {
+async function upgradeKey(key, email) {
     const params = {
-        key: document.querySelector('#upgradeKey-input').value,
-        email: document.querySelector('#upgradeEmail-input').value,
+        key,
+        email,
         countryC: "AU"
     }
 
@@ -61,5 +110,12 @@ async function upgradeKey() {
     }
     const request = await fetch("http://localhost:12345/api/upgrade", options)
     const response = await request.json()
-    alert(response.message)
+    return response
 }
+
+
+document.querySelector("#inviteAddress").addEventListener("click", function() {
+    const copyText = document.querySelector("#inviteAddress").textContent;
+    navigator.clipboard.writeText(copyText);
+    toastr.message("Address successfully copied", "success", 3000)
+})

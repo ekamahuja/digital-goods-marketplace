@@ -1,0 +1,97 @@
+.account-form .form-group button {
+    width: 100%;
+}
+
+.toast-wrap {
+    z-index: 9999999;
+}
+
+.account-wrapper {
+    border-radius: 32px;
+    padding: 35px 0;
+}
+
+
+#success-upgrade {
+    display: none;
+}
+
+.banner-content-2 p {
+    margin: 0px
+}
+
+p.detatils-heading {
+    font-weight: bold;
+    text-decoration: underline;
+    padding-bottom: 5px;
+}
+
+.upgrade-pad-bot {
+    padding-bottom: 0.8rem;
+}
+
+button#inviteAddress {
+    background-color: #3b9aff;
+    color: #fff;
+    border-radius: 12px;
+    width: 55%;
+}
+
+
+.upgrade-pad-bottom {
+    padding-bottom: 0.8rem;
+}
+
+
+.banner-button-group {
+    margin: 0 auto;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+/* @media only screen and (max-width: 769px) { */
+    /* .account-wrapper {
+        background: #eff5fc;
+        border-radius: 20px;
+        padding: 33px;
+    } */
+/* } */
+
+
+@media (max-width: 991px) {
+    .banner-2 {
+        background: #f0f5fc;
+    }
+
+    a.button-4 {
+        text-align: center;
+        width: 100%;
+    }
+}
+
+p.logo-txt {
+    color: white;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+p.logo-txt-upgrade-page {
+    color: #3b368c;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+li.disabled {
+	opacity: 0.6;
+    text-decoration: line-through;
+}
+
+b.automated-bold {
+    color: #ff8a00;
+}
+
+section.faq-section.padding-top {
+	margin-bottom: 125px;
+}
+
+

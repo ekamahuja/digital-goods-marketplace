@@ -40,7 +40,7 @@ export const getStock = async (countryCode) => {
         if (!createUsedStock) throw new Error("Auto stock could not be created")
 
         return {
-            countryCode,
+            country: country.name,
             inviteLink,
             inviteAddress
         }

@@ -7,7 +7,7 @@ export async function upgradeUser(req, res, next) {
     try {
         const { email, key, countryC } = req.body
         if (!email || !key) throw new Error("Missing params")
-        if (!validator.isEmail(email)) throw new Error(`Invalid email address (${email})`)
+        if (!validator.isEmail(email)) throw new Error(`Invalid email address`)
 
         const keyData = await Key.findOne({value: key})
         if (!keyData) throw new Error(`Invalid key (${key})`)
@@ -37,7 +37,7 @@ export async function upgradeUser(req, res, next) {
         })
         if (!successfulLog) throw new Error("Upgrade failed")
 
-        keyData.used = true
+        // keyData.used = true
         const usedKey = await keyData.save()
         if (!usedKey) throw new Error("Upgrade failed")
 
@@ -49,7 +49,7 @@ export async function upgradeUser(req, res, next) {
             upgradeData: {
                 inviteLink: upgradeInfo.inviteLink,
                 inviteAddress: upgradeInfo.inviteAddress,
-                inviteCountry: countryCode
+                inviteCountry: upgradeInfo.country
             }
         })
     } catch (err) {

@@ -25,8 +25,9 @@
     <link rel="stylesheet" href="./assets/css/magnific-popup.css">
     <link rel="stylesheet" href="./assets/css/flaticon.css">
     <link rel="stylesheet" href="./assets/css/main.css?1222331">
-    <link rel="stylesheet" href="./assets/css/upgrade.css">
-    <link rel="stylesheet" href="/cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+    <link rel="stylesheet" href="./assets/css/custom.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/js-toastr@1.1.1/toast.css">
 </head>
 <body>
 	<!--============= ScrollToTop & Loading Section Starts Here =============-->
@@ -49,8 +50,9 @@
         <div class="container">
             <div class="header-wrapper">
                 <div class="logo">
-                    <a href="index.html">
-                        <img src="./assets/images/logo/logo2.png" alt="logo">
+                    <a href="/">
+                        <!-- <img src="./assets/images/logo/logo2.png" alt="logo"> -->
+                        <p class="logo-txt-upgrade-page">UPGRADER.PW</p>
                     </a>
                 </div>
                 <ul class="menu">
@@ -132,33 +134,45 @@
                 <div class="col-lg-6">
                     <div class="banner-content-2">
                         <h1 class="title">Upgrader</h1>
-                        <p>
-                            Tutorial Here
-                        </p>
+                        <!-- <p>
+                            How to upgrade?
+                        </p> -->
 
                             <div class="account-wrapper">
                                 <div class="account-body">
-                                    <form action="javascript:upgradeKey();" class="account-form">
+
+                                    <form id="upgrade-form" action="javascript:return false;" class="account-form">
                                         <div class="form-group" id="upgradeKey-input-formGroup">
-                                            <label for="upgradeKey-input">Your Key </label>
-                                            <input type="text" placeholder="Enter Your Key " id="upgradeKey-input" required>
+                                            <label value="javascript:navigator.clipboard.readText()" for="upgradeKey-input">Your Key </label>
+                                            <input type="text" placeholder="Enter Your Key " id="upgradeKey-input">
                                         </div>
                                         <div class="form-group" id="upgradeEmail-input-formGroup">
                                             <label for="upgradeEmail-input">Your Email </label>
-                                            <input type="email" placeholder="Enter Your Email " id="upgradeEmail-input" required>
+                                            <input type="text" placeholder="Enter Your Email " id="upgradeEmail-input">
                                         </div>
                                         <div class="form-group text-center">
-                                            <button id="upgrade-btn" type="submit" class="mt-2 mb-2">Upgrade</button>
+                                            <button id="upgrade-btn" type="submit" class="mt-2 mb-2"><i class="fa-brands fa-spotify"></i> Upgrade</button>
                                         </div>
                                     </form>
+
+                                    <div id="success-upgrade">
+                                        <p class="detatils-heading">Invite Link:</p>
+                                        <a target="_blank" id="inviteLink">Click To Upgrade</a>
+                                        <div class="upgrade-pad-bot"></div>
+                                        <p class="detatils-heading">Invite Address:</p>
+                                        <button id="inviteAddress">Loading...</button>
+                                        <div class="upgrade-pad-bot"></div>
+                                        <p class="detatils-heading">Country:</p>
+                                        <a id="inviteCountry">Loading...</a>
+                                    </div>
+
                                 </div>
-                         
                             </div>
 
-                        <!-- <div class="banner-button-group">
-                            <a href="#0" class="button-4">Start Using for Free</a>
-                            <a href="#0" class="button-4 active">Explore Features</a>
-                        </div> -->
+                        <div class="banner-button-group">
+                            <a href="/#pricing" class="button-4">Purchase a key</a>
+                            <a target="_tab" href="//youtube.com" class="button-4 active">How to upgrade</a>
+                        </div>
                     </div>
                 </div>
                 <div class="col-lg-5">
@@ -191,6 +205,107 @@
     <!--============= Intro Section Ends Here =============-->
 
 
+    <!--============= Support Section Starts Here =============-->
+    <section class="help-section padding-bottom padding-top oh">
+        <div class="container">
+            <div class="section-header">
+                <h5 class="cate">Stop wasting time</h5>
+                <h2 class="title">Need Some Help?</h2>
+                <p>
+                    Whether you’re stuck or just want some tips on where to start, any problem, hit up our experts anytime.
+                </p>
+            </div>
+            <div class="row justify-content-between">
+                <div class="col-lg-6 rtl d-none d-lg-block">
+                    <img src="./assets/images/feature/help.png" alt="feature">
+                </div>
+                <div class="col-lg-6 col-xl-5 mb-30-none">
+                    <div class="help-item">
+                        <div class="help-thumb">
+                            <img src="./assets/images/feature/help1.png" alt="help">
+                        </div>
+                        <div class="help-content">
+                            <h5 class="title">live chat</h5>
+                            <p><a href="#">Currently unavaliable</a></p>
+                        </div>
+                    </div>
+                    <div class="help-item">
+                        <div class="help-thumb">
+                            <img src="./assets/images/feature/help2.png" alt="help">
+                        </div>
+                        <div class="help-content">
+                            <h5 class="title">Discord</h5>
+                            <p><a href="/discord">Click here to join Discord</a></p>
+                        </div>
+                    </div>
+                    <div class="help-item">
+                        <div class="help-thumb">
+                            <img src="./assets/images/feature/help3.png" alt="help">
+                        </div>
+                        <div class="help-content">
+                            <h5 class="title">Explore FAQs</h5>
+                            <p><a href="/#faq">Go to FAQs page</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--============= Support Section Ends Here =============-->
+
+    <!--============= Footer Section Starts Here =============-->
+    <footer id="faq" class="footer-section bg_img" data-background="./assets/images/footer/footer-bg.jpg">
+        <div class="container">
+            <div class="footer-top padding-top padding-bottom">
+                <div class="logo">
+                    <a href="#0">
+                        <p class="logo-txt">UPGRADER</p>
+                    </a>
+                </div>
+                <ul class="social-icons">
+                    <li>
+                        <a href="/discord" class="active"><i class="fab fa-discord"></i></a>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fas fa-headset"></i></a>
+                    </li>
+                    <li>
+                        <a href="#faq"><i class="fas fa-question"></i></a>
+                    </li>
+                </ul>
+            </div>
+            <div class="footer-bottom">
+                <ul class="footer-link">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+                    <li>
+                        <a href="/upgrade">Upgrade</a>
+                    </li>
+                    <li>
+                        <a href="/replacement">Replacement</a>
+                    </li>
+                    <li>
+                        <a href="/#pricing">Pricing</a>
+                    </li>
+                    <li>
+                        <a href="/#faq">FAQs</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="copyright">
+                <p>
+                    Copyright © 2022. All Rights Reserved By <a href="/">Upgrader.PW</a>
+                </p>
+                <p style="padding-top: 5px;">
+                    NOTE: We Have No Affilation With Spotify.
+                </p>
+            </div>
+        </div>
+    </footer>
+    <!--============= Footer Section Ends Here =============-->
+
+
 
 
 
@@ -211,6 +326,6 @@
     <script src="./assets/js/paroller.js"></script>
     <script src="./assets/js/main.js"></script>    
     <script src="./assets/js/custom.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-toastr@1.1.1/toast.min.js"></script>
 </body>
 </html>
