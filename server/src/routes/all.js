@@ -5,6 +5,7 @@ import stockRoutes from './countryRoutes.js'
 import keyRoutes from './keyRoutes.js'
 import upgradeRoutes from './upgradeRoutes.js'
 import replacementRoutes from './replacementRoutes.js'
+import clientRoutes from './clientRoutes/clientRoutes.js'
 
 const app = express();
 
@@ -16,7 +17,9 @@ function routes(app) {
     //         requestIp: req.headers['x-forwarded-for'] || req.socket.remoteAddress,
     //     })
     // })
-  
+
+    app.use('/', clientRoutes);
+
     app.use('/api/auth', authRoutes);
 
     app.use('/api/data', stockRoutes);
@@ -26,6 +29,8 @@ function routes(app) {
     app.use('/api/', upgradeRoutes);
 
     app.use('/api/', replacementRoutes)
+
+    
 }
 
 

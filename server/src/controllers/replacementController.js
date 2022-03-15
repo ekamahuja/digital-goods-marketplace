@@ -4,27 +4,6 @@ import { spotifyUser } from '../helpers/replacementHelper.js'
 import { Key } from '../schemas/keySchema.js'
 import { upgradeLog } from '../schemas/upgradeLogSchema.js'
 
-export async function createSpotifyAuthUrl(req, res) {
-  const scopes = ['user-read-email', 'user-read-private']
-  const clientId = process.env.SPOTIFY_CLIENT_ID
-  const state = 'replacement'
-  const showDialog = true
-  const responseType = 'token'
-
-  const spotifyApi = new SpotifyWebApi({
-    clientId: clientId,
-    redirectUri: `${process.env.SERVER_URL}/api/spotify/oauth`
-  })  
-
-  const authUrl = spotifyApi.createAuthorizeURL(
-    scopes,
-    state,
-    showDialog,
-    responseType
-  )
-
-  res.redirect(authUrl)
-}
 
 
 export async function getReplacement(req, res, next) {

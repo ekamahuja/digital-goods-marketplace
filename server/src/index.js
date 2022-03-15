@@ -15,6 +15,9 @@ import './cron/cronjob.js'
 // Variables
 const app = express()
 
+// EJS setup
+app.set('view engine', 'ejs')
+app.use('/assets', express.static('../client/assets'));
 
 // Middlewares
 app.use(cookieParser())
@@ -44,10 +47,8 @@ async function startApp() {
 
 
     // Intialize server routes from routes folder
-    
     routes(app)
-    app.use('/', express.static('../client'))
-    app.use('/upgrade', express.static('../client/upgrade.html'))
+
     app.use(errorHandler)
 }
 
