@@ -18,8 +18,9 @@ const app = express()
 // EJS setup
 app.set('view engine', 'ejs')
 app.use('/assets', express.static('../client/assets'));
+// app.use('/', express.static('../client'));
 
-// Middlewares
+// Middlewaresblue
 app.use(cookieParser())
 app.use(express.json({limit: '50mb'}))
 app.use(express.urlencoded({extended: false}))

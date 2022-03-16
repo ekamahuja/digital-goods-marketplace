@@ -12,11 +12,13 @@ clientRoutes.get('/upgrade', async (req, res) => {
     res.render('../../client/upgrade')
 })
 
-
-clientRoutes.get('/api/spotify/oauth', replacementCallBack)
+clientRoutes.get('/keyinfo', async (req, res) => {
+    res.render('../../client/keyinfo')
+})
 
 clientRoutes.get('/replacement', replacementPage)
 
+clientRoutes.get('/api/spotify/oauth', replacementCallBack)
 
 
 

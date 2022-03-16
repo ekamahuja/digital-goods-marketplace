@@ -24,6 +24,10 @@ const upgradeLogSchema = mongoose.Schema({
             type: String,
             required: "inviteCountry is missing"
         },
+        userEmail: {
+            type: String,
+            required: "userEmail is missing"
+        },
         userIp: {
             type: String,
             required: "userIp is missing"

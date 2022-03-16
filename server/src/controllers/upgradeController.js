@@ -32,6 +32,7 @@ export async function upgradeUser(req, res, next) {
                 inviteLink: upgradeInfo.inviteLink,
                 inviteAddress: upgradeInfo.inviteAddress,
                 inviteCountry: countryCode,
+                userEmail: email,
                 userIp: ip
             }]
         })

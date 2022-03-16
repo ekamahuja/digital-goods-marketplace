@@ -1,6 +1,7 @@
 let isValidKey = false;
 let isValidEmail = false;
-
+let copiedAddress = false;
+let inviteLink;
 
 // Check valid upgrade key
 document.querySelector("#upgradeKey-input").addEventListener('input', async function() {
@@ -68,26 +69,34 @@ document.querySelector("#upgrade-btn").addEventListener('click', async function(
     emailInput.disabled = true
 
     const upgradeData = await upgradeKey(document.querySelector('#upgradeKey-input').value, (document.querySelector('#upgradeEmail-input').value).toLowerCase())
+
+    const messageType = (upgradeData.success) ? 'success' : 'error'
+    toastr.message(upgradeData.message, messageType, 5000)
+
     if (!upgradeData.success) {
         if (upgradeData.message.match("email")) {
-            emailInput.disabled = false
-            upgradeBtn.disabled = false
+            emailInput.disabled = false 
             document.querySelector('#upgradeEmail-input').style.border = '1px solid rgb(255 0 118 / 80%)'
-            upgradeBtn.innerHTML = `<i class="fa-brands fa-spotify"></i> Upgrade`
-            toastr.message(upgradeData.message, 'error', 3000)
-            return
         }
-        // keyInput.disabled = false
-        
+
+        if (upgradeData.message.match("key")) {
+            keyInput.disabled = false 
+            keyInput.style.border = '1px solid rgb(255 0 118 / 80%)'
+        }
+
+        upgradeBtn.innerHTML = `<i class="fa-brands fa-spotify"></i> Upgrade`
+        upgradeBtn.disabled = false
+        return
     }
 
     if (upgradeData.upgradeData) {
-        toastr.message(upgradeData.message, "success", 3000)
         document.querySelector('#upgrade-form').style.display = 'none'
         document.querySelector('#success-upgrade').style.display = 'block'
-        document.querySelector("#inviteLink").href = `${upgradeData.upgradeData.inviteLink}`
+        inviteLink = upgradeData.upgradeData.inviteLink
         document.querySelector("#inviteAddress").innerHTML = `${upgradeData.upgradeData.inviteAddress}`
         document.querySelector("#inviteCountry").innerHTML = `${upgradeData.upgradeData.inviteCountry}`
+        document.querySelector("#switch-btn").href = '/discord'
+        document.querySelector("#switch-btn").innerHTML = `<i class="fa-brands fa-discord"></i> Join Discord`
     }
 })
 
@@ -114,56 +123,17 @@ async function upgradeKey(key, email) {
 }
 
 
-
-
-
-
-
-
-
-
-// document.querySelector("#replacement-btn").addEventListener('click', function() {
-//     console.log("OK")
-// })
-
-
-async function getReplacement() {
-    document.querySelector("#replacement-btn").disabled = true
-    document.querySelector("#replacement-btn").innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Loading...'
-
-    const options = {
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        method: "POST",
-        cache: 'no-cache',
-        body: JSON.stringify({
-            countryC: "AU"
-        })
+document.querySelector("#inviteLink").addEventListener('click', () => {
+    if (copiedAddress) {
+        window.open(inviteLink, '_blank').focus();
+    } else {
+        toastr.message("Make sure to copy the address before proceeding", 'error', 3000)
     }
-
-    const request = await fetch("http://localhost:12345/api/replacement", options)
-    const response = await request.json();
-
-    console.log(response)
-
-    const messageType = (response.success) ? "success" : "error";
-    toastr.message(response.message, messageType, 5000)
-
-    if (response.success) {
-        document.querySelector("#replacement-form > div").style.display = "none";
-        document.querySelector("#success-upgrade").style.display = "block"
-        document.querySelector("#inviteLink").href = response.upgradeData.inviteLink
-        document.querySelector("#inviteAddress").innerHTML = response.upgradeData.inviteAddress
-        document.querySelector("#inviteCountry").innerHTML = response.upgradeData.inviteCountry
-    }
-
-    document.querySelector("#replacement-btn").innerHTML = `<i class="fa-brands fa-spotify"></i> Claim Replacement`
-    document.querySelector("#replacement-btn").disabled = false
-}
+})
 
 document.querySelector("#inviteAddress").addEventListener("click", function() {
     const copyText = document.querySelector("#inviteAddress").textContent;
     navigator.clipboard.writeText(copyText);
+    copiedAddress = true
     toastr.message("Address successfully copied", "success", 3000)
 })

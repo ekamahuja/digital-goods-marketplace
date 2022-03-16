@@ -24,7 +24,7 @@ export const keySchema = mongoose.Schema({
         required: true,
         default: 0
     },
-    amountOfResets: {
+    totalReplacementsClaimed: {
         type: Number,
         required: true,
         default: 0

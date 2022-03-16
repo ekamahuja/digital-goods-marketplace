@@ -1,5 +1,5 @@
 import SpotifyWebApi from 'spotify-web-api-node'
-import { getStock, ipToCountryCode } from '../helpers/upgradeHelper.js'
+import { getStock, ipToCountryCode, countryCodeToCountry } from '../helpers/upgradeHelper.js'
 import { spotifyUser } from '../helpers/replacementHelper.js'
 import { Key } from '../schemas/keySchema.js'
 import { upgradeLog } from '../schemas/upgradeLogSchema.js'
@@ -9,7 +9,6 @@ import { upgradeLog } from '../schemas/upgradeLogSchema.js'
 export async function getReplacement(req, res, next) {
   try {
     const { countryC } = req.body
-    // const spotifyToken = req.query.access_token
     const { spotifyToken } = req.cookies
     if (!spotifyToken) throw new Error('Missing spotify bearer token')
 
@@ -25,6 +24,9 @@ export async function getReplacement(req, res, next) {
     const upgradeData  = await upgradeLog.findOne({email: user.email})
     if (!upgradeData) throw new Error("Account not found in database")
 
+    const lastUpgradeTime = (new Date()).getTime() - (upgradeData.updatedAt).getTime()
+    if (lastUpgradeTime < (process.env.REPLACEMENT_COOLDOWN * 60000)) throw new Error("Not eligible for a replacement")
+
     const keyData = await Key.findOne({value: upgradeData.key})
     if (!keyData) throw new Error("Could not fetch key detatils")
     if (keyData.replacementsClaimed >= process.env.MAX_REPLACEMENTS) throw new Error("The key has been locked. Please contact staff for further details") 
@@ -32,6 +34,7 @@ export async function getReplacement(req, res, next) {
     if (countryCode !== user.country) throw new Error("Please change your account's country to the country you live in")
 
     keyData.replacementsClaimed ++
+    keyData.totalReplacementsClaimed ++
     const updatedKeyData = await keyData.save()
     if (!updatedKeyData) throw new Error("Could not update key data")
 
@@ -42,20 +45,24 @@ export async function getReplacement(req, res, next) {
       inviteLink: upgradeInfo.inviteLink,
       inviteAddress: upgradeInfo.inviteAddress,
       inviteCountry: countryCode,
+      userEmail: user.email,
       userIp: ip
     })
     const updatedUpgradeData = await upgradeData.save()
 
+    const country = await countryCodeToCountry(countryCode) || countryCode
+
     res.status(200).json({
       success: true,
+      message: "Successfully replaced",
       email: updatedUpgradeData.email,
       key: updatedKeyData.value,
       upgradeData: {
         inviteLink: upgradeInfo.inviteLink,
         inviteAddress: upgradeInfo.inviteAddress,
-        inviteCountry: countryCode
+        inviteCountry: country
     }
-    })
+  })
 
   } catch (err) {
     next(err)

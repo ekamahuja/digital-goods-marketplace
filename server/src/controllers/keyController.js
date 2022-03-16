@@ -1,6 +1,7 @@
 import randomKey from 'random-key'
 import { Key } from '../schemas/keySchema.js'
 import { upgradeLog } from '../schemas/upgradeLogSchema.js'
+import { countryCodeToCountry } from '../helpers/upgradeHelper.js'
 
 export async function generateKeys(req, res) {
     const {prefix, type, amount} = req.body
@@ -31,18 +32,47 @@ export async function generateKeys(req, res) {
 
 
 
-export async function getKeyInfo(req, res) {
+export async function getKeyInfo(req, res, next) {
     const key = req.query.key
     if (!key) return res.status(400).json({success: false, error: 'Key missing'})
     
     try {
-        const keyInfo = await Key.findOne({value: key}).select("-__v").select("-createdAt").select("-upd atedAt")
+        const keyInfo = await Key.findOne({value: key}).select("-__v").select("-createdAt").select("-updatedAt")
         if (!keyInfo) return res.status(404).json({success: false, message: 'Key not found'})
+        
+        const keyUpgradeData = (keyInfo.used) ? await upgradeLog.findOne({key: keyInfo.value}) : null
+        
+        let keyData
 
-        return res.status(200).json({ success: true, message: 'Successfully retrieved key', keyInfo})
+        if (!keyUpgradeData) {
+            keyData = {
+                key,
+                redeemed: keyInfo.used,
+                keyType: keyInfo.type,
+            }
+        } else {
+            let country =  await countryCodeToCountry(keyUpgradeData.upgrades[keyUpgradeData.upgrades.length - 1].inviteCountry)
+            country = (country.success) ? keyUpgradeData.upgrades[keyUpgradeData.upgrades.length - 1].inviteCountry : country
+
+            keyData = {
+                key,
+                email: keyUpgradeData.email,
+                redeemed: keyInfo.used,
+                type: keyInfo.type,
+                totalReplacementsClaimed: keyInfo.totalReplacementsClaimed,
+                lastUpgrade: [keyUpgradeData.upgrades[keyUpgradeData.upgrades.length -1]].map((upgradeInfo) => {
+                    return {
+                        inviteLink: upgradeInfo.inviteLink,
+                        inviteAddress: upgradeInfo.inviteAddress,
+                        inviteCountry: country
+                    }
+                })[0]
+            }
+        }
+        
+        return res.status(200).json({ success: true, message: 'Successfully retrieved key', keyData })
     } catch (err) {
-        consola.error(err)
-        return res.status(500).json({success: false, error: err.message, stack: err})
+        next(err)
     }
 }
 
@@ -64,7 +94,7 @@ export async function getKeys(req, res) {
 
 
 
-export async function unlockKey(req, res) {
+export async function unlockKey(req, res, next) {
     const {key} = req.body
     if (!key) return res.status(400).json({success: false, error: 'Key missing'})
 
@@ -81,7 +111,6 @@ export async function unlockKey(req, res) {
         
         return res.status(200).json({ success: true, message: 'Key successfully unlock', key: resetKey})
     } catch (err) {
-        consola.error(err)
-        return res.status(500).json({success: false, error: err.message, stack: err})
+        next(err)
     }
 }

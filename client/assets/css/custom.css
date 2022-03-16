@@ -95,3 +95,10 @@ section.faq-section.padding-top {
 }
 
 
+#success-keyinfo {
+    display: none 
+}
+
+#upgrade-data {
+    display: none;
+}

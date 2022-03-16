@@ -13,7 +13,7 @@
     <meta property="og:description" content="Upgrader.PW is a simple yet powerful site that allows you to upgrade to Spotify premium for just a few bucks!">
     <meta name="theme-color" content="#ffba00">
     <!-- Basic Information -->
-    <title>Upgrade</title>
+    <title>Key Info</title>
     <link rel="icon" type="image/png" href="https://upgrader.pw/assets/images/img/favicon2-s.png">
     <!-- StyleSheets -->
     <link rel="stylesheet" href="./assets/css/bootstrap.min.css">
@@ -133,7 +133,7 @@
             <div class="row align-items-center">
                 <div class="col-lg-6">
                     <div class="banner-content-2">
-                        <h1 class="title">Upgrader</h1>
+                        <h1 class="title">Key Info</h1>
                         <!-- <p>
                             How to upgrade?
                         </p> -->
@@ -141,38 +141,45 @@
                             <div class="account-wrapper">
                                 <div class="account-body">
 
-                                    <form id="upgrade-form" action="javascript:return false;" class="account-form">
+                                    <form id="replacement-form" action="javascript: return false" class="account-form">
                                         <div class="form-group" id="upgradeKey-input-formGroup">
-                                            <label value="javascript:navigator.clipboard.readText()" for="upgradeKey-input">Your Key </label>
-                                            <input type="text" placeholder="Enter Your Key " id="upgradeKey-input">
-                                        </div>
-                                        <div class="form-group" id="upgradeEmail-input-formGroup">
-                                            <label for="upgradeEmail-input">Your Email </label>
-                                            <input type="text" autocomplete="email" placeholder="Enter Your Email " id="upgradeEmail-input" >
+                                            <label for="keySearch-input">Your Key </label>
+                                            <input type="text" placeholder="Enter Your Key " id="keySearch-input">
                                         </div>
                                         <div class="form-group text-center">
-                                            <button id="upgrade-btn" type="submit" class="mt-2 mb-2"><i class="fa-brands fa-spotify"></i> Upgrade</button>
+                                            <button id="keySearch-btn" class="mt-2 mb-2"><i class="fa-solid fa-key"></i> Search Key</button>
                                         </div>
                                     </form>
 
-                                    <div id="success-upgrade">
-                                        <p class="detatils-heading">Invite Link:</p>
-                                        <a  href="#" id="inviteLink">Click To Upgrade</a>
-                                        <div class="upgrade-pad-bot"></div>
-                                        <p class="detatils-heading">Invite Address:</p>
-                                        <button id="inviteAddress">Loading...</button>
-                                        <div class="upgrade-pad-bot"></div>
-                                        <p class="detatils-heading">Country:</p>
-                                        <a id="inviteCountry">Loading...</a>
+                                    <div id="success-keyinfo">
+                                        <div id="key-data">
+                                            <p class="detatils-heading">Key:</p>
+                                            <a id="inviteLink" href="#">Loading...</a>
+                                            <div class="upgrade-pad-bot"></div>
+                                            <p class="detatils-heading">Email:</p>
+                                            <a id="inviteLink" href="#">Loading...</a>
+                                            <div class="upgrade-pad-bot"></div>
+                                        </div>
+
+                                        <div id="upgrade-data">
+                                            <p class="detatils-heading">Invite Link:</p>
+                                            <a id="inviteLink" href="#">Click To Upgrade</a>
+                                            <div class="upgrade-pad-bot"></div>
+                                            <p class="detatils-heading">Invite Address:</p>
+                                            <button id="inviteAddress">Loading...</button>
+                                            <div class="upgrade-pad-bot"></div>
+                                            <p class="detatils-heading">Country:</p>
+                                            <a id="inviteCountry">Loading...</a>
+                                        </div>
                                     </div>
 
                                 </div>
                             </div>
 
-                        <div class="banner-button-group">
-                            <a href="/#pricing" class="button-4" id="switch-btn">Purchase a key</a>
+                        <!-- <div class="banner-button-group">
+                            <a href="/#pricing" class="button-4">Purchase a key</a>
                             <a target="_tab" href="//youtube.com" class="button-4 active">How to upgrade</a>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
                 <div class="col-lg-5">
@@ -325,7 +332,7 @@
     <script src="./assets/js/counterup.min.js"></script>
     <script src="./assets/js/paroller.js"></script>
     <script src="./assets/js/main.js"></script>    
-    <script src="./assets/js/custom/upgrade.js"></script>
+    <script src="./assets/js/custom/keyinfo.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/js-toastr@1.1.1/toast.min.js"></script>
 </body>
 </html>

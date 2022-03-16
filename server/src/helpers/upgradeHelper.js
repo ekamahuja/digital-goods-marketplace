@@ -101,3 +101,14 @@ export async function ipToCountryCode(ip) {
         return {success: false, error: err.message, stack: err}
     }
 }
+
+
+export async function countryCodeToCountry(countryCode) {
+    try {
+        const request = await fetch(`https://restcountries.com/v3.1/alpha/${countryCode}`)
+        const response = await request.json();
+        return response[0].name.common
+    } catch (err) {
+        return {success: false, error: err.message, stack: err}
+    }
+}
