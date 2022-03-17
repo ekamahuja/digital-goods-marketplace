@@ -29,17 +29,18 @@ export async function getReplacement(req, res, next) {
 
     const keyData = await Key.findOne({value: upgradeData.key})
     if (!keyData) throw new Error("Could not fetch key detatils")
+    if (keyData.type == "onetime") throw new Error("One time use keys do not come with warranty")
     if (keyData.replacementsClaimed >= process.env.MAX_REPLACEMENTS) throw new Error("The key has been locked. Please contact staff for further details") 
 
     if (countryCode !== user.country) throw new Error("Please change your account's country to the country you live in")
+
+    const upgradeInfo = await getStock(countryCode)
+    if (upgradeInfo.error) throw new Error(upgradeInfo.error)
 
     keyData.replacementsClaimed ++
     keyData.totalReplacementsClaimed ++
     const updatedKeyData = await keyData.save()
     if (!updatedKeyData) throw new Error("Could not update key data")
-
-    const upgradeInfo = await getStock(countryCode)
-    if (!upgradeInfo || upgradeInfo.error) throw new Error((upgradeInfo.error) ? `${upgradeInfo.error}` : "Could not get upgrade data") 
 
     upgradeData.upgrades.push({
       inviteLink: upgradeInfo.inviteLink,
@@ -50,7 +51,7 @@ export async function getReplacement(req, res, next) {
     })
     const updatedUpgradeData = await upgradeData.save()
 
-    const country = await countryCodeToCountry(countryCode) || countryCode
+    const country = countryCodeToCountry(countryCode)
 
     res.status(200).json({
       success: true,
@@ -68,3 +69,5 @@ export async function getReplacement(req, res, next) {
     next(err)
   }
 } 
+
+

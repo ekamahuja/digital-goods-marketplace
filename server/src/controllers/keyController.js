@@ -47,8 +47,8 @@ export async function getKeyInfo(req, res, next) {
         if (!keyUpgradeData) {
             keyData = {
                 key,
-                redeemed: keyInfo.used,
-                keyType: keyInfo.type,
+                type: keyInfo.type,
+                used: keyInfo.used,
             }
         } else {
             let country =  await countryCodeToCountry(keyUpgradeData.upgrades[keyUpgradeData.upgrades.length - 1].inviteCountry)
@@ -57,7 +57,7 @@ export async function getKeyInfo(req, res, next) {
             keyData = {
                 key,
                 email: keyUpgradeData.email,
-                redeemed: keyInfo.used,
+                used: keyInfo.used,
                 type: keyInfo.type,
                 totalReplacementsClaimed: keyInfo.totalReplacementsClaimed,
                 lastUpgrade: [keyUpgradeData.upgrades[keyUpgradeData.upgrades.length -1]].map((upgradeInfo) => {

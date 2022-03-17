@@ -6,6 +6,7 @@ import keyRoutes from './keyRoutes.js'
 import upgradeRoutes from './upgradeRoutes.js'
 import replacementRoutes from './replacementRoutes.js'
 import clientRoutes from './clientRoutes/clientRoutes.js'
+import sellixRoutes from './sellixRoutes.js'
 
 const app = express();
 
@@ -29,6 +30,8 @@ function routes(app) {
     app.use('/api/', upgradeRoutes);
 
     app.use('/api/', replacementRoutes)
+
+    app.use('/api/', sellixRoutes)
 
     
 }

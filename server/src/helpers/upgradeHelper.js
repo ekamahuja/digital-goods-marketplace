@@ -3,6 +3,8 @@ import {cookie} from './getCookies.js'
 import fetch from 'node-fetch'
 import {Config} from '../schemas/configSchema.js'
 import { usedStock } from '../schemas/usedStock.js'
+import countryMap from '../config/countryMap.js'
+
 
 export const getStock = async (countryCode) => {
     try {
@@ -47,7 +49,6 @@ export const getStock = async (countryCode) => {
         
 
     } catch (err) {
-        consola.error(err)
         return {success: false, error: err.message, stack: err}
     }
 
@@ -95,7 +96,7 @@ export async function ipToCountryCode(ip) {
     try {
         const request = await fetch(`http://ip-api.com/json/${ip}`)
         const response = await request.json();
-        return response.countryCode
+        return {country: response.country, countryCode: response.countryCode}
     } catch (err) {
         consola.error(err)
         return {success: false, error: err.message, stack: err}
@@ -103,12 +104,7 @@ export async function ipToCountryCode(ip) {
 }
 
 
-export async function countryCodeToCountry(countryCode) {
-    try {
-        const request = await fetch(`https://restcountries.com/v3.1/alpha/${countryCode}`)
-        const response = await request.json();
-        return response[0].name.common
-    } catch (err) {
-        return {success: false, error: err.message, stack: err}
-    }
+export function countryCodeToCountry(countryCode) {
+    console.log(countryMap[countryCode])
+    return countryMap[countryCode] || countryCode
 }

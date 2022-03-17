@@ -99,6 +99,24 @@ section.faq-section.padding-top {
     display: none 
 }
 
+#key-data {
+    display: none
+}
+
 #upgrade-data {
     display: none;
+}
+
+#upgradeSentance {
+    text-decoration: none;
+    font-size: 18px;
+}
+
+#keySentance {
+    text-decoration: none;
+    font-size: 18px;
+}
+
+.keyinfo-text {
+    font-size: 20px;
 }

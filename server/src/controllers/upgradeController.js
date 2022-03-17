@@ -2,6 +2,7 @@ import validator from 'validator';
 import { Key } from '../schemas/keySchema.js'
 import { getStock, ipToCountryCode } from '../helpers/upgradeHelper.js'
 import { upgradeLog } from '../schemas/upgradeLogSchema.js'
+import countryMap from '../config/countryMap.js'
 
 export async function upgradeUser(req, res, next) {
     try {
@@ -22,8 +23,7 @@ export async function upgradeUser(req, res, next) {
         if (!countryCode) throw new Error(`Please provide a valid country`)
         
         const upgradeInfo = await getStock(countryCode)
-        if (!upgradeInfo) throw new Error(`Out of stock (${countryCode})`)
-
+        if (upgradeInfo.error) throw new Error(upgradeInfo.error)
 
         const successfulLog = await upgradeLog.create({
             email,

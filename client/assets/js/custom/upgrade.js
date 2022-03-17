@@ -18,7 +18,7 @@ document.querySelector("#upgradeKey-input").addEventListener('input', async func
         toastr.message(response.message, 'error', 3000);
     }
 
-    if (response.keyInfo.used) {
+    if (response.keyData.used) {
         toastr.message('Key already redeemed', 'error', 3000);
         document.querySelector('#upgradeKey-input').style.border = '1px solid rgb(255 0 118 / 80%)'
         return
