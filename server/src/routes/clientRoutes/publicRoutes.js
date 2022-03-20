@@ -1,5 +1,6 @@
 import  { Router } from 'express'
 import { replacementCallBack, replacementPage } from '../../controllers/clientController.js'
+import { Config } from '../../schemas/configSchema.js'
 
 const clientRoutes = Router()
 
@@ -19,6 +20,18 @@ clientRoutes.get('/keyinfo', async (req, res) => {
 clientRoutes.get('/replacement', replacementPage)
 
 clientRoutes.get('/api/spotify/oauth', replacementCallBack)
+
+
+
+clientRoutes.get('/contact', async(req, res) => {
+    const {contactLink} = await Config.findOne({})
+    res.redirect(contactLink);
+})
+
+clientRoutes.get('/discord', async(req, res) => {
+    const {discordServer} = await Config.findOne({})
+    res.redirect(discordServer);
+})
 
 
 

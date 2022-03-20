@@ -5,8 +5,10 @@ import stockRoutes from './countryRoutes.js'
 import keyRoutes from './keyRoutes.js'
 import upgradeRoutes from './upgradeRoutes.js'
 import replacementRoutes from './replacementRoutes.js'
-import clientRoutes from './clientRoutes/clientRoutes.js'
+import clientRoutes from './clientRoutes/publicRoutes.js'
+import adminClientRoutes from './clientRoutes/adminClientRoutes.js'
 import sellixRoutes from './sellixRoutes.js'
+import adminRoutes from './adminRoutes.js'
 
 const app = express();
 
@@ -20,6 +22,8 @@ function routes(app) {
     // })
 
     app.use('/', clientRoutes);
+    
+    app.use('/admin', adminClientRoutes);
 
     app.use('/api/auth', authRoutes);
 
@@ -33,6 +37,7 @@ function routes(app) {
 
     app.use('/api/', sellixRoutes)
 
+    app.use('/admin/api', adminRoutes);
     
 }
 

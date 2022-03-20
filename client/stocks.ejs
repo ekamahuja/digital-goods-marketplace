@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="./assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./assets/css/all.min.css">
+    <link rel="stylesheet" href="./assets/css/animate.css">
+    <link rel="stylesheet" href="./assets/css/nice-select.css">
+    <link rel="stylesheet" href="./assets/css/owl.min.css">
+    <link rel="stylesheet" href="./assets/css/jquery-ui.min.css">
+    <link rel="stylesheet" href="./assets/css/magnific-popup.css">
+    <link rel="stylesheet" href="./assets/css/flaticon.css">
+    <link rel="stylesheet" href="./assets/css/main.css">
+    <link rel="stylesheet" href="./assets/css/admin.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/js-toastr@1.1.1/toast.css">
+    <link rel="shortcut icon" href="assets/images/favicon.png" type="image/x-icon">
+</head>
+<body>
+    <!--============= ScrollToTop Section Starts Here =============-->
+    <div class="preloader">
+        <div class="preloader-inner">
+            <div class="preloader-icon">
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </div>
+    <a href="#0" class="scrollToTop"><i class="fas fa-angle-up"></i></a>
+    <div class="overlay"></div>
+    <!--============= ScrollToTop Section Ends Here =============-->
+
+    <!--============= NavBar Section Starts Here =============-->
+    <header class="header-section inner-header">
+        <div class="container">
+            <div class="header-wrapper">
+                <div class="logo">
+                    <a href="/">
+                        <p class="logo-txt-upgrade-page">UPGRADER.PW</p>
+                    </a>
+                </div>
+                <ul class="menu">
+                    <li>
+                        <a href="/admin">Dashboard</a>
+                    </li>
+                    <li>
+                        <a href="/admin/keys">Keys</a>
+                    </li>
+                    <li>
+                        <a href="/admin/stocks">Stocks</a>
+                    </li>
+                    <li>
+                        <a href="/admins/logs">Logs</a>
+                    </li>
+                    <li>
+                        <a href="/api/auth/logout">Log out</a>
+                    </li>
+                </ul>
+                <div class="header-bar d-lg-none">
+                    <span></span>
+                    <span></span> 
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!--============= NavBar Section Ends Here =============-->
+
+     <!--============= Header Section Ends Here =============-->
+     <section class="page-header bg_img" data-background="./assets/images/page-header.png">
+        <div class="bottom-shape d-none d-md-block">
+            <img src="./assets/css/img/page-header.png" alt="css">
+        </div>
+        <div class="container">
+            <div class="page-header-content cl-white">
+                <h2 class="title">Stocks</h2>
+                <ul class="breadcrumb">
+                    <li>
+                        <a href="/admin">Admin</a>
+                    </li>
+                    <li>
+                        Mange Stocks
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+    <!--============= Header Section Ends Here =============-->
+
+
+    <!--============= Stats Section Ends Here =============-->
+    <div class="feature-section padding-top padding-bottom">
+        <div class="container">
+            <div class="owl-theme owl-carousel feature-item-2-slider mb--50">
+                <div class="feature-item-2">
+                    <div class="feature-thumb">
+                        <img src="./assets/images/feature/featurei1.png" alt="feature">
+                    </div>
+                    <div class="feature-content">
+                        <h4 class="title">Keys</h4>
+                        <p><%- totalKeys %></p>
+                    </div>
+                </div>
+                <div class="feature-item-2">
+                    <div class="feature-thumb">
+                        <img src="./assets/images/feature/featurei2.png" alt="feature">
+                    </div>
+                    <div class="feature-content">
+                        <h4 class="title">Countries</h4>
+                        <p><%- totalCountries %></p>
+                    </div>
+                </div>
+                <div class="feature-item-2">
+                    <div class="feature-thumb">
+                        <img src="./assets/images/feature/featurei3.png" alt="feature">
+                    </div>
+                    <div class="feature-content">
+                        <h4 class="title">Stock</h4>
+                        <p><%- totalStock %></p>
+                    </div>
+                </div>
+                <div class="feature-item-2">
+                    <div class="feature-thumb">
+                        <img src="./assets/images/feature/featurei3.png" alt="feature">
+                    </div>
+                    <div class="feature-content">
+                        <h4 class="title">Sellix Orders</h4>
+                        <p>Integration Pending</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--============= Stats Section Ends Here =============-->
+
+
+    <div class="mange-country padding-bottom">
+        <div class="country-options">
+            <label for="countries">Fetch Countries</label>
+            <select name="countries" id="countries-select">
+                <option selected disabled>Fetch Country Stock</option>
+                <% stock.forEach(item => {%>
+                    <option value="<%- item.countryCode %>"><%- item.name.charAt(0).toUpperCase() + item.name.slice(1).toLowerCase() %></option>
+                <% });%>
+            </select>
+
+            <button type="button" id="addCountry-popup">Add Country</button>
+            <button type="button" id="deleteCountry-popup">Delete Country</button>
+        </div>
+    </div>
+
+    
+
+
+
+
+
+
+
+    <!-- Country Stock Data Modal -->
+    <div id="countryStock-modal" class="modal">
+        <!-- Modal Content -->
+        <div id="countryStock-modal-content" class="modal-content">
+            <!-- <span class="close">&times;</span> -->
+        </div>
+    </div>
+
+
+    <!-- Add Country Modal -->
+    <div id="addCountry-modal" class="modal">
+        <!-- Modal Content -->
+        <div id="addCountry-modal-content" class="modal-content">
+            <!-- <span class="close">&times;</span> -->
+            <h5 class="modal-heading">Add Country</h5>
+            
+            <div class="inputGroup">
+                <label for="countryName">Country Name</label>
+                <input type="text" name="countryName" id="countryName" class="form-control">
+            </div>
+            <div class="inputGroup">
+                <label for="countryCode">Country Code</label>
+                <input type="text" name="countryCode" id="countryCode" class="form-control">
+            </div>
+
+            <button type="button" class="confirm-btn" id="addCountry-confirm">Confirm</button>
+        </div>
+    </div>
+    
+    <script src="./assets/js/jquery-3.3.1.min.js"></script>
+    <script src="./assets/js/modernizr-3.6.0.min.js"></script>
+    <script src="./assets/js/plugins.js"></script>
+    <script src="./assets/js/bootstrap.min.js"></script>
+    <script src="./assets/js/magnific-popup.min.js"></script>
+    <script src="./assets/js/jquery-ui.min.js"></script>
+    <script src="./assets/js/wow.min.js"></script>
+    <script src="./assets/js/waypoints.js"></script>
+    <script src="./assets/js/nice-select.js"></script>
+    <script src="./assets/js/owl.min.js"></script>
+    <script src="./assets/js/counterup.min.js"></script>
+    <script src="./assets/js/paroller.js"></script>
+    <script src="./assets/js/countdown.js"></script>
+    <script src="./assets/js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-toastr@1.1.1/toast.min.js"></script>
+    <script>
+        let stock;
+        const countryFetchOptions = document.querySelector("#countries-select")
+
+
+        window.addEventListener('load', async () => {
+            try {
+                const request = await fetch("http://localhost:12345/api/data/stock")
+                response = await request.json()
+
+                if (response.success) {
+                    stock = response.data
+                    return
+                }
+
+                return toastr.message(stock.message, 'error', 5000) 
+            } catch (err) {
+                toastr.message(err, 'error', 5000)
+            }
+        });
+        
+
+        countryFetchOptions.addEventListener('change', () => {
+            let data = stock.filter(item => {
+                if (item.countryCode == countryFetchOptions.value) return item
+            })
+
+            stockData = data[0].stock
+            console.log(stockData)
+        
+            document.querySelector('#countryStock-modal').style.display = 'block'
+            
+            document.querySelector("#countryStock-modal-content").innerHTML = `<h5 class="modal-heading">${data[0].name.charAt(0).toUpperCase() + data[0].name.slice(1).toLowerCase()} (${stockData.length} Upgrades Remaining)</h5>`
+            
+            stockData.forEach(item => {
+                let stockLi = document.createElement("div")
+                stockLi.className = "countryStock-modal-item"
+                stockLi.innerHTML = `<p>Invite Address: ${item.inviteAddress}</p><p>InviteLink: ${item.inviteLink}</p>`
+                document.querySelector("#countryStock-modal-content").appendChild(stockLi)
+            })
+            
+        })
+
+
+        document.querySelector("#addCountry-popup").addEventListener("click", async () => {
+            document.querySelector("#addCountry-modal").style.display = "block"
+        })
+
+        document.querySelector("#addCountry-confirm").addEventListener("click", async () => {
+            const addCountryBtn = document.querySelector("#addCountry-confirm")
+            const countryName = document.querySelector("#countryName").value
+            const countryCode = document.querySelector("#countryCode").value
+
+            addCountryBtn.disabled = true
+            document.querySelector("#addCountry-confirm").innerHTML = `<i class="fas fa-circle-notch fa-spin"></i> Loading...`
+
+            const params = {name: countryName, countryCode: countryCode}
+            const options = {headers: {'Content-Type': 'application/json'}, method: "POST", body: JSON.stringify(params)}
+            const request = await fetch("http://localhost:12345/api/data/country", options)
+            const response = await request.json()
+
+            if (!response.success) {
+                let errorMessage = null
+                if (response.message.match("duplicate")) errorMessage = "There is an already existing country name or country code"
+                addCountryBtn.disabled = false
+                addCountryBtn.innerHTML = `Confirm`
+                return toastr.message((errorMessage) ? errorMessage : response.message, 'error', 5000)
+            }
+
+            if (response.success) {
+                addCountryBtn.innerHTML = `Confirm`
+                toastr.message(response.message, 'success', 5000)
+
+                setTimeout(function(){
+                    window.location.reload();
+                }, 1000);
+
+                return 
+            } else {
+                return toastr.message("Something went wrong!", 'error', 5000)
+            }
+        })
+
+
+
+
+        window.onclick = function(event) {
+            if (event.target == document.querySelector('#countryStock-modal')) {
+                document.querySelector('#countryStock-modal').style.display = "none";
+            }
+
+            if (event.target == document.querySelector('#addCountry-modal')) {
+                document.querySelector('#addCountry-modal').style.display = "none";
+
+                document.querySelector("#countryName").value = ""
+                document.querySelector("#countryCode").value = ""
+            }
+        }
+
+        
+    </script>
+</body>
+</html>

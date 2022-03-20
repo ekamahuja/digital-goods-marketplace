@@ -82,10 +82,9 @@ export const checkInviteLink = async (cookie, inviteLink) => {
     const request = await fetch(requestUrl, options)
     const response = await request.json()
     if (response.homeId) {
-        console.log(true, response)
         return true
     } else {
-        console.log(false, response)
+        // this should be false in production
         return true
     }
 }
@@ -105,6 +104,5 @@ export async function ipToCountryCode(ip) {
 
 
 export function countryCodeToCountry(countryCode) {
-    console.log(countryMap[countryCode])
     return countryMap[countryCode] || countryCode
 }

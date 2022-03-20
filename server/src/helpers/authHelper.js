@@ -3,7 +3,7 @@ export const sessions = []
 
 export function getMemorySession(sessionId) {
     const session = sessions[sessionId]
-
+    
     return session && session.valid ? session: null
 }
 

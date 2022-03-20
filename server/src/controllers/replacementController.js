@@ -3,11 +3,16 @@ import { getStock, ipToCountryCode, countryCodeToCountry } from '../helpers/upgr
 import { spotifyUser } from '../helpers/replacementHelper.js'
 import { Key } from '../schemas/keySchema.js'
 import { upgradeLog } from '../schemas/upgradeLogSchema.js'
+import { Config } from '../schemas/configSchema.js'
+
 
 
 
 export async function getReplacement(req, res, next) {
   try {
+    const config = await Config.findOne({})
+    console.log(config)
+
     const { countryC } = req.body
     const { spotifyToken } = req.cookies
     if (!spotifyToken) throw new Error('Missing spotify bearer token')
@@ -25,12 +30,12 @@ export async function getReplacement(req, res, next) {
     if (!upgradeData) throw new Error("Account not found in database")
 
     const lastUpgradeTime = (new Date()).getTime() - (upgradeData.updatedAt).getTime()
-    if (lastUpgradeTime < (process.env.REPLACEMENT_COOLDOWN * 60000)) throw new Error("Not eligible for a replacement")
+    if (lastUpgradeTime < (config.replacementCooldown * 60000)) throw new Error("Not eligible for a replacement")
 
     const keyData = await Key.findOne({value: upgradeData.key})
     if (!keyData) throw new Error("Could not fetch key detatils")
     if (keyData.type == "onetime") throw new Error("One time use keys do not come with warranty")
-    if (keyData.replacementsClaimed >= process.env.MAX_REPLACEMENTS) throw new Error("The key has been locked. Please contact staff for further details") 
+    if (keyData.replacementsClaimed >= config.maxReplacements) throw new Error("The key has been locked. Please contact staff for further details") 
 
     if (countryCode !== user.country) throw new Error("Please change your account's country to the country you live in")
 

@@ -17,7 +17,7 @@ export const verifyJwt = (token) => {
     } catch (err) {
         return {
             payload: null,
-            expired: err.message.includes('jwt expired')
+            expired: true
         }
     }
 }

@@ -1,6 +1,7 @@
 import puppeteer from 'puppeteer-extra' 
 import { PuppeteerScreenRecorder } from 'puppeteer-screen-recorder';
 import RecaptchaPlugin from 'puppeteer-extra-plugin-recaptcha'
+import {Config} from '../schemas/configSchema.js'
 
   puppeteer.use(
     RecaptchaPlugin({
@@ -15,6 +16,8 @@ import RecaptchaPlugin from 'puppeteer-extra-plugin-recaptcha'
 
 export const getCookie = async () => {
     try {
+        let loginInfo = ((await Config.findOne({})).spotifyLogin).split(":")
+        // loginInfo = (loginInfo.spotifyLogin).split(":")
         const browser = await puppeteer.launch();
         const page = await browser.newPage();
         // const recorder = new PuppeteerScreenRecorder(page);
@@ -22,10 +25,10 @@ export const getCookie = async () => {
         await page.goto('https://accounts.spotify.com/en/login/');
         await page.focus('#login-username')
 
-        await page.keyboard.type(process.env.SPOTIFY_EMAIL)
+        await page.keyboard.type(loginInfo[0])
 
         await page.focus('#login-password')
-        await page.keyboard.type(process.env.SPOTIFY_EMAIL)
+        await page.keyboard.type(loginInfo[1])
 
         // await page.solveRecaptchas()
 
@@ -39,6 +42,7 @@ export const getCookie = async () => {
         return `${authCookies[0].name}=${authCookies[0].value}`
         
     } catch (err) {
+        console.log(err)
         return null
     }
 }

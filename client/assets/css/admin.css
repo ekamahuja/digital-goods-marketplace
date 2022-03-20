@@ -1,0 +1,163 @@
+.logo-txt-upgrade-page {
+  color: white;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.config-box {
+  background: white;
+  padding: 30px;
+  max-width: 80%;
+  margin: 0 auto;
+  border-radius: 12px;
+  color: white;
+  padding-top: 2.3rem;
+  margin-bottom: 2rem;
+}
+
+.config-info {
+  padding: 11px;
+  color: black;
+}
+
+.config-btn {
+  border: none;
+  background: -webkit-linear-gradient(0deg, #e2906e 0%, #e83a99 100%);
+  box-shadow: 2.419px 9.703px 12.48px 0.52px rgb(232 58 153 / 50%);
+  width: auto;
+  padding: 0 45px;
+  color: #ffffff;
+  border-radius: 10px;
+  margin-top: 1.5rem;
+}
+
+.config-info h4 {
+  font-size: 26px;
+}
+
+.config-info p {
+  padding: 0.6rem 0rem 0.8rem 0rem;
+  color: #646363;
+}
+
+.footer-padding {
+  margin-top: 8rem;
+}
+
+.toast-wrap {
+  z-index: 999999999999;
+}
+
+.mange-country {
+  background: #fff;
+  max-width: 80%;
+  margin: 0 auto;
+  padding: 50px;
+  border-radius: 10px;
+  margin-bottom: 6rem;
+}
+
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+}
+
+#countryStock-modal-content {
+  overflow: scroll;
+  max-height: 60%;
+  overflow-x: hidden;
+}
+
+#addCountry-modal-content {
+  max-width: 50%;
+  top: 15%;
+}
+
+/* The Close Button */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.modal-heading {
+  padding-top: 1.2rem;
+  padding-bottom: 1.6rem;
+  font-size: 36px;
+  line-height: 1;
+}
+
+.countryStock-modal-item {
+  margin-bottom: 1.2rem;
+  background-color: #3b319e;
+  color: white;
+  padding: 1.2rem;
+  border-radius: 10px;
+}
+
+#addCountry-popup {
+  border-radius: 10px;
+  background: -webkit-linear-gradient(0deg, #e2906e 0%, #e83a99 100%);
+  margin-top: 1rem;
+  color: #fff;
+  font-weight: bold;
+  font-size: 16px;
+  transition: all 2s ease;
+}
+
+#addCountry-popup:hover {
+  background: -webkit-linear-gradient(0deg, #e83a99 0%, #e2906e 100%);
+}
+
+#deleteCountry-popup {
+  border-radius: 10px;
+  background: -webkit-linear-gradient(0deg, #d180dd 0%, #796be8 100%);
+  margin-top: 1rem;
+  color: #fff;
+  font-weight: bold;
+  font-size: 16px;
+  transition: all 2s ease;
+}
+
+#countries-select {
+    padding-left: 12px
+}
+
+#deleteCountry-popup:hover {
+  background: -webkit-linear-gradient(0deg, #796be8 0%, #d180dd 100%);
+}
+
+.inputGroup {
+  margin-bottom: 1rem;
+}
+
+.confirm-btn {
+  color: white;
+  font-weight: bold;
+  background: #3b319e;
+}

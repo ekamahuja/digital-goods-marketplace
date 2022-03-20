@@ -9,7 +9,12 @@ const configSchema = mongoose.Schema({
         immutable: true
     },
     authCookie: String,
-    twoCaptchaTokenApiKey: String
+    twoCaptchaTokenApiKey: String,
+    discordServer: String,
+    maxReplacements: Number,
+    replacementCooldown: Number,
+    spotifyLogin: String,
+    contactLink: String
 }, {
     collection: 'config',
     timestamps: true
