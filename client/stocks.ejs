@@ -139,7 +139,7 @@
     <div class="mange-country padding-bottom">
         <div class="country-options">
             <label for="countries">Fetch Countries</label>
-            <select name="countries" id="countries-select">
+            <select name="countries" id="countries-select" class="countries-select">
                 <option selected disabled>Fetch Country Stock</option>
                 <% stock.forEach(item => {%>
                     <option value="<%- item.countryCode %>"><%- item.name.charAt(0).toUpperCase() + item.name.slice(1).toLowerCase() %></option>
@@ -185,6 +185,27 @@
             </div>
 
             <button type="button" class="confirm-btn" id="addCountry-confirm">Confirm</button>
+        </div>
+    </div>
+
+    <!-- Delete Country Modal -->
+    <div id="deleteCountry-modal" class="modal">
+        <!-- Modal Content -->
+        <div id="deleteCountry-modal-content" class="modal-content">
+            <!-- <span class="close">&times;</span> -->
+            <h5 class="modal-heading">Delete Country</h5>
+            <p>NOTE: Deleting the country will also delete all stock data and will make keys attached to the country not be able to upgrade or get replacements</p>
+            <div class="inputGroup">
+                <label for="countryName">Country Name</label>
+                <select class="countries-select" id="select-country-delete">
+                    <option selected disabled>Select a country to delete</option>
+                    <% stock.forEach(item => {%>
+                        <option value="<%- item.countryCode %>"><%- item.name.charAt(0).toUpperCase() + item.name.slice(1).toLowerCase() %></option>
+                    <% });%>
+                </select>
+            </div>
+
+            <button type="button" class="delete-btn" id="deleteCountry-confirm">Delete</button>
         </div>
     </div>
     
@@ -247,10 +268,6 @@
         })
 
 
-        document.querySelector("#addCountry-popup").addEventListener("click", async () => {
-            document.querySelector("#addCountry-modal").style.display = "block"
-        })
-
         document.querySelector("#addCountry-confirm").addEventListener("click", async () => {
             const addCountryBtn = document.querySelector("#addCountry-confirm")
             const countryName = document.querySelector("#countryName").value
@@ -287,11 +304,53 @@
         })
 
 
+        document.querySelector("#deleteCountry-confirm").addEventListener("click", async () => {
+            try {
+                const deleteButton = document.querySelector("#deleteCountry-confirm")
+                const countryToDelete = document.querySelector("#select-country-delete").value
+                console.log(countryToDelete)
 
+                deleteButton.disabled = true
+                deleteButton.innerHTML = `<i class="fas fa-circle-notch fa-spin"></i> Deleting...`
+
+                const params = {countryCode: countryToDelete}
+                const options = {headers: {'Content-Type': 'application/json'}, method: "DELETE", body: JSON.stringify(params)}
+
+                const request = await fetch("http://localhost:12345/api/data/country", options)
+                const response = await request.json()
+
+                toastr.message(response.message, (response.success) ? 'success' : 'error', 5000)
+
+                if (response.success) {
+                    deleteButton.innerHTML = `Delete`
+                    setTimeout(function(){
+                        window.location.reload();
+                    }, 1500);
+                } else {
+                    deleteButton.disabled = false
+                    deleteButton.innerHTML = `Delete`
+                }
+            } catch (err) {
+                toastr.message(err.message, 'error', 5000)
+            }
+        })
+
+
+        document.querySelector("#addCountry-popup").addEventListener("click", async () => {
+            document.querySelector("#addCountry-modal").style.display = "block"
+        })
+
+        document.querySelector("#deleteCountry-popup").addEventListener("click", async () => {
+            document.querySelector("#deleteCountry-modal").style.display = "block"
+        })
 
         window.onclick = function(event) {
             if (event.target == document.querySelector('#countryStock-modal')) {
                 document.querySelector('#countryStock-modal').style.display = "none";
+            }
+
+            if (event.target == document.querySelector('#deleteCountry-modal')) {
+                document.querySelector('#deleteCountry-modal').style.display = "none";
             }
 
             if (event.target == document.querySelector('#addCountry-modal')) {

@@ -18,6 +18,25 @@ export async function createCountry(req, res, next) {
 }
 
 
+
+export async function deleteCountry(req, res, next) {
+    try {
+        const {countryCode} = req.body
+        if (!countryCode) throw new Error("Please enter all fields")
+
+        const deletedCountry = await Country.findOneAndDelete({countryCode})
+        if (!deletedCountry) throw new Error("Failed to delete the country")
+
+        res.json({success: true, message: `Successfully deleted ${deletedCountry.name.charAt(0).toUpperCase() + deletedCountry.name.slice(1).toLowerCase()}`})
+    } catch (err) {
+        next(err)
+    }
+    
+
+}
+
+
+
 export async function addStock(req, res, next) {
     let { stock, countryCode } = req.body
 

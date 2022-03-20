@@ -144,8 +144,8 @@
   transition: all 2s ease;
 }
 
-#countries-select {
-    padding-left: 12px
+.countries-select {
+  padding-left: 12px;
 }
 
 #deleteCountry-popup:hover {
@@ -160,4 +160,10 @@
   color: white;
   font-weight: bold;
   background: #3b319e;
+}
+
+.delete-btn {
+  color: white;
+  font-weight: bold;
+  background: #ff5959;
 }
