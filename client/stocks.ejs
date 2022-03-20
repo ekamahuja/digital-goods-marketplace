@@ -68,7 +68,7 @@
     </header>
     <!--============= NavBar Section Ends Here =============-->
 
-     <!--============= Header Section Ends Here =============-->
+     <!--============= Header Section Starts Here =============-->
      <section class="page-header bg_img" data-background="./assets/images/page-header.png">
         <div class="bottom-shape d-none d-md-block">
             <img src="./assets/css/img/page-header.png" alt="css">
@@ -90,7 +90,7 @@
     <!--============= Header Section Ends Here =============-->
 
 
-    <!--============= Stats Section Ends Here =============-->
+    <!--============= Stats Section Starts Here =============-->
     <div class="feature-section padding-top padding-bottom">
         <div class="container">
             <div class="owl-theme owl-carousel feature-item-2-slider mb--50">
@@ -136,7 +136,9 @@
     <!--============= Stats Section Ends Here =============-->
 
 
+    <!--============= Mange Country Section Starts Here =============-->
     <div class="mange-country padding-bottom">
+        <h3 class="mange-title">Mange Country</h3>
         <div class="country-options">
             <label for="countries">Fetch Countries</label>
             <select name="countries" id="countries-select" class="countries-select">
@@ -150,6 +152,25 @@
             <button type="button" id="deleteCountry-popup">Delete Country</button>
         </div>
     </div>
+    <!--============= Mange Country Section Ends Here =============-->
+
+
+    <!--============= Mange Stock Section Starts Here =============-->
+    <div class="mange-stock padding-bottom">
+        <h3 class="mange-title">Add Stock</h3>
+        <div class="add-stock">
+            <label for="country-stock">Select country</label>
+            <select name="country-stock" id="select-country-stock" class="countries-select">
+                <option selected disabled>Select country to add stock</option>
+                <% stock.forEach(item => {%>
+                    <option value="<%- item.countryCode %>"><%- item.name.charAt(0).toUpperCase() + item.name.slice(1).toLowerCase() %></option>
+                <% });%>
+            </select>
+            <textarea class="add-stock-textarea" id="stock-data-textarea" placeholder='Paste Invite Link and Invite Address Seperated By "|"'></textarea>
+            <button type="button" id="add-stock-btn">Upload Stock</button>
+        </div>
+    </div>
+    <!--============= Mange Stock Section Ends Here =============-->
 
     
 
@@ -159,6 +180,8 @@
 
 
 
+
+    <!--============= Modals Section Starts Here =============-->
     <!-- Country Stock Data Modal -->
     <div id="countryStock-modal" class="modal">
         <!-- Modal Content -->
@@ -208,6 +231,7 @@
             <button type="button" class="delete-btn" id="deleteCountry-confirm">Delete</button>
         </div>
     </div>
+    <!--============= Modals Section Ends Here =============-->
     
     <script src="./assets/js/jquery-3.3.1.min.js"></script>
     <script src="./assets/js/modernizr-3.6.0.min.js"></script>
@@ -256,7 +280,7 @@
         
             document.querySelector('#countryStock-modal').style.display = 'block'
             
-            document.querySelector("#countryStock-modal-content").innerHTML = `<h5 class="modal-heading">${data[0].name.charAt(0).toUpperCase() + data[0].name.slice(1).toLowerCase()} (${stockData.length} Upgrades Remaining)</h5>`
+            document.querySelector("#countryStock-modal-content").innerHTML = `<h5 class="modal-heading">${data[0].name.charAt(0).toUpperCase() + data[0].name.slice(1).toLowerCase()} (${stockData.length} Upgrades Avaliable)</h5>`
             
             stockData.forEach(item => {
                 let stockLi = document.createElement("div")
@@ -360,6 +384,57 @@
                 document.querySelector("#countryCode").value = ""
             }
         }
+
+
+
+
+
+
+
+        document.querySelector("#add-stock-btn").addEventListener('click', async () => {
+            try {
+                let stock = []
+                let uploadStockBtn = document.querySelector("#add-stock-btn")
+                const countryCode = document.querySelector("#select-country-stock").value
+                let stockInput = document.querySelector("#stock-data-textarea")
+
+                uploadStockBtn.disabled = true
+                uploadStockBtn.innerHTML = `<i class="fas fa-circle-notch fa-spin"></i> Uploading...`
+
+                const stockSeperatedByLine = stockInput.value.split("\n")
+                stockSeperatedByLine.forEach((line) => {
+                    let lineSplit = line.split("|")
+                    let link = lineSplit[0].match("https") ? lineSplit[0] : `https://www.spotify.com/us/family/join/invite/${lineSplit[0]}`
+                    let data = {inviteLink: link, inviteAddress: lineSplit[1]}
+                    stock.push(data)
+                })
+
+                const params = {countryCode, stock}
+                const options = {headers: {'Content-Type': 'application/json'}, method: "POST", body: JSON.stringify(params)}
+
+                const request = await fetch("http://localhost:12345/api/data/stock", options)
+                const response = await request.json()
+
+                toastr.message(response.message, (response.success) ? 'success' : 'error', 5000)
+                uploadStockBtn.disabled = false
+                
+                uploadStockBtn.innerHTML = "Upload Stock"
+
+                if (response.success) {
+                    stockInput.value = ""
+                    
+                }
+
+                console.log(response)
+            } catch(err) {
+                console.log(err)
+                toastr.message(err.message, 'error', 5000)
+            }
+        })
+
+
+
+
 
         
     </script>

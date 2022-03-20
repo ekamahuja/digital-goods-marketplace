@@ -167,3 +167,41 @@
   font-weight: bold;
   background: #ff5959;
 }
+
+
+.mange-stock {
+    background: #fff;
+    max-width: 80%;
+    margin: 0 auto;
+    padding: 50px;
+    border-radius: 10px;
+    margin-bottom: 6rem;
+}
+
+.mange-title {
+    padding-bottom: 0.8rem;
+}
+
+.add-stock-textarea {
+    margin-top: 1rem;
+}
+
+#add-stock-btn {
+    border-radius: 10px;
+    background: -webkit-linear-gradient(0deg, #e2906e 0%, #e83a99 100%);
+    margin-top: 1rem;
+    color: #fff;
+    font-weight: bold;
+    font-size: 16px;
+    transition: all 2s ease;
+}
+
+#add-stock-btn:hover {
+    border-radius: 10px;
+    background: -webkit-linear-gradient(0deg, #e83a99 0%, #e2906e 100%);
+    margin-top: 1rem;
+    color: #fff;
+    font-weight: bold;
+    font-size: 16px;
+    transition: all 2s ease;
+}
