@@ -205,3 +205,82 @@
     font-size: 16px;
     transition: all 2s ease;
 }
+
+
+
+
+
+
+
+.all-keys {
+    max-width: 80%;
+    margin: 0 auto;
+    border-radius: 1.2rem;
+}
+
+.all-key-header {
+  background: #3b319e;
+}
+
+.key-header-left {
+  padding: 2rem 0 0rem 2rem;
+  font-size: 2rem;
+  color: #fff;
+}
+
+.all-key-body {
+  background: #fff;
+}
+
+
+
+.btn-one {
+  border-radius: 10px;
+  background: -webkit-linear-gradient(0deg, #e2906e 0%, #e83a99 100%);
+  margin-top: 1rem;
+  color: #fff;
+  font-weight: bold;
+  font-size: 16px;
+  transition: all 2s ease;
+}
+
+
+.btn-two {
+  border-radius: 10px;
+  background: -webkit-linear-gradient(0deg, #d180dd 0%, #796be8 100%);
+  margin-top: 1rem;
+  color: #fff;
+  font-weight: bold;
+  font-size: 16px;
+  transition: all 2s ease;
+}
+
+.btn-one:hover {
+  background: -webkit-linear-gradient(0deg, #e83a99 0%, #e2906e 100%);
+}
+
+
+.btn-two:hover {
+  background: -webkit-linear-gradient(0deg, #796be8 0%, #d180dd 100%);
+}
+
+
+#generate-keys-body {
+  max-height: 50vh;
+  overflow: scroll;
+  overflow-x: hidden;
+}
+
+
+#generate-key-footer {
+  margin-top: 1rem;
+}
+
+
+
+.green-btn {
+  color: #fff;
+  background-color: #7ce87c;
+  border: none;
+  border-radius: 0.2rem;
+}

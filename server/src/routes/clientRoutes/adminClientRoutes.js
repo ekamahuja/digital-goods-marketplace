@@ -26,22 +26,31 @@ adminClientRoutes.get("/dashboard", async (req, res) => {
     spotifyLogin,
     contactLink
   });
-
-
-
-  adminClientRoutes.get("/stocks", async (req, res) => {
-    const { totalCountries, totalKeys, totalStock } = await getStats();
-    const stock = await Country.find({})
-    res.render("../../client/stocks", {
-        totalCountries,
-        totalKeys,
-        totalStock,
-        stock
-    });
-
-  });
-
-
 });
+
+
+adminClientRoutes.get("/stocks", async (req, res) => {
+  const { totalCountries, totalKeys, totalStock } = await getStats();
+  const stock = await Country.find({})
+  res.render("../../client/stocks", {
+      totalCountries,
+      totalKeys,
+      totalStock,
+      stock
+  });
+});
+
+
+
+adminClientRoutes.get("/keys", async (req, res) => {
+  const { totalCountries, totalKeys, totalStock } = await getStats();
+  res.render("../../client/keys", {
+    totalCountries,
+    totalKeys,
+    totalStock
+  })
+})
+
+
 
 export default adminClientRoutes;

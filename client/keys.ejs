@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mange Keys</title>
+    <link rel="stylesheet" href="./assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./assets/css/all.min.css">
+    <link rel="stylesheet" href="./assets/css/animate.css">
+    <link rel="stylesheet" href="./assets/css/nice-select.css">
+    <link rel="stylesheet" href="./assets/css/owl.min.css">
+    <link rel="stylesheet" href="./assets/css/jquery-ui.min.css">
+    <link rel="stylesheet" href="./assets/css/magnific-popup.css">
+    <link rel="stylesheet" href="./assets/css/flaticon.css">
+    <link rel="stylesheet" href="./assets/css/main.css">
+    <link rel="stylesheet" href="./assets/css/admin.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/js-toastr@1.1.1/toast.css">
+    <link rel="shortcut icon" href="assets/images/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <!--============= ScrollToTop Section Starts Here =============-->
+    <div class="preloader">
+        <div class="preloader-inner">
+            <div class="preloader-icon">
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </div>
+    <a href="#0" class="scrollToTop"><i class="fas fa-angle-up"></i></a>
+    <div class="overlay"></div>
+    <!--============= ScrollToTop Section Ends Here =============-->
+
+    <!--============= NavBar Section Starts Here =============-->
+    <header class="header-section inner-header">
+        <div class="container">
+            <div class="header-wrapper">
+                <div class="logo">
+                    <a href="/">
+                        <p class="logo-txt-upgrade-page">UPGRADER.PW</p>
+                    </a>
+                </div>
+                <ul class="menu">
+                    <li>
+                        <a href="/admin">Dashboard</a>
+                    </li>
+                    <li>
+                        <a href="/admin/keys">Keys</a>
+                    </li>
+                    <li>
+                        <a href="/admin/stocks">Stocks</a>
+                    </li>
+                    <li>
+                        <a href="/admins/logs">Logs</a>
+                    </li>
+                    <li>
+                        <a href="/api/auth/logout">Log out</a>
+                    </li>
+                </ul>
+                <div class="header-bar d-lg-none">
+                    <span></span>
+                    <span></span> 
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!--============= NavBar Section Ends Here =============-->
+
+     <!--============= Header Section Starts Here =============-->
+     <section class="page-header bg_img" data-background="./assets/images/page-header.png">
+        <div class="bottom-shape d-none d-md-block">
+            <img src="./assets/css/img/page-header.png" alt="css">
+        </div>
+        <div class="container">
+            <div class="page-header-content cl-white">
+                <h2 class="title">Keys</h2>
+                <ul class="breadcrumb">
+                    <li>
+                        <a href="/admin">Admin</a>
+                    </li>
+                    <li>
+                        Mange Keys
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+    <!--============= Header Section Ends Here =============-->
+
+
+    <!--============= Stats Section Starts Here =============-->
+    <div class="feature-section padding-top padding-bottom">
+        <div class="container">
+            <div class="owl-theme owl-carousel feature-item-2-slider mb--50">
+                <div class="feature-item-2">
+                    <div class="feature-thumb">
+                        <img src="./assets/images/feature/featurei1.png" alt="feature">
+                    </div>
+                    <div class="feature-content">
+                        <h4 class="title">Keys</h4>
+                        <p><%- totalKeys %></p>
+                    </div>
+                </div>
+                <div class="feature-item-2">
+                    <div class="feature-thumb">
+                        <img src="./assets/images/feature/featurei2.png" alt="feature">
+                    </div>
+                    <div class="feature-content">
+                        <h4 class="title">Countries</h4>
+                        <p><%- totalCountries %></p>
+                    </div>
+                </div>
+                <div class="feature-item-2">
+                    <div class="feature-thumb">
+                        <img src="./assets/images/feature/featurei3.png" alt="feature">
+                    </div>
+                    <div class="feature-content">
+                        <h4 class="title">Stock</h4>
+                        <p><%- totalStock %></p>
+                    </div>
+                </div>
+                <div class="feature-item-2">
+                    <div class="feature-thumb">
+                        <img src="./assets/images/feature/featurei3.png" alt="feature">
+                    </div>
+                    <div class="feature-content">
+                        <h4 class="title">Sellix Orders</h4>
+                        <p>Integration Pending</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--============= Stats Section Ends Here =============-->
+
+
+
+    <!--============= Mange Keys Section Ends Here =============-->
+    <div class="mange-country padding-bottom">
+        <h3 class="mange-title">Mange Keys</h3>
+        <div class="country-options">
+            <button type="button" id="keys-generate-modal" class="btn-one">Generate Keys</button>
+            <button type="button" id="keys-search-modal" class="btn-two">Search Key</button>
+        </div>
+    </div>
+    <!--============= Mange Keys Section Ends Here =============-->
+
+
+
+    <!--============= All Keys Section Ends Here =============-->
+    <div class="all-keys">
+        <div class="all-key-header">
+            <h5 class="key-header-left">Keys</h5>
+            <!-- <ul>
+                <li class="pagantion-btn"><a id="previousPage"><i class="fa-solid fa-angle-left"></i></a></li>
+                <li class="pagantion-btn pagination-active"></li>
+                <li class="pagantion-btn" id="nextPage"><a id="nextPage"><i class="fa-solid fa-angle-right"></i></a></li>
+            </ul> -->
+        </div>
+        <div class="all-key-body">
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Key</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">Used</th>
+                    <!-- <th scope="col" colspan="2">Options</th> -->
+                  </tr>
+                </thead>
+                <tbody id="key-body">
+                </tbody>
+              </table>
+        </div>
+    </div>
+    <!--============= All Keys  Section Ends Here =============-->
+
+
+
+
+    <!--============= Modals Section Starts Here =============-->
+    <div id="generateKeys-modal" class="modal">
+        <!-- Modal Content -->
+        <div id="generateKeys-modal-content" class="modal-content">
+            <!-- <span class="close">&times;</span> -->
+            <h5 class="modal-heading" id="generate-key-heading">Generate Keys</h5>
+
+            <div id="generate-keys-body">
+                <div class="inputGroup">
+                    <label for="keyPrefix">Key Prefix</label>
+                    <select name="keyPrefix" id="keys-prefix">
+                        <option value="UPGRADERPW">UPGRADERPW-XXXX-XXXX-XXXX-XXXX</option>
+                        <option value="KEY">KEY-XXXX-XXXX-XXXX-XXXX</option>
+                        <option value="STAFF">STAFF-XXXX-XXXX-XXXX</option>
+                        <option value="GIFT">GIFT-XXXX-XXXX-XXXX-XXXX</option>
+                    </select>
+                </div>
+                <div class="inputGroup">
+                    <label for="keyType">Type of Key</label>
+                    <select name="keyType" id="keys-type">
+                        <option value="onetime">One Time (No Warranty)</option>
+                        <option value="lifetime">Lifetime (Normal Warranty)</option>
+                        <option value="unlimited">Unlimited (Never Gets Locked)</option>
+                        <option value="reseller" disabled>Reseller (Comming Soon)</option>
+                        <option value="admin" disabled>Admin (Comming Soon)</option>
+                    </select>
+                </div>
+                <div class="inputGroup">
+                    <label for="keyGenerate">Number of Keys to Generate</label>
+                    <input type="number" name="keyGenerate" id="keys-generate" class="form-control">
+                </div>
+                <button type="button" class="confirm-btn" id="generateKeys-confirm">Generate</button>
+            </div>
+
+            
+        </div>
+    </div>
+    <!--============= Modals Section Ends Here =============-->
+
+
+
+    
+    <script>
+        let generatedKeys;
+
+        document.querySelector('#keys-generate-modal').addEventListener('click', function() {
+            document.querySelector('#generateKeys-modal').style.display = 'block';
+        })        
+
+        window.onclick = function(event) {
+            if (event.target == document.querySelector("#generateKeys-modal")) {
+                document.querySelector("#generateKeys-modal").style.display = 'none'
+            }
+        }
+
+        document.querySelector('#generateKeys-confirm').addEventListener('click', async () => {
+            try {
+                const keyPrefix = document.querySelector('#keys-prefix').value
+                const keyType = document.querySelector('#keys-type').value
+                const numberOfKeys = document.querySelector('#keys-generate').value
+
+                console.log(keyPrefix, keyType, numberOfKeys)
+
+                const params = {
+                    prefix: keyPrefix,
+                    type: keyType,
+                    amount: Number(numberOfKeys)
+                }
+
+                const options = {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    method: "POST",
+                    body: JSON.stringify(params)
+                }
+
+                const request = await fetch("http://localhost:12345/api/keys", options)
+                const response = await request.json()
+
+                toastr.message(response.message, (response.success) ? 'success' : 'error', 5000)
+
+                if (response.success) {
+                    const generateKeyBody = document.querySelector('#generate-keys-body')
+                    document.querySelector("#generate-key-heading").innerText = "Generated Keys"
+                    generateKeyBody.innerHTML = '<ul id="generated-keys-list"></ul'
+                    
+                    for (let i = 0; i < response.keys.length; i++) {
+                        console.log(response.keys[i])
+                        const line = document.createElement("li")
+                        line.innerHTML = response.keys[i]
+                        console.log(line)
+                        document.querySelector("#generated-keys-list").appendChild(line)
+                    }
+
+                    const generatedKeyFooter = document.createElement("div")
+                    generatedKeyFooter.id = "generate-key-footer"
+                    document.querySelector("#generateKeys-modal-content").appendChild(generatedKeyFooter)
+
+                    generatedKeys = response.keys
+
+                    generatedKeyFooter.innerHTML = `<button onclick="copyGeneratedKeys()" class="green-btn">Copy</button>`
+                }
+            } catch(err) {
+                toastr.message(err.message, 'error', 5000)
+            }
+        })
+
+
+        async function copyGeneratedKeys() {
+            // const copyText = document.querySelector("#inviteAddress").textContent
+            generatedKeys = generatedKeys.join('\n')
+            navigator.clipboard.writeText(generatedKeys)
+            toastr.message("Keys successfully copied", "success", 3000)
+            setTimeout(function() {
+                location.reload()
+            }, 3000)
+        }
+
+
+
+
+
+        window.addEventListener('load', async () => {
+            const keyData = await fetchKeys()
+            const keyBody = document.querySelector("#key-body")
+
+            keyData.forEach((key, index) => {
+                const keyDocument = document.createElement('tr')
+                // keyDocument.innerHTML = `<th scope="row">${index + 1}</th><td>${key.value}</td><td>${key.type.charAt(0).toUpperCase() + key.type.slice(1)}</td><td>${(key.used) ? "Yes" : "No"}</td><td><button class="key-copy-btn" type="button" id="${key.value}-copyBtn">Copy</td><td><a href="delete-key">Delete</a></td>`
+                keyDocument.innerHTML = `<th scope="row">${index + 1}</th><td>${key.value}</td><td>${key.type.charAt(0).toUpperCase() + key.type.slice(1)}</td><td>${(key.used) ? "Yes" : "No"}</td>`
+                keyBody.appendChild(keyDocument)
+            })
+        })
+
+        async function fetchKeys(pageNumber = 0) {
+           try {
+                const request = await fetch(`http://localhost:12345/api/keys?page=${pageNumber}`)
+                const response = await request.json()
+                
+                if (response.success) {
+                    return response.keys
+                } else {
+                    toastr.message(response.message, error, 5000)
+                    return null
+                }
+           } catch(err) {
+            toastr.message(err.message, error, 5000)
+           }
+        }
+
+        
+    </script>
+
+
+
+
+    
+    <script src="./assets/js/jquery-3.3.1.min.js"></script>
+    <script src="./assets/js/modernizr-3.6.0.min.js"></script>
+    <script src="./assets/js/plugins.js"></script>
+    <script src="./assets/js/bootstrap.min.js"></script>
+    <script src="./assets/js/magnific-popup.min.js"></script>
+    <script src="./assets/js/jquery-ui.min.js"></script>
+    <script src="./assets/js/wow.min.js"></script>
+    <script src="./assets/js/waypoints.js"></script>
+    <script src="./assets/js/nice-select.js"></script>
+    <script src="./assets/js/owl.min.js"></script>
+    <script src="./assets/js/counterup.min.js"></script>
+    <script src="./assets/js/paroller.js"></script>
+    <script src="./assets/js/countdown.js"></script>
+    <script src="./assets/js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-toastr@1.1.1/toast.min.js"></script>
+</body>
+</html>

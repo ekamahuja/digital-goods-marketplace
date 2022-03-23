@@ -3,30 +3,28 @@ import { Key } from '../schemas/keySchema.js'
 import { upgradeLog } from '../schemas/upgradeLogSchema.js'
 import { countryCodeToCountry } from '../helpers/upgradeHelper.js'
 
-export async function generateKeys(req, res) {
+export async function generateKeys(req, res, next) {
     const {prefix, type, amount} = req.body
-    if (!prefix || !type || !amount || prefix.length < 3 || type.length < 4 || typeof amount !== 'number') return res.status(400).json({success: false, error: 'Invalid params'})
+    if (!prefix || !type || !amount || prefix.length < 3 || type.length < 4 || typeof amount !== 'number') throw new Error("Invalid params")
 
     try {
         let keyArray = []
+        let savedKeys = []
         for (let i = 1; i <= parseInt(amount); i++) {
             let key = `${prefix}-${randomKey.generateBase30(5)}-${randomKey.generateBase30(5)}-${randomKey.generateBase30(5)}`
             keyArray.push({ value: key.toUpperCase(), type })
         }
 
         let generatedKeys = await Key.insertMany(keyArray)
-        if (!generatedKeys) return res.status(201).json({ success: false, message: 'Keys could not be saved to database'})
+        if (!generatedKeys) throw new Error("Could not save keys to the database")
 
-        generatedKeys = generatedKeys.map((key) => ({
-            _id: key._id,
-            value: key.value,
-            type: key.type,
-        }))
+        generatedKeys.forEach(key => {
+            savedKeys.push(key.value)
+        })
 
-        return res.status(201).json({ success: true, amountOfKeys: generatedKeys.length, keys: generatedKeys})
+        return res.status(201).json({ success: true, message: `Successfully generated ${generatedKeys.length} ${type.charAt(0).toUpperCase() + type.slice(1).toLowerCase()} keys`, amountOfKeys: generatedKeys.length, typeOfKeys: type.charAt(0).toUpperCase() + type.slice(1).toLowerCase(),keys: savedKeys})
     } catch (err) {
-        consola.error(err.message)
-        return res.status(500).json({success: false, error: err.message, stack: err})
+        next(err)
     }
 }
 
@@ -78,18 +76,22 @@ export async function getKeyInfo(req, res, next) {
 
 
 
-export async function getKeys(req, res) {
-    const page = parseInt(req.query.page) || 0
+export async function getKeys(req, res, next) {
+    try {
+        const page = parseInt(req.query.page) || 0
 
-    const documentPerLimit = parseInt(process.env.PAGE_LIMIT)
-    const totalKeys = await Key.countDocuments()
-    const totalPages = Math.ceil(totalKeys / documentPerLimit)
+        const documentPerLimit = parseInt(process.env.PAGE_LIMIT)
+        const totalKeys = await Key.countDocuments()
+        const totalPages = Math.ceil(totalKeys / documentPerLimit)
 
-    const keys = await Key.find({}).limit(documentPerLimit).skip(documentPerLimit * page).select("-createdAt").select("-updatedAt").select("-__v")
-    if (!keys) return res.status(404).json({success: false, error: 'Keys could not be fetched'})
-    if (keys.length == 0) return res.status(404).json({ success: true, message: "No keys exist or Invalid page"})
+        const keys = await Key.find({}).limit(documentPerLimit).skip(documentPerLimit * page).select("-createdAt").select("-updatedAt").select("-__v")
+        if (!keys) throw new Error('Keys could not be fetched')
+        if (keys.length == 0) throw new Error("No keys exist or Invalid page")
 
-    return res.status(200).json({success: true, keysOnThisPage: keys.length, totalKeys, totalPages, keys})
+        return res.status(200).json({success: true, keysOnThisPage: keys.length, totalKeys, totalPages, keys})
+    } catch(err) {
+        next(err)
+    }
 }
 
 
