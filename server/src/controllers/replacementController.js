@@ -11,7 +11,6 @@ import { Config } from '../schemas/configSchema.js'
 export async function getReplacement(req, res, next) {
   try {
     const config = await Config.findOne({})
-    console.log(config)
 
     const { countryC } = req.body
     const { spotifyToken } = req.cookies
@@ -57,6 +56,7 @@ export async function getReplacement(req, res, next) {
     const updatedUpgradeData = await upgradeData.save()
 
     const country = countryCodeToCountry(countryCode)
+
 
     res.status(200).json({
       success: true,

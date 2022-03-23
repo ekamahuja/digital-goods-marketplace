@@ -38,7 +38,7 @@ export async function upgradeUser(req, res, next) {
         })
         if (!successfulLog) throw new Error("Upgrade failed")
 
-        // keyData.used = true
+        keyData.used = true
         const usedKey = await keyData.save()
         if (!usedKey) throw new Error("Upgrade failed")
 

@@ -4,10 +4,10 @@ import { upgradeLog } from '../schemas/upgradeLogSchema.js'
 import { countryCodeToCountry } from '../helpers/upgradeHelper.js'
 
 export async function generateKeys(req, res, next) {
-    const {prefix, type, amount} = req.body
-    if (!prefix || !type || !amount || prefix.length < 3 || type.length < 4 || typeof amount !== 'number') throw new Error("Invalid params")
-
     try {
+        const {prefix, type, amount} = req.body
+        if (!prefix || !type || !amount || prefix.length < 3 || type.length < 4 || typeof amount !== 'number') throw new Error("Invalid params")
+    
         let keyArray = []
         let savedKeys = []
         for (let i = 1; i <= parseInt(amount); i++) {

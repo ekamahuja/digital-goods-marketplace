@@ -192,6 +192,7 @@
                 <div class="inputGroup">
                     <label for="keyPrefix">Key Prefix</label>
                     <select name="keyPrefix" id="keys-prefix">
+                        <option value="not-selected" disabled selected>Select Key Prefix</option>
                         <option value="UPGRADERPW">UPGRADERPW-XXXX-XXXX-XXXX-XXXX</option>
                         <option value="KEY">KEY-XXXX-XXXX-XXXX-XXXX</option>
                         <option value="STAFF">STAFF-XXXX-XXXX-XXXX</option>
@@ -201,6 +202,7 @@
                 <div class="inputGroup">
                     <label for="keyType">Type of Key</label>
                     <select name="keyType" id="keys-type">
+                        <option value="not-selected" disabled selected>Select Key Type</option>
                         <option value="onetime">One Time (No Warranty)</option>
                         <option value="lifetime">Lifetime (Normal Warranty)</option>
                         <option value="unlimited">Unlimited (Never Gets Locked)</option>
@@ -236,11 +238,21 @@
             }
         }
 
+        document.querySelector("#keys-search-modal").addEventListener("click", () => {
+            toastr.message("Comming soon - remind qwerty", 'info', 3000)
+        })
+
         document.querySelector('#generateKeys-confirm').addEventListener('click', async () => {
             try {
                 const keyPrefix = document.querySelector('#keys-prefix').value
                 const keyType = document.querySelector('#keys-type').value
                 const numberOfKeys = document.querySelector('#keys-generate').value
+
+                console.log(typeof numberOfKeys)
+
+                if (keyPrefix == "not-selected" || keyType == "not-selected") return toastr.message('Please select the key prefix and key type', 'error', 3000)
+                if (!numberOfKeys.length) return toastr.message('Please make sure the number of keys is entered correctly', 'error', 3000)
+                
 
                 console.log(keyPrefix, keyType, numberOfKeys)
 
@@ -294,10 +306,10 @@
             // const copyText = document.querySelector("#inviteAddress").textContent
             generatedKeys = generatedKeys.join('\n')
             navigator.clipboard.writeText(generatedKeys)
-            toastr.message("Keys successfully copied", "success", 3000)
+            toastr.message("Keys successfully copied", "success", 900)
             setTimeout(function() {
                 location.reload()
-            }, 3000)
+            }, 1000)
         }
 
 
