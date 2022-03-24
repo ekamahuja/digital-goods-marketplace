@@ -1,7 +1,10 @@
 import randomKey from 'random-key'
+import validator from 'validator';
 import { Key } from '../schemas/keySchema.js'
 import { upgradeLog } from '../schemas/upgradeLogSchema.js'
 import { countryCodeToCountry } from '../helpers/upgradeHelper.js'
+import { Config } from '../schemas/configSchema.js'
+
 
 export async function generateKeys(req, res, next) {
     try {
@@ -49,23 +52,37 @@ export async function getKeyInfo(req, res, next) {
                 used: keyInfo.used,
             }
         } else {
-            let country =  await countryCodeToCountry(keyUpgradeData.upgrades[keyUpgradeData.upgrades.length - 1].inviteCountry)
-            country = (country.success) ? keyUpgradeData.upgrades[keyUpgradeData.upgrades.length - 1].inviteCountry : country
+            if (req.user && req.user.role == 'admin') {
+                keyData = {
+                    key,
+                    email: keyUpgradeData.email,
+                    used: keyInfo.used,
+                    type: keyInfo.type,
+                    replacementsClaimed: keyInfo.replacementsClaimed,
+                    totalReplacementsClaimed: keyInfo.totalReplacementsClaimed,
+                    upgradeData: keyUpgradeData
+                }
+            } else {
+                let country =  await countryCodeToCountry(keyUpgradeData.upgrades[keyUpgradeData.upgrades.length - 1].inviteCountry)
+                country = (country.success) ? keyUpgradeData.upgrades[keyUpgradeData.upgrades.length - 1].inviteCountry : country
 
-            keyData = {
-                key,
-                email: keyUpgradeData.email,
-                used: keyInfo.used,
-                type: keyInfo.type,
-                totalReplacementsClaimed: keyInfo.totalReplacementsClaimed,
-                lastUpgrade: [keyUpgradeData.upgrades[keyUpgradeData.upgrades.length -1]].map((upgradeInfo) => {
-                    return {
-                        inviteLink: upgradeInfo.inviteLink,
-                        inviteAddress: upgradeInfo.inviteAddress,
-                        inviteCountry: country
-                    }
-                })[0]
+                keyData = {
+                    key,
+                    email: keyUpgradeData.email,
+                    used: keyInfo.used,
+                    type: keyInfo.type,
+                    totalReplacementsClaimed: keyInfo.totalReplacementsClaimed,
+                    lastUpgrade: [keyUpgradeData.upgrades[keyUpgradeData.upgrades.length -1]].map((upgradeInfo) => {
+                        return {
+                            inviteLink: upgradeInfo.inviteLink,
+                            inviteAddress: upgradeInfo.inviteAddress,
+                            inviteCountry: country
+                        }
+                    })[0]
+                }
             }
+            
+            
         }
         
         return res.status(200).json({ success: true, message: 'Successfully retrieved key', keyData })
@@ -97,22 +114,51 @@ export async function getKeys(req, res, next) {
 
 
 export async function unlockKey(req, res, next) {
-    const {key} = req.body
-    if (!key) return res.status(400).json({success: false, error: 'Key missing'})
-
     try {
-        const keyInfo = await Key.findOne({value: key}).select("-__v").select("-createdAt").select("-updatedAt")
-        if (!keyInfo) return res.status(404).json({success: false, error: 'Key not found'})
+        const {key} = req.query
+        if (!key) throw new Error("Key missing")
 
-        if (keyInfo.replacementsClaimed <= 5) return res.status(200).json({success: false, message: "Key is not locked"})
+    
+        const keyInfo = await Key.findOne({value: key}).select("-__v").select("-createdAt").select("-updatedAt")
+        if (!keyInfo) throw new Error("Key not found")
+        if (!keyInfo.used) throw new Error("Key has not been used")
+
+        const config = await Config.findOne({})
+        if (!config) throw new Error("Config not found")
+
+        if (keyInfo.replacementsClaimed <= config.maxReplacements - 1) throw new Error("Key is not locked")
 
         keyInfo.replacementsClaimed = 0;
-        keyInfo.amountOfResets++ 
 
         const resetKey = await keyInfo.save()
         
-        return res.status(200).json({ success: true, message: 'Key successfully unlock', key: resetKey})
+        return res.status(200).json({ success: true, message: 'Key successfully unlocked', key: resetKey})
     } catch (err) {
+        next(err)
+    }
+}
+
+
+export async function changeKeyEmail(req, res, next) {
+    try {
+        const {key, email} = req.query
+        if (!key || !email) throw new Error("Missing key or email")
+        if (!validator.isEmail(email)) throw new Error(`Invalid email address`)
+
+        const keyInfo = await Key.findOne({value: key}).select("-__v").select("-createdAt").select("-updatedAt")
+        if (!keyInfo) throw new Error("Key not found")
+        if (!keyInfo.used) throw new Error("Key has not been used")
+
+        const upgradeData = await upgradeLog.findOne({key})
+        if (!upgradeData) throw new Error("Something went wrong")
+
+        upgradeData.email = email.toLowerCase()
+        const savedUpgradeData = await upgradeData.save()
+        if (!savedUpgradeData) throw new Error(`Could not change the email on ${upgradeData.key}`)
+
+        res.status(201).json({success: true, message: `Email updated it to ${savedUpgradeData.email}`})
+
+    } catch(err) {
         next(err)
     }
 }

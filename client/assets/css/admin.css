@@ -168,54 +168,47 @@
   background: #ff5959;
 }
 
-
 .mange-stock {
-    background: #fff;
-    max-width: 80%;
-    margin: 0 auto;
-    padding: 50px;
-    border-radius: 10px;
-    margin-bottom: 6rem;
+  background: #fff;
+  max-width: 80%;
+  margin: 0 auto;
+  padding: 50px;
+  border-radius: 10px;
+  margin-bottom: 6rem;
 }
 
 .mange-title {
-    padding-bottom: 0.8rem;
+  padding-bottom: 0.8rem;
 }
 
 .add-stock-textarea {
-    margin-top: 1rem;
+  margin-top: 1rem;
 }
 
 #add-stock-btn {
-    border-radius: 10px;
-    background: -webkit-linear-gradient(0deg, #e2906e 0%, #e83a99 100%);
-    margin-top: 1rem;
-    color: #fff;
-    font-weight: bold;
-    font-size: 16px;
-    transition: all 2s ease;
+  border-radius: 10px;
+  background: -webkit-linear-gradient(0deg, #e2906e 0%, #e83a99 100%);
+  margin-top: 1rem;
+  color: #fff;
+  font-weight: bold;
+  font-size: 16px;
+  transition: all 2s ease;
 }
 
 #add-stock-btn:hover {
-    border-radius: 10px;
-    background: -webkit-linear-gradient(0deg, #e83a99 0%, #e2906e 100%);
-    margin-top: 1rem;
-    color: #fff;
-    font-weight: bold;
-    font-size: 16px;
-    transition: all 2s ease;
+  border-radius: 10px;
+  background: -webkit-linear-gradient(0deg, #e83a99 0%, #e2906e 100%);
+  margin-top: 1rem;
+  color: #fff;
+  font-weight: bold;
+  font-size: 16px;
+  transition: all 2s ease;
 }
 
-
-
-
-
-
-
 .all-keys {
-    max-width: 80%;
-    margin: 0 auto;
-    border-radius: 1.2rem;
+  max-width: 80%;
+  margin: 0 auto;
+  border-radius: 1.2rem;
 }
 
 .all-key-header {
@@ -232,8 +225,6 @@
   background: #fff;
 }
 
-
-
 .btn-one {
   border-radius: 10px;
   background: -webkit-linear-gradient(0deg, #e2906e 0%, #e83a99 100%);
@@ -243,7 +234,6 @@
   font-size: 16px;
   transition: all 2s ease;
 }
-
 
 .btn-two {
   border-radius: 10px;
@@ -259,11 +249,9 @@
   background: -webkit-linear-gradient(0deg, #e83a99 0%, #e2906e 100%);
 }
 
-
 .btn-two:hover {
   background: -webkit-linear-gradient(0deg, #796be8 0%, #d180dd 100%);
 }
-
 
 #generate-keys-body {
   max-height: 50vh;
@@ -271,16 +259,83 @@
   overflow-x: hidden;
 }
 
-
 #generate-key-footer {
   margin-top: 1rem;
 }
-
-
 
 .green-btn {
   color: #fff;
   background-color: #7ce87c;
   border: none;
   border-radius: 0.2rem;
+}
+
+.no-scroll {
+  overflow: hidden !important;
+}
+
+.key-select {
+  padding-left: 12px;
+}
+
+.keys-input {
+  height: calc(1.5em + 0.75rem + 10px);
+}
+
+#keyinfo-data {
+  display: none;
+}
+
+.keyinfo-upgrades {
+  background-color: #3b319e;
+  color: #fff;
+  margin-bottom: 1rem;
+  padding: 1.5rem;
+  border-radius: 1rem;
+}
+
+.keyinfo-info {
+  font-weight: bold;
+  padding-left: 0.8rem;
+}
+
+.btn-three {
+  border-radius: 10px;
+  background: -webkit-linear-gradient(0deg, #db3995 0%, #8867df 100%);
+  margin-top: 1rem;
+  color: #fff;
+  font-weight: bold;
+  font-size: 16px;
+  transition: all 2s ease;
+}
+
+.btn-three:hover {
+  border-radius: 10px;
+  background: -webkit-linear-gradient(0deg, #8867df 0%, #db3995 100%);
+  margin-top: 1rem;
+  color: #fff;
+  font-weight: bold;
+  font-size: 16px;
+  transition: all 2s ease;
+}
+
+
+.btn-four {
+  border-radius: 10px;
+  background: -webkit-linear-gradient(0deg, #38ff96 0%, #35dfe8 100%);
+  margin-top: 1rem;
+  color: #fff;
+  font-weight: bold;
+  font-size: 16px;
+  transition: all 2s ease;
+}
+
+.btn-four:hover {
+  border-radius: 10px;
+  background: -webkit-linear-gradient(0deg, #35dfe8 0%, #38ff96 100%);
+  margin-top: 1rem;
+  color: #fff;
+  font-weight: bold;
+  font-size: 16px;
+  transition: all 2s ease;
 }

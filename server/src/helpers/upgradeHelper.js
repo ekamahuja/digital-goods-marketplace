@@ -91,7 +91,6 @@ export const checkInviteLink = async (cookie, inviteLink) => {
     
 }
 
-//sp_dc=AQCexcZtmfNDdMEfrHni7imeghDPHXOS_7gmvhllTWUsBUhTnWJIopn-q5yvvlSLFWkbNYh93TgP8Ecp7Z_YDD26zYJHjffUJtGkdutZ-AEpSLhYRyK_G0HVBFjnq6saqytAU7AswcMnCkbphEdYWqpR-KhGMB-7
 
 export async function ipToCountryCode(ip) {
     try {
