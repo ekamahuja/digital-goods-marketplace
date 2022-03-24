@@ -52,7 +52,6 @@ import {getMemorySession} from '../helpers/authHelper.js'
 async function deserializeUser(req, res, next) {
     const {accessToken, refreshToken} = req.cookies
 
-
     // No refresh token or access token
     if (!accessToken && !refreshToken) {
         return next()
@@ -80,7 +79,6 @@ async function deserializeUser(req, res, next) {
 
     // Has access token but no refresh token
     if (accessToken && !refreshToken) {
-
         const {payload, expired} = verifyJwt(accessToken)
         if (!payload) return next()
 
@@ -119,9 +117,6 @@ async function deserializeUser(req, res, next) {
         return next()
 
     }
-
-
-
 
 
 

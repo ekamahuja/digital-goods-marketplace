@@ -136,6 +136,17 @@
     <section id="config-section" class="config-section padding-bottom">
         <div class="config-box">
             <div class="config-info">
+                <h4>Auth Cookie</h4>
+                <p>The cookie is generated with the Spotify login information to check Invite links</p>
+            </div>
+            <div class="config-edit">
+                <input type="text" id="authCookie" value="<%- authCookie %>" placeholder="Auth cookie" disabled>
+                <button class="btn btn-primary config-btn cookie-btn" id="authCookie-btn" disabled>Generate new cookie</button>
+            </div>
+        </div>
+        
+        <div class="config-box">
+            <div class="config-info">
                 <h4>Spotify Login</h4>
                 <p>Email:Password is used to update the auth cookie</p>
             </div>
