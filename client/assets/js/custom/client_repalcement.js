@@ -19,7 +19,6 @@ async function getReplacement() {
     const request = await fetch("http://localhost:12345/api/replacement", options)
     const response = await request.json();
 
-    console.log(response)
 
     const messageType = (response.success) ? "success" : "error";
     toastr.message(response.message, messageType, 5000)

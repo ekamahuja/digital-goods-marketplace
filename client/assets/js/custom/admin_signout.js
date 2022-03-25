@@ -6,7 +6,6 @@ document.querySelector("#logout").addEventListener("click", async() => {
         toastr.message(response.message, 'success', 5000)
 
         if (response.success) {
-            console.log('ok')
             window.setTimeout(() =>{
                 window.location.href = '/admin'
             }, 1000)

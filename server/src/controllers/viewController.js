@@ -122,6 +122,10 @@ export const contactRedirect = async (req, res, next) => {
 };
 
 
+export const playlistTransferPage = async (req, res, next) => {
+    res.redirect("https://playlisttransfer.upgrader.pw/")
+}
+
 
 export const adminLoginPage = async (req, res, next) => {
   try {

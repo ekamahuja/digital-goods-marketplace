@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard</title>
+    <title>Mange Stocks</title>
     <link rel="stylesheet" href="./assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="./assets/css/all.min.css">
     <link rel="stylesheet" href="./assets/css/animate.css">
@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="./assets/css/main.css">
     <link rel="stylesheet" href="./assets/css/admin.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/js-toastr@1.1.1/toast.css">
-    <link rel="shortcut icon" href="assets/images/favicon.png" type="image/x-icon">
+    <link rel="icon" type="image/png" href="/assets/images/logo.png">
 </head>
 <body>
     <!--============= ScrollToTop Section Starts Here =============-->
@@ -93,7 +93,7 @@
                     <option value="<%- item.countryCode %>"><%- item.name.charAt(0).toUpperCase() + item.name.slice(1).toLowerCase() %></option>
                 <% });%>
             </select>
-            <textarea class="add-stock-textarea" id="stock-data-textarea" placeholder='Paste Invite Link and Invite Address Seperated By "|"'></textarea>
+            <textarea class="add-stock-textarea" id="stock-data-textarea" placeholder='Paste Invite Address and Invite Link Seperated By "|"'></textarea>
             <button type="button" id="add-stock-btn">Upload Stock</button>
         </div>
     </div>

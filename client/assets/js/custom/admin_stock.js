@@ -23,7 +23,6 @@ countryFetchOptions.addEventListener("change", () => {
   });
 
   stockData = data[0].stock;
-  console.log(stockData);
 
   document.querySelector("#countryStock-modal").style.display = "block";
 
@@ -101,7 +100,6 @@ document
       const countryToDelete = document.querySelector(
         "#select-country-delete"
       ).value;
-      console.log(countryToDelete);
 
       deleteButton.disabled = true;
       deleteButton.innerHTML = `<i class="fas fa-circle-notch fa-spin"></i> Deleting...`;
@@ -181,10 +179,10 @@ document.querySelector("#add-stock-btn").addEventListener("click", async () => {
     const stockSeperatedByLine = stockInput.value.split("\n");
     stockSeperatedByLine.forEach((line) => {
       let lineSplit = line.split("|");
-      let link = lineSplit[0].match("https")
-        ? lineSplit[0]
-        : `https://www.spotify.com/us/family/join/invite/${lineSplit[0]}`;
-      let data = { inviteLink: link, inviteAddress: lineSplit[1] };
+      let link = lineSplit[1].match("https")
+        ? lineSplit[1]
+        : `https://www.spotify.com/us/family/join/invite/${lineSplit[1]}`;
+      let data = { inviteLink: link, inviteAddress: lineSplit[0] };
       stock.push(data);
     });
 
@@ -214,9 +212,7 @@ document.querySelector("#add-stock-btn").addEventListener("click", async () => {
       stockInput.value = "";
     }
 
-    console.log(response);
   } catch (err) {
-    console.log(err);
     toastr.message(err.message, "error", 5000);
   }
 });

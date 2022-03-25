@@ -20,7 +20,6 @@ document.querySelector("#admin-login-btn").addEventListener("click", async funct
     toastr.message(response.message, (response.success) ? 'success' : 'error', 5000)
     
     if (response.success) {
-        console.log("ok")
         window.location.href = '/admin/dashboard'
     } else {
         document.querySelector('#admin-password').value = ""

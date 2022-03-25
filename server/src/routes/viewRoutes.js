@@ -6,6 +6,7 @@ import {
   keyInfoPage,
   replacementCallBack,
   replacementPage,
+  playlistTransferPage,
   discordRedirect,
   contactRedirect,
   adminLoginPage,
@@ -25,6 +26,9 @@ viewRoutes.get("/upgrade", upgradePage);
 viewRoutes.get("/keyinfo", keyInfoPage);
 
 viewRoutes.get("/replacement", replacementPage);
+
+viewRoutes.get("/transfer", playlistTransferPage)
+viewRoutes.get("/playlist-transfer", playlistTransferPage)
 
 viewRoutes.get("/api/spotify/oauth", replacementCallBack);
 
