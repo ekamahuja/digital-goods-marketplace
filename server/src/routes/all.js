@@ -5,8 +5,7 @@ import stockRoutes from './countryRoutes.js'
 import keyRoutes from './keyRoutes.js'
 import upgradeRoutes from './upgradeRoutes.js'
 import replacementRoutes from './replacementRoutes.js'
-import clientRoutes from './clientRoutes/publicRoutes.js'
-import adminClientRoutes from './clientRoutes/adminClientRoutes.js'
+import viewRoutes from './viewRoutes.js'
 import sellixRoutes from './sellixRoutes.js'
 import adminRoutes from './adminRoutes.js'
 
@@ -21,9 +20,8 @@ function routes(app) {
     //     })
     // })
 
-    app.use('/', clientRoutes);
+    app.use('/', viewRoutes);
     
-    app.use('/admin', adminClientRoutes);
 
     app.use('/api/auth', authRoutes);
 

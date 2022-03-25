@@ -34,12 +34,15 @@ export async function generateKeys(req, res, next) {
 
 
 export async function getKeyInfo(req, res, next) {
-    const key = req.query.key
-    if (!key) return res.status(400).json({success: false, error: 'Key missing'})
-    
     try {
+        const {key, adminData} = req.query
+        if (!key) throw new Error("Key missing")
+
         const keyInfo = await Key.findOne({value: key}).select("-__v").select("-createdAt").select("-updatedAt")
-        if (!keyInfo) return res.status(404).json({success: false, message: 'Key not found'})
+        if (!keyInfo) {
+            res.status(404)
+            throw new Error("Key not found")
+        }
         
         const keyUpgradeData = (keyInfo.used) ? await upgradeLog.findOne({key: keyInfo.value}) : null
         
@@ -52,15 +55,19 @@ export async function getKeyInfo(req, res, next) {
                 used: keyInfo.used,
             }
         } else {
-            if (req.user && req.user.role == 'admin') {
-                keyData = {
-                    key,
-                    email: keyUpgradeData.email,
-                    used: keyInfo.used,
-                    type: keyInfo.type,
-                    replacementsClaimed: keyInfo.replacementsClaimed,
-                    totalReplacementsClaimed: keyInfo.totalReplacementsClaimed,
-                    upgradeData: keyUpgradeData
+            if (adminData) {
+                if (req.user && req.user.role == 'admin') {
+                    keyData = {
+                        key,
+                        email: keyUpgradeData.email,
+                        used: keyInfo.used,
+                        type: keyInfo.type,
+                        replacementsClaimed: keyInfo.replacementsClaimed,
+                        totalReplacementsClaimed: keyInfo.totalReplacementsClaimed,
+                        upgradeData: keyUpgradeData
+                    }
+                } else {
+                    throw new Error("Invalid session")
                 }
             } else {
                 let country =  await countryCodeToCountry(keyUpgradeData.upgrades[keyUpgradeData.upgrades.length - 1].inviteCountry)

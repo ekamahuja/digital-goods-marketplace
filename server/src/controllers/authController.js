@@ -62,7 +62,7 @@ export function getSession(req, res) {
 
     const session = await deleteMemorySession(req.user.sessionId)
 
-    res.send({sucess: true, message: "Sucessfully logged out", session})
+    res.send({success: true, message: "Sucessfully logged out", session})
 }
 
 

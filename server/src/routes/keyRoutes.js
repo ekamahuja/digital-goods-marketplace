@@ -1,16 +1,16 @@
 import express from 'express'
 const keyRoutes = express.Router()
-import { requireUser } from '../middlewares/requireUser.js'
+import { adminOnly } from '../middlewares/adminOnly.js'
 import { generateKeys, getKeyInfo, getKeys, unlockKey, changeKeyEmail } from '../controllers/keyController.js'
 
 
 
 
-keyRoutes.post('/keys', requireUser, generateKeys)
-keyRoutes.get('/keys', requireUser, getKeys)
+keyRoutes.post('/keys', adminOnly, generateKeys)
+// keyRoutes.get('/keys', adminOnly, getKeys) // Not being used
 keyRoutes.get('/key', getKeyInfo)
-keyRoutes.get('/unlockkey', requireUser, unlockKey)
-keyRoutes.get('/updateemail', requireUser, changeKeyEmail)
+keyRoutes.get('/unlockkey', adminOnly, unlockKey)
+keyRoutes.get('/updateemail', adminOnly, changeKeyEmail)
 
 
 

@@ -1,7 +1,7 @@
 export async function adminOnly(req, res, next) {
     if (!req.user) {
         return res.status(401).send({
-            sucess: false,
+            success: false,
             message: "Invalid session"
         })
     }

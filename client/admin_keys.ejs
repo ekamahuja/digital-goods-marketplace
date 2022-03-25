@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mange Keys</title>
+    <link rel="stylesheet" href="./assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./assets/css/all.min.css">
+    <link rel="stylesheet" href="./assets/css/animate.css">
+    <link rel="stylesheet" href="./assets/css/nice-select.css">
+    <link rel="stylesheet" href="./assets/css/owl.min.css">
+    <link rel="stylesheet" href="./assets/css/jquery-ui.min.css">
+    <link rel="stylesheet" href="./assets/css/magnific-popup.css">
+    <link rel="stylesheet" href="./assets/css/flaticon.css">
+    <link rel="stylesheet" href="./assets/css/main.css">
+    <link rel="stylesheet" href="./assets/css/admin.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/js-toastr@1.1.1/toast.css">
+    <link rel="shortcut icon" href="assets/images/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <!--============= ScrollToTop Section Starts Here =============-->
+    <div class="preloader">
+        <div class="preloader-inner">
+            <div class="preloader-icon">
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </div>
+    <a href="#0" class="scrollToTop"><i class="fas fa-angle-up"></i></a>
+    <div class="overlay"></div>
+    <!--============= ScrollToTop Section Ends Here =============-->
+
+    <!--============= NavBar Section Starts Here =============-->
+    <%- include('./components/adminNavbar'); %>
+    <!--============= NavBar Section Ends Here =============-->
+
+     <!--============= Header Section Starts Here =============-->
+     <section class="page-header bg_img" data-background="./assets/images/page-header.png">
+        <div class="bottom-shape d-none d-md-block">
+            <img src="./assets/css/img/page-header.png" alt="css">
+        </div>
+        <div class="container">
+            <div class="page-header-content cl-white">
+                <h2 class="title">Keys</h2>
+                <ul class="breadcrumb">
+                    <li>
+                        <a href="/admin">Admin</a>
+                    </li>
+                    <li>
+                        Mange Keys
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+    <!--============= Header Section Ends Here =============-->
+
+
+    <!--============= Stats Section Starts Here =============-->
+    <%- include('./components/adminStats'); %>
+    <!--============= Stats Section Ends Here =============-->
+
+
+
+    <!--============= Mange Keys Section Ends Here =============-->
+    <div class="mange-country padding-bottom">
+        <h3 class="mange-title">Mange Keys</h3>
+        <div class="country-options">
+            <button type="button" id="keys-generate-modal" class="btn-one">Generate Keys</button>
+            <button type="button" id="keys-search-modal" class="btn-two">Search Key</button>
+            <button type="button" id="keys-unlock-modal" class="btn-three">Unlock Key</button>
+            <button type="button" id="keys-change-email-modal" class="btn-four">Change email</button>
+        </div>
+    </div>
+    <!--============= Mange Keys Section Ends Here =============-->
+
+    <!--============= Modals Section Starts Here =============-->
+
+    <!-- Generate Key Modal -->
+    <div id="generateKeys-modal" class="modal">
+        <!-- Modal Content -->
+        <div id="generateKeys-modal-content" class="modal-content">
+            <!-- <span class="close">&times;</span> -->
+            <h5 class="modal-heading" id="generate-key-heading">Generate Keys</h5>
+            <div id="generate-keys-body" class="no-scroll"> 
+                <div class="inputGroup">
+                    <label for="keyPrefix">Key Prefix</label>
+                    <select class="key-select" name="keyPrefix" id="keys-prefix">
+                        <option value="not-selected" disabled selected>Select Key Prefix</option>
+                        <option value="UPGRADERPW">UPGRADERPW-XXXX-XXXX-XXXX-XXXX</option>
+                        <option value="KEY">KEY-XXXX-XXXX-XXXX-XXXX</option>
+                        <option value="STAFF">STAFF-XXXX-XXXX-XXXX</option>
+                        <option value="GIFT">GIFT-XXXX-XXXX-XXXX-XXXX</option>
+                    </select>
+                </div>
+                <div class="inputGroup">
+                    <label for="keyType">Type of Key</label>
+                    <select class="key-select" name="keyType" id="keys-type">
+                        <option value="not-selected" disabled selected>Select Key Type</option>
+                        <option value="onetime">One Time (No Warranty)</option>
+                        <option value="lifetime">Lifetime (Normal Warranty)</option>
+                        <option value="unlimited">Unlimited (Never Gets Locked)</option>
+                        <option value="reseller" disabled>Reseller (Comming Soon)</option>
+                        <option value="admin" disabled>Admin (Comming Soon)</option>
+                    </select>
+                </div>
+                <div class="inputGroup">
+                    <label for="keyGenerate">Number of Keys to Generate</label>
+                    <input type="number" min="1" max="1000" name="keyGenerate" id="keys-generate" class="form-control keys-input">
+                </div>
+                <button type="button" class="confirm-btn" id="generateKeys-confirm">Generate</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Search Key Modal -->
+    <div id="searchKeys-modal" class="modal">
+        <!-- Modal Content -->
+        <div id="searchKeys-modal-content" class="modal-content">
+            <!-- <span class="close">&times;</span> -->
+            <h5 class="modal-heading" id="search-key-heading">Search Key</h5>
+            <p id="searchKeyHeading">Searching key will grab all data stored including the key info itself as well as it's upgrade data</p>
+            <div id="search-keys-body" class="no-scroll"> 
+                <div class="inputGroup">
+                    <label for="keySearch">Key</label>
+                    <input type="text"  name="keySearch" id="keys-search" class="form-control keys-input">
+                </div>
+                <button type="button" class="confirm-btn" id="searchKeys-confirm">Search</button>
+            </div>
+            <div class="keyinfo-content" id="keyinfo-data">
+                <p class="keyinfo-info">Key: <span id="dataKeyInfo-key"></span></p>
+                <p class="keyinfo-info">Current Email: <span id="dataKeyInfo-email"></span></p>
+                <p class="keyinfo-info">Used: <span id="dataKeyInfo-used"></span></p>
+                <p class="keyinfo-info">Type: <span id="dataKeyInfo-type"></span></p>
+                <p class="keyinfo-info">Current Replacements: <span id="dataKeyInfo-currentReplacements"></span></p>
+                <p class="keyinfo-info">Total Replacements: <span id="dataKeyInfo-totalRepalcements"></span></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Unlock Key -->
+        <div id="unlockKeys-modal" class="modal">
+        <!-- Modal Content -->
+        <div id="unlockKeys-modal-content" class="modal-content">
+            <!-- <span class="close">&times;</span> -->
+            <h5 class="modal-heading" id="search-key-heading">Unlock Key</h5>
+            <!-- <p id="unlockKeyHeading">If the key is locked - this will unlock it</p> -->
+            <div id="unlock-keys-body" class="no-scroll"> 
+                <div class="inputGroup">
+                    <label for="keyUnlock">Key</label>
+                    <input type="text"  name="keyUnlock" id="keys-unlock" class="form-control keys-input">
+                </div>
+                <button type="button" class="confirm-btn" id="unlockKeys-confirm">Unlock</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Unlock Key -->
+    <div id="changeEmail-modal" class="modal">
+        <!-- Modal Content -->
+        <div id="changeEmail-modal-content" class="modal-content">
+            <!-- <span class="close">&times;</span> -->
+            <h5 class="modal-heading" id="change-email-heading">Update Email on Key</h5>
+            <!-- <p id="unlockKeyHeading">If the key is locked - this will unlock it</p> -->
+            <div id="change-email-body" class="no-scroll"> 
+                <div class="inputGroup">
+                    <label for="changeEmailKey">Key</label>
+                    <input type="text"  name="changeEmailKey" id="change-email-key" class="form-control keys-input">
+                </div>
+                <div class="inputGroup">
+                    <label for="changeEmailEmail">New Email</label>
+                    <input type="text"  name="changeEmailEmail" id="change-email-email" class="form-control keys-input">
+                </div>
+                <button type="button" class="confirm-btn" id="changeEmail-confirm">Update Email</button>
+            </div>
+        </div>
+    </div>
+
+    <!--============= Modals Section Ends Here =============-->
+    <script src="./assets/js/jquery-3.3.1.min.js"></script>
+    <script src="./assets/js/modernizr-3.6.0.min.js"></script>
+    <script src="./assets/js/plugins.js"></script>
+    <script src="./assets/js/bootstrap.min.js"></script>
+    <script src="./assets/js/magnific-popup.min.js"></script>
+    <script src="./assets/js/jquery-ui.min.js"></script>
+    <script src="./assets/js/wow.min.js"></script>
+    <script src="./assets/js/waypoints.js"></script>
+    <script src="./assets/js/nice-select.js"></script>
+    <script src="./assets/js/owl.min.js"></script>
+    <script src="./assets/js/counterup.min.js"></script>
+    <script src="./assets/js/paroller.js"></script>
+    <script src="./assets/js/countdown.js"></script>
+    <script src="./assets/js/main.js"></script>
+    <script src="./assets/js/custom/admin_keys.js"></script>
+    <script src="./assets/js/custom/admin_signout.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-toastr@1.1.1/toast.min.js"></script>
+</body>
+</html>

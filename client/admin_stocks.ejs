@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="./assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./assets/css/all.min.css">
+    <link rel="stylesheet" href="./assets/css/animate.css">
+    <link rel="stylesheet" href="./assets/css/nice-select.css">
+    <link rel="stylesheet" href="./assets/css/owl.min.css">
+    <link rel="stylesheet" href="./assets/css/jquery-ui.min.css">
+    <link rel="stylesheet" href="./assets/css/magnific-popup.css">
+    <link rel="stylesheet" href="./assets/css/flaticon.css">
+    <link rel="stylesheet" href="./assets/css/main.css">
+    <link rel="stylesheet" href="./assets/css/admin.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/js-toastr@1.1.1/toast.css">
+    <link rel="shortcut icon" href="assets/images/favicon.png" type="image/x-icon">
+</head>
+<body>
+    <!--============= ScrollToTop Section Starts Here =============-->
+    <div class="preloader">
+        <div class="preloader-inner">
+            <div class="preloader-icon">
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </div>
+    <a href="#0" class="scrollToTop"><i class="fas fa-angle-up"></i></a>
+    <div class="overlay"></div>
+    <!--============= ScrollToTop Section Ends Here =============-->
+
+    <!--============= NavBar Section Starts Here =============-->
+    <%- include('./components/adminNavbar'); %>
+    <!--============= NavBar Section Ends Here =============-->
+
+     <!--============= Header Section Starts Here =============-->
+     <section class="page-header bg_img" data-background="./assets/images/page-header.png">
+        <div class="bottom-shape d-none d-md-block">
+            <img src="./assets/css/img/page-header.png" alt="css">
+        </div>
+        <div class="container">
+            <div class="page-header-content cl-white">
+                <h2 class="title">Stocks</h2>
+                <ul class="breadcrumb">
+                    <li>
+                        <a href="/admin">Admin</a>
+                    </li>
+                    <li>
+                        Mange Stocks
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+    <!--============= Header Section Ends Here =============-->
+
+
+    <!--============= Stats Section Starts Here =============-->
+    <%- include('./components/adminStats'); %>
+    <!--============= Stats Section Ends Here =============-->
+
+
+    <!--============= Mange Country Section Starts Here =============-->
+    <div class="mange-country padding-bottom">
+        <h3 class="mange-title">Mange Country</h3>
+        <div class="country-options">
+            <label for="countries">Fetch Countries</label>
+            <select name="countries" id="countries-select" class="countries-select">
+                <option selected disabled>Fetch Country Stock</option>
+                <% stock.forEach(item => {%>
+                    <option value="<%- item.countryCode %>"><%- item.name.charAt(0).toUpperCase() + item.name.slice(1).toLowerCase() %></option>
+                <% });%>
+            </select>
+
+            <button type="button" id="addCountry-popup">Add Country</button>
+            <button type="button" id="deleteCountry-popup">Delete Country</button>
+        </div>
+    </div>
+    <!--============= Mange Country Section Ends Here =============-->
+
+
+    <!--============= Mange Stock Section Starts Here =============-->
+    <div class="mange-stock padding-bottom">
+        <h3 class="mange-title">Add Stock</h3>
+        <div class="add-stock">
+            <label for="country-stock">Select country</label>
+            <select name="country-stock" id="select-country-stock" class="countries-select">
+                <option selected disabled>Select country to add stock</option>
+                <% stock.forEach(item => {%>
+                    <option value="<%- item.countryCode %>"><%- item.name.charAt(0).toUpperCase() + item.name.slice(1).toLowerCase() %></option>
+                <% });%>
+            </select>
+            <textarea class="add-stock-textarea" id="stock-data-textarea" placeholder='Paste Invite Link and Invite Address Seperated By "|"'></textarea>
+            <button type="button" id="add-stock-btn">Upload Stock</button>
+        </div>
+    </div>
+    <!--============= Mange Stock Section Ends Here =============-->
+
+    
+
+
+
+
+
+
+
+
+    <!--============= Modals Section Starts Here =============-->
+    <!-- Country Stock Data Modal -->
+    <div id="countryStock-modal" class="modal">
+        <!-- Modal Content -->
+        <div id="countryStock-modal-content" class="modal-content">
+            <!-- <span class="close">&times;</span> -->
+        </div>
+    </div>
+
+
+    <!-- Add Country Modal -->
+    <div id="addCountry-modal" class="modal">
+        <!-- Modal Content -->
+        <div id="addCountry-modal-content" class="modal-content">
+            <!-- <span class="close">&times;</span> -->
+            <h5 class="modal-heading">Add Country</h5>
+            
+            <div class="inputGroup">
+                <label for="countryName">Country Name</label>
+                <input type="text" name="countryName" id="countryName" class="form-control">
+            </div>
+            <div class="inputGroup">
+                <label for="countryCode">Country Code</label>
+                <input type="text" name="countryCode" id="countryCode" class="form-control">
+            </div>
+
+            <button type="button" class="confirm-btn" id="addCountry-confirm">Confirm</button>
+        </div>
+    </div>
+
+    <!-- Delete Country Modal -->
+    <div id="deleteCountry-modal" class="modal">
+        <!-- Modal Content -->
+        <div id="deleteCountry-modal-content" class="modal-content">
+            <!-- <span class="close">&times;</span> -->
+            <h5 class="modal-heading">Delete Country</h5>
+            <p>NOTE: Deleting the country will also delete all stock data and will make keys attached to the country not be able to upgrade or get replacements</p>
+            <div class="inputGroup">
+                <label for="countryName">Country Name</label>
+                <select class="countries-select" id="select-country-delete">
+                    <option selected disabled>Select a country to delete</option>
+                    <% stock.forEach(item => {%>
+                        <option value="<%- item.countryCode %>"><%- item.name.charAt(0).toUpperCase() + item.name.slice(1).toLowerCase() %></option>
+                    <% });%>
+                </select>
+            </div>
+
+            <button type="button" class="delete-btn" id="deleteCountry-confirm">Delete</button>
+        </div>
+    </div>
+    <!--============= Modals Section Ends Here =============-->
+    
+    <script src="./assets/js/jquery-3.3.1.min.js"></script>
+    <script src="./assets/js/modernizr-3.6.0.min.js"></script>
+    <script src="./assets/js/plugins.js"></script>
+    <script src="./assets/js/bootstrap.min.js"></script>
+    <script src="./assets/js/magnific-popup.min.js"></script>
+    <script src="./assets/js/jquery-ui.min.js"></script>
+    <script src="./assets/js/wow.min.js"></script>
+    <script src="./assets/js/waypoints.js"></script>
+    <script src="./assets/js/nice-select.js"></script>
+    <script src="./assets/js/owl.min.js"></script>
+    <script src="./assets/js/counterup.min.js"></script>
+    <script src="./assets/js/paroller.js"></script>
+    <script src="./assets/js/countdown.js"></script>
+    <script src="./assets/js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-toastr@1.1.1/toast.min.js"></script>
+    <script src="./assets/js/custom/admin_stock.js"></script>
+    <script src="./assets/js/custom/admin_signout.js"></script>
+</body>
+</html>
