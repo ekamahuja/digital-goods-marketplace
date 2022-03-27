@@ -12,6 +12,7 @@ export async function upgradeUser(req, res, next) {
 
         const keyData = await Key.findOne({value: key})
         if (!keyData) throw new Error(`Invalid key (${key})`)
+        if (keyData.blacklisted) throw new Error('This is a blacklisted key')
         if (keyData.used) throw new Error(`This key is already used`)
 
         const emailAlreadyUsed = await upgradeLog.findOne({email})

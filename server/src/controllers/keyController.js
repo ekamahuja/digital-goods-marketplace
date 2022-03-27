@@ -44,7 +44,7 @@ export async function getKeyInfo(req, res, next) {
             throw new Error("Key not found")
         }
 
-        if (keyInfo.blacklisted) throw new Error("Key has been blacklisted")
+        if (keyInfo.blacklisted) throw new Error("This is a blacklisted key")
         console.log(keyInfo.blacklisted)
         const keyUpgradeData = (keyInfo.used) ? await upgradeLog.findOne({key: keyInfo.value}) : null
         
