@@ -18,11 +18,17 @@ export const getStock = async (countryCode) => {
 
         let validStock = false
         let i = 0
+        let amountOfFails = 0
         let inviteLink, inviteAddress
         const authCookie = (await Config.findOne({}, 'authCookie')).authCookie
         
 
         while (!validStock) {
+             if (amountOfFails >= 10) {
+                validStock = true
+                throw new Error(`Upgrade unsuccessful, please try again later`)
+            }
+
             if (i >= stock.length) {
                 validStock = true
                 throw new Error(`Ran out of stock for ${countryCodeToCountry(countryCode)}`)
@@ -35,6 +41,7 @@ export const getStock = async (countryCode) => {
             validStock = await checkInviteLink(authCookie, inviteLink)
 
             await Country.updateOne({ countryCode }, {"$pull": {stock: {"_id": stockId}}})
+            amountOfFails++
             i++
         }
 
@@ -86,7 +93,7 @@ export const checkInviteLink = async (cookie, inviteLink) => {
             return true
         } else {
             // this should be false in production
-            return true
+            return false
         }
     
 }
@@ -96,9 +103,9 @@ export async function ipToCountryCode(ip) {
     try {
         const request = await fetch(`http://ip-api.com/json/${ip}`)
         const response = await request.json();
-        return {country: response.country, countryCode: response.countryCode}
+        return response.countryCode
+        // return {country: response.country, countryCode: response.countryCode}
     } catch (err) {
-        consola.error(err)
         return {success: false, error: err.message, stack: err}
     }
 }

@@ -4,7 +4,5 @@ export default async function adminClientRouteProtection(req, res, next) {
         return
     }
 
-
-
     return next()
 }

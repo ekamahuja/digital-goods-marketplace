@@ -18,7 +18,6 @@ export async function upgradeUser(req, res, next) {
         if (emailAlreadyUsed) throw new Error(`The email is already linked with another key`)
 
         const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress
-
         const countryCode = (countryC) ? countryC : await ipToCountryCode(ip)
         if (!countryCode) throw new Error(`Please provide a valid country`)
         

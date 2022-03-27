@@ -106,7 +106,7 @@ async function upgradeKey(key, email) {
     const params = {
         key,
         email,
-        countryC: "AU"
+        // countryC: "AU"
     }
 
     const options = {
