@@ -346,3 +346,15 @@
     background: -webkit-linear-gradient(0deg, #6ee275 0%, #76e83a 100%);
     box-shadow: 2.419px 9.703px 12.48px 0.52px rgb(171 243 186);
 }
+
+
+
+.btn-five {
+  border-radius: 10px;
+  background: -webkit-linear-gradient(0deg, #ff8271 0%, #ee4730 100%);
+  margin-top: 1rem;
+  color: #fff;
+  font-weight: bold;
+  font-size: 16px;
+  transition: all 2s ease;
+}

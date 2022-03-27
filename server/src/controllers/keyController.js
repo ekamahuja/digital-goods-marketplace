@@ -43,7 +43,9 @@ export async function getKeyInfo(req, res, next) {
             res.status(404)
             throw new Error("Key not found")
         }
-        
+
+        if (keyInfo.blacklisted) throw new Error("Key has been blacklisted")
+        console.log(keyInfo.blacklisted)
         const keyUpgradeData = (keyInfo.used) ? await upgradeLog.findOne({key: keyInfo.value}) : null
         
         let keyData
@@ -163,7 +165,34 @@ export async function changeKeyEmail(req, res, next) {
         const savedUpgradeData = await upgradeData.save()
         if (!savedUpgradeData) throw new Error(`Could not change the email on ${upgradeData.key}`)
 
-        res.status(201).json({success: true, message: `Email updated it to ${savedUpgradeData.email}`})
+        return res.status(201).json({success: true, message: `Email updated it to ${savedUpgradeData.email}`})
+
+    } catch(err) {
+        next(err)
+    }
+}
+
+
+
+export async function blacklistKeys(req, res, next) {
+    try {
+        const {keys} = req.body
+        if (!keys) throw new Error("No key(s) provided")
+
+        let successfullBlacklistedAmount= 0
+
+
+        for (let i = 0; i < keys.length; i++) {
+            let keyData = await Key.findOne({value: keys[i]})
+
+            if (keyData) {
+                keyData.blacklisted = true
+                await keyData.save()
+                successfullBlacklistedAmount++
+            }
+        }
+
+        return res.status(200).json({success: true, message: `Successfully blacklisted ${successfullBlacklistedAmount} key(s)`})
 
     } catch(err) {
         next(err)

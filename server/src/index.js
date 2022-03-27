@@ -12,6 +12,7 @@ import errorHandler from './middlewares/errorHandler.js'
 import './cron/cronjob.js'
 
 
+
 // Variables
 const app = express()
 

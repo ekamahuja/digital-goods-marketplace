@@ -73,6 +73,7 @@
             <button type="button" id="keys-search-modal" class="btn-two">Search Key</button>
             <button type="button" id="keys-unlock-modal" class="btn-three">Unlock Key</button>
             <button type="button" id="keys-change-email-modal" class="btn-four">Change email</button>
+            <button type="button" id="keys-blacklist-modal" class="btn-five">Blackist Keys</button>
         </div>
     </div>
     <!--============= Mange Keys Section Ends Here =============-->
@@ -175,6 +176,23 @@
                     <input type="text"  name="changeEmailEmail" id="change-email-email" class="form-control keys-input">
                 </div>
                 <button type="button" class="confirm-btn" id="changeEmail-confirm">Update Email</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Unlock Key -->
+    <div id="blacklistKeys-modal" class="modal">
+        <!-- Modal Content -->
+        <div id="changeEmail-modal-content" class="modal-content">
+            <!-- <span class="close">&times;</span> -->
+            <h5 class="modal-heading" id="change-email-heading">Blacklist Keys</h5>
+            <!-- <p id="unlockKeyHeading">If the key is locked - this will unlock it</p> -->
+            <div id="blacklist-key-body" class="no-scroll"> 
+                <div class="inputGroup">
+                    <label for="keystoBlacklist">Keys</label>
+                    <textarea name="keystoBlacklist" class="blacklist-keys-textarea" id="blacklist-keys-textarea" placeholder="Paste keys to blacklist (Oner per line)"></textarea>
+                </div>
+                <button type="button" class="confirm-btn" id="blacklistKeys-confirm">Blacklist</button>
             </div>
         </div>
     </div>

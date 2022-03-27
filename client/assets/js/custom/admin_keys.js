@@ -23,6 +23,12 @@ document
     document.querySelector("#changeEmail-modal").style.display = "block";
   });
 
+document
+  .querySelector("#keys-blacklist-modal")
+  .addEventListener("click", () => {
+    document.querySelector("#blacklistKeys-modal").style.display = "block";
+  })
+
 window.onclick = function (event) {
   if (event.target == document.querySelector("#generateKeys-modal")) {
     document.querySelector("#generateKeys-modal").style.display = "none";
@@ -38,6 +44,10 @@ window.onclick = function (event) {
 
   if (event.target == document.querySelector("#changeEmail-modal")) {
     document.querySelector("#changeEmail-modal").style.display = "none";
+  }
+
+  if (event.target == document.querySelector("#blacklistKeys-modal")) {
+    document.querySelector("#blacklistKeys-modal").style.display = "none";
   }
 };
 
@@ -287,3 +297,36 @@ document
       toastr.message(err.message, "error", 5000);
     }
   });
+
+
+
+
+  document.querySelector("#blacklistKeys-confirm").addEventListener("click", async () => {
+    try {
+      const keyTextArea = document.querySelector("#blacklist-keys-textarea")
+
+      let keys = []
+
+      keys = keyTextArea.value.split("\n")
+
+      const options = {
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        method: "POST",
+        body: JSON.stringify({keys})
+      }
+
+      const request = await fetch("http://localhost:12345/api/blacklistkeys", options)
+      const response = await request.json()
+
+      toastr.message(response.message, (response.success) ? 'success' : 'error', 5000)
+
+      if (response.success) {
+        keyTextArea.value = ''
+      }
+    } catch(err) {
+      toastr.message(err.message, "error", 5000);
+    }
+
+  })

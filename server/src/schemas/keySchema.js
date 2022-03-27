@@ -28,6 +28,11 @@ export const keySchema = mongoose.Schema({
         type: Number,
         required: true,
         default: 0
+    },
+    blacklisted: {
+        type: Boolean,
+        required: true,
+        default: false
     }
 }, {
     timestamps: true
