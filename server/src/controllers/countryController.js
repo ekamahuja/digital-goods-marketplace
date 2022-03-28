@@ -1,20 +1,30 @@
 import {Country} from '../schemas/countrySchema.js'
-
+import fetch from 'node-fetch'
 
 export async function createCountry(req, res, next) {
-    const {name, countryCode} = req.body
-
-    if (!name || !countryCode) return res.status(400).json({success: false, message: "Please enter all fields"})
-    if (!name.length || countryCode.length !== 2) return res.status(400).json({success: false, message: "Invalid Country name or Country code"})
-
     try {
-        const newCountry = await Country.create({name, countryCode: countryCode.toUpperCase()})
+        let { countryCode } = req.body
+        countryCode = countryCode.toUpperCase()
 
-        return res.status(201).json({success: true, message: "Country succesfully created", country: {_id: newCountry._id, name: newCountry.name, countryCode: newCountry.countryCode}})
-    } catch (err) {
+        if (!countryCode) throw new Error('Please Provide a Country Code')
+        if (countryCode.length !== 2) throw new Error("Invalid country code")
+
+        const request = await fetch(`https://restcountries.com/v3.1/alpha/${countryCode}`)
+        const response = await request.json()
+        
+        const countryAlreadyExists = await Country.findOne({ countryCode })
+        if (countryAlreadyExists) throw new Error("Country already exists")
+
+        if (request.status == 404) throw new Error("Invalid country code")
+
+        const countryName = response[0].name.common
+
+        const newCountry = await Country.create({name: countryName, countryCode})
+
+        return res.status(201).json({success: true, message: "Country successfully created", country: newCountry})
+    } catch(err) {
         next(err)
     }
-
 }
 
 

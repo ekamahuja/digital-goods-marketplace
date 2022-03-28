@@ -29,7 +29,7 @@ countryFetchOptions.addEventListener("change", () => {
   document.querySelector(
     "#countryStock-modal-content"
   ).innerHTML = `<h5 class="modal-heading">${
-    data[0].name.charAt(0).toUpperCase() + data[0].name.slice(1).toLowerCase()
+    data[0].name
   } (${stockData.length} Upgrades Avaliable)</h5>`;
 
   stockData.forEach((item) => {
@@ -44,7 +44,6 @@ document
   .querySelector("#addCountry-confirm")
   .addEventListener("click", async () => {
     const addCountryBtn = document.querySelector("#addCountry-confirm");
-    const countryName = document.querySelector("#countryName").value;
     const countryCode = document.querySelector("#countryCode").value;
 
     addCountryBtn.disabled = true;
@@ -52,7 +51,7 @@ document
       "#addCountry-confirm"
     ).innerHTML = `<i class="fas fa-circle-notch fa-spin"></i> Loading...`;
 
-    const params = { name: countryName, countryCode: countryCode };
+    const params = { countryCode: countryCode };
     const options = {
       headers: { "Content-Type": "application/json" },
       method: "POST",
