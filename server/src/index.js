@@ -35,8 +35,6 @@ app.use(cors({
 }))
 
 
-
-
 // Application
 async function startApp() {
     console.clear();

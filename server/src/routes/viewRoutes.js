@@ -1,5 +1,5 @@
 import { Router } from "express";
-import adminClientRouteProtection from "../middlewares/adminClientProtection.js";
+import { adminViewOnly, adminAndModeratorViewOnly } from "../middlewares/viewRouteProtection.js"
 import {
   landingPage,
   upgradePage,
@@ -38,11 +38,11 @@ viewRoutes.get("/discord", discordRedirect);
 
 viewRoutes.get("/admin/", adminLoginPage);
 
-viewRoutes.get("/admin/dashboard", adminClientRouteProtection, adminDashboardPage);
+viewRoutes.get("/admin/dashboard", adminViewOnly, adminDashboardPage);
 
-viewRoutes.get("/admin/stocks", adminClientRouteProtection, adminStockPage);
+viewRoutes.get("/admin/stocks", adminViewOnly, adminStockPage);
 
-viewRoutes.get("/admin/keys", adminClientRouteProtection, adminKeysPage);
+viewRoutes.get("/admin/keys", adminAndModeratorViewOnly, adminKeysPage);
 
 
 

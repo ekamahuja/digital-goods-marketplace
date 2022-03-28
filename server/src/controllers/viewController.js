@@ -131,6 +131,8 @@ export const adminLoginPage = async (req, res, next) => {
   try {
     if (req.user && req.user.role == "admin") {
       res.redirect("/admin/dashboard");
+    } else if (req.user && req.user.role == "moderator") {
+      res.redirect("/admin/keys");
     } else {
       res.render("../../client/admin_login");
     }

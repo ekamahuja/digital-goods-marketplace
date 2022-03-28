@@ -1,12 +1,12 @@
 import express from 'express';
 const adminRoutes = express();
-import { adminOnly } from "../middlewares/adminOnly.js";
-import {getStats, updateConfig} from '../controllers/adminController.js'
+import { adminApiOnly } from "../middlewares/apiRouteProtection.js"
+import { getStats, updateConfig } from '../controllers/adminController.js'
 
 
 
-adminRoutes.get('/stats', adminOnly, getStats)
-adminRoutes.post('/config', adminOnly, updateConfig)
+adminRoutes.get('/stats', adminApiOnly, getStats)
+adminRoutes.post('/config', adminApiOnly, updateConfig)
 
 
 

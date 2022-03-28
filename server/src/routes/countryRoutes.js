@@ -1,17 +1,17 @@
 import express from 'express'
 const stockRoutes = express.Router();
 import { addStock, getStock, createCountry, deleteCountry } from '../controllers/countryController.js'
-import { adminOnly } from '../middlewares/adminOnly.js'
+import { adminApiOnly } from '../middlewares/apiRouteProtection.js'
 
 
 // create country
-stockRoutes.post('/country', adminOnly, createCountry)
+stockRoutes.post('/country', adminApiOnly, createCountry)
 
 // delete country
-stockRoutes.delete('/country', adminOnly, deleteCountry)
+stockRoutes.delete('/country', adminApiOnly, deleteCountry)
 
 // add stock
-stockRoutes.post('/stock', adminOnly, addStock)
+stockRoutes.post('/stock', adminApiOnly, addStock)
 
 //get stock
 stockRoutes.get('/stock', getStock)
