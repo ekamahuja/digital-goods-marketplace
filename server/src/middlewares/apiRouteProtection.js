@@ -1,4 +1,4 @@
-export function lol(req, res, next) {
+export function requireUser(req, res, next) {
     if (!req.user) {
         return res.status(403).send({
             sucess: false,
@@ -38,25 +38,13 @@ export function adminAndModeratorApiOnly(req, res, next) {
         })
     }
 
-    if (req.user.role !== "moderator") { 
+    if (req.user.role !== "admin" && req.user.role !== "moderator") { 
         return res.status(403).json({
             success: false,
-            message: "Must be a moderator to perfom this action"
+            message: "Must be an admin or a moderator to perfom this action"
         })
     }
 
     return next()
 }
 
-
-
-export function tryThis(req, res, next) {
-    if (!req.user) {
-        return res.status(401).json({
-            success: false,
-            message: "You are not authed"
-        })
-    }
-
-    return next()
-}
