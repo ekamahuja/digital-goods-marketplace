@@ -15,7 +15,7 @@ document.querySelector("#admin-login-btn").addEventListener("click", async funct
         body: JSON.stringify(param)
     }
 
-    const request = await fetch("http://localhost:12345/api/auth/session", options)
+    const request = await fetch("/api/auth/session", options)
     const response = await request.json()
     toastr.message(response.message, (response.success) ? 'success' : 'error', 5000)
     

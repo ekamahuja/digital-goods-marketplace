@@ -1,6 +1,6 @@
 document.querySelector("#logout").addEventListener("click", async() => {
     try {
-        const request = await fetch("http://localhost:12345/api/auth/session", {method: "DELETE"})
+        const request = await fetch("/api/auth/session", {method: "DELETE"})
         const response = await request.json()
 
         toastr.message(response.message, 'success', 5000)

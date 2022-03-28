@@ -7,7 +7,7 @@ let inviteLink;
 document.querySelector("#upgradeKey-input").addEventListener('input', async function() {
     if (document.querySelector("#upgradeKey-input").value.length < 4) return 
 
-    const request = await fetch(`http://localhost:12345/api/key?key=${document.querySelector("#upgradeKey-input").value}`)
+    const request = await fetch(`/api/key?key=${document.querySelector("#upgradeKey-input").value}`)
     const response = await request.json()
 
     if (request.status == 404) {
@@ -117,7 +117,7 @@ async function upgradeKey(key, email) {
         cache: "no-cache",
         body: JSON.stringify(params)
     }
-    const request = await fetch("http://localhost:12345/api/upgrade", options)
+    const request = await fetch("/api/upgrade", options)
     const response = await request.json()
     return response
 }

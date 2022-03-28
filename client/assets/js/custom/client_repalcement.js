@@ -16,7 +16,7 @@ async function getReplacement() {
         })
     }
 
-    const request = await fetch("http://localhost:12345/api/replacement", options)
+    const request = await fetch("/api/replacement", options)
     const response = await request.json();
 
 

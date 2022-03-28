@@ -13,7 +13,7 @@ for (let i = 0; i < allConfigButtons.length; i++) {
 async function updateConfig(key, value) {
   try {
     const request = await fetch(
-      `http://localhost:12345/admin/api/config?${key}=${value}`,
+      `/admin/api/config?${key}=${value}`,
       { method: "POST" }
     );
     const response = await request.json();

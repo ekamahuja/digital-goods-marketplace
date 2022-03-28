@@ -108,7 +108,7 @@ document
         body: JSON.stringify(params),
       };
 
-      const request = await fetch("http://localhost:12345/api/keys", options);
+      const request = await fetch("/api/keys", options);
       const response = await request.json();
 
       toastr.message(
@@ -171,7 +171,7 @@ document
         '<i class="fas fa-circle-notch fa-spin"></i> Fetching...';
 
       const request = await fetch(
-        `http://localhost:12345/api/key?key=${keySearchInput}&adminData=true`
+        `/api/key?key=${keySearchInput}&adminData=true`
       );
       const response = await request.json();
 
@@ -236,7 +236,7 @@ document
       '<i class="fas fa-circle-notch fa-spin"></i> Unlocking...';
 
     const request = await fetch(
-      `http://localhost:12345/api/unlockkey?key=${confirmUnlockKeyInput.value.toUpperCase()}`
+      `/api/unlockkey?key=${confirmUnlockKeyInput.value.toUpperCase()}`
     );
     const response = await request.json();
 
@@ -272,7 +272,7 @@ document
         '<i class="fas fa-circle-notch fa-spin"></i> Updating...';
 
       const request = await fetch(
-        `http://localhost:12345/api/updateemail?key=${updateEmailKeyInput.value.toUpperCase()}&email=${
+        `/api/updateemail?key=${updateEmailKeyInput.value.toUpperCase()}&email=${
           updateEmailEmailInput.value
         }`
       );
@@ -317,7 +317,7 @@ document
         body: JSON.stringify({keys})
       }
 
-      const request = await fetch("http://localhost:12345/api/blacklistkeys", options)
+      const request = await fetch("/api/blacklistkeys", options)
       const response = await request.json()
 
       toastr.message(response.message, (response.success) ? 'success' : 'error', 5000)

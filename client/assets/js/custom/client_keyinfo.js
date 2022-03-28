@@ -12,7 +12,7 @@ document.querySelector("#keySearch-input").addEventListener('input', async () =>
 
 
 async function getKeyInfo(isClicked) {
-    const request = await fetch(`http://localhost:12345/api/key?key=${document.querySelector("#keySearch-input").value.toUpperCase()}`)
+    const request = await fetch(`/api/key?key=${document.querySelector("#keySearch-input").value.toUpperCase()}`)
     const response = await request.json()
 
     const messageType = (response.success) ? 'success' : 'error'

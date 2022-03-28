@@ -3,7 +3,7 @@ const countryFetchOptions = document.querySelector("#countries-select");
 
 window.addEventListener("load", async () => {
   try {
-    const request = await fetch("http://localhost:12345/api/data/stock");
+    const request = await fetch("/api/data/stock");
     response = await request.json();
 
     if (response.success) {
@@ -58,7 +58,7 @@ document
       body: JSON.stringify(params),
     };
     const request = await fetch(
-      "http://localhost:12345/api/data/country",
+      "/api/data/country",
       options
     );
     const response = await request.json();
@@ -111,7 +111,7 @@ document
       };
 
       const request = await fetch(
-        "http://localhost:12345/api/data/country",
+        "/api/data/country",
         options
       );
       const response = await request.json();
@@ -193,7 +193,7 @@ document.querySelector("#add-stock-btn").addEventListener("click", async () => {
     };
 
     const request = await fetch(
-      "http://localhost:12345/api/data/stock",
+      "/api/data/stock",
       options
     );
     const response = await request.json();
