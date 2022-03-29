@@ -12,15 +12,12 @@ import adminRoutes from './adminRoutes.js'
 const app = express();
 
 function routes(app) {
-    // app.get('/', function(req, res) {
-    //     res.json({
-    //         sucess: true,
-    //         message: "Sucessfully running",
-    //         requestIp: req.headers['x-forwarded-for'] || req.socket.remoteAddress,
-    //     })
-    // })
 
-    app.use('/', viewRoutes);
+    app.get('/', async function(req, res, next) {
+        res.render('../../client/comming_soon')
+    })
+
+    // app.use('/', viewRoutes);
     
 
     app.use('/api/auth', authRoutes);
