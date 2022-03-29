@@ -2,7 +2,7 @@ import validator from 'validator';
 import { Key } from '../schemas/keySchema.js'
 import { getStock, ipToCountryCode } from '../helpers/upgradeHelper.js'
 import { upgradeLog } from '../schemas/upgradeLogSchema.js'
-import countryMap from '../config/countryMap.js'
+
 
 export async function upgradeUser(req, res, next) {
     try {

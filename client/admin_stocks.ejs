@@ -71,7 +71,7 @@
             <select name="countries" id="countries-select" class="countries-select">
                 <option selected disabled>Fetch Country Stock</option>
                 <% stock.forEach(item => {%>
-                    <option value="<%- item.countryCode %>"><%- item.name %></option>
+                    <option value="<%- item.countryCode %>"><%- item.name %> (<%- item.countryCode %>)</option>
                 <% });%>
             </select>
 
@@ -90,7 +90,7 @@
             <select name="country-stock" id="select-country-stock" class="countries-select">
                 <option selected disabled>Select country to add stock</option>
                 <% stock.forEach(item => {%>
-                    <option value="<%- item.countryCode %>"><%- item.name %></option>
+                    <option value="<%- item.countryCode %>"><%- item.name %> (<%- item.countryCode %>)</option>
                 <% });%>
             </select>
             <textarea class="add-stock-textarea" id="stock-data-textarea" placeholder='Paste Invite Address and Invite Link Seperated By "|"'></textarea>
@@ -146,7 +146,7 @@
                 <select class="countries-select" id="select-country-delete">
                     <option selected disabled>Select a country to delete</option>
                     <% stock.forEach(item => {%>
-                        <option value="<%- item.countryCode %>"><%- item.name %></option>
+                        <option value="<%- item.countryCode %>"><%- item.name %> (<%- item.countryCode %>)</option>
                     <% });%>
                 </select>
             </div>

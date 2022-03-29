@@ -1,4 +1,3 @@
-import SpotifyWebApi from 'spotify-web-api-node'
 import { getStock, ipToCountryCode, countryCodeToCountry } from '../helpers/upgradeHelper.js'
 import { spotifyUser } from '../helpers/replacementHelper.js'
 import { Key } from '../schemas/keySchema.js'

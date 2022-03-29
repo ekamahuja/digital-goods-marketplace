@@ -79,13 +79,12 @@
                     <li>
                         <a href="/#pricing">Pricing</a>
                     </li>
-                    
-            
+
                     <li>
                         <a href="/#faq">FAQs</a>
                     </li>
                     <li class="d-sm-none">
-                        <a href="/discor" class="m-0 header-button">Join Discord</a>
+                        <a href="/discord" class="m-0 header-button">Join Discord</a>
                     </li>
                 </ul>
                 <div class="header-bar d-lg-none">
@@ -171,7 +170,8 @@
 
                         <div class="banner-button-group">
                             <a href="/#pricing" class="button-4" id="switch-btn">Purchase a key</a>
-                            <a target="_tab" href="//youtube.com" class="button-4 active">How to upgrade</a>
+                            <a id="check-stock" class="button-4 active cursor" disabled>Check Stock</a>
+                            <!-- <a target="_tab" href="//youtube.com" class="button-4 active">How to upgrade</a> -->
                         </div>
                     </div>
                 </div>
@@ -292,7 +292,15 @@
 
 
 
-
+    <!--============= Modals Section Starts Here =============-->
+    <!-- Country Stock Data Modal -->
+    <div id="countryStock-modal" class="modal">
+        <!-- Modal Content -->
+        <div id="countryStock-modal-content" class="modal-content">
+            <!-- <span class="close">&times;</span> -->
+        </div>
+    </div>
+    <!--============= Modals Section Ends Here =============-->
 
 
 
@@ -311,6 +319,7 @@
     <script src="./assets/js/paroller.js"></script>
     <script src="./assets/js/main.js"></script>    
     <script src="./assets/js/custom/client_upgrade.js"></script>
+    <script src="./assets/js/custom/stock_popup.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/js-toastr@1.1.1/toast.min.js"></script>
 </body>
 </html>

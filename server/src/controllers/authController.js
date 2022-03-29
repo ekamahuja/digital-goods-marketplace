@@ -4,7 +4,8 @@ import {createMemorySession, deleteMemorySession} from '../helpers/authHelper.js
 
 export async function createSession(req, res, next) {
     try {
-        const {username, password} = req.body
+        let {username, password} = req.body
+        username = username.toLowerCase()
 
         const user = await User.findOne({username})
 

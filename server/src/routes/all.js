@@ -17,7 +17,7 @@ function routes(app) {
         res.render('../../client/comming_soon')
     })
 
-    // app.use('/', viewRoutes);
+    app.use('/', viewRoutes);
     
 
     app.use('/api/auth', authRoutes);
