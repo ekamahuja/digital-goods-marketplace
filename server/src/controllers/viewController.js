@@ -100,6 +100,20 @@ export async function replacementCallBack(req, res, next) {
 }
 
 
+export const deleteReplacementToken = async (req, res, next) => {
+  try {
+    res.cookie("spotifyToken", null, {
+      maxAge: 0,
+      httpOnly: true
+    })
+
+
+    res.send({success: true, message: "Signing out.."})
+  } catch (err) {
+    res.render("../../client/500", { err });
+  }
+}
+
 
 export const discordRedirect = async (req, res, next) => {
   try {

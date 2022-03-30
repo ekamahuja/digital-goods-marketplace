@@ -13,6 +13,7 @@ import {
   adminDashboardPage,
   adminStockPage,
   adminKeysPage,
+  deleteReplacementToken,
 } from "../controllers/viewController.js";
 
 
@@ -26,6 +27,8 @@ viewRoutes.get("/upgrade", upgradePage);
 viewRoutes.get("/keyinfo", keyInfoPage);
 
 viewRoutes.get("/replacement", replacementPage);
+
+viewRoutes.get("/delete-replacement-token", deleteReplacementToken)
 
 viewRoutes.get("/transfer", playlistTransferPage)
 viewRoutes.get("/playlist-transfer", playlistTransferPage)

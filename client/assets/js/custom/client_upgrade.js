@@ -2,6 +2,7 @@ let isValidKey = false;
 let isValidEmail = false;
 let copiedAddress = false;
 let inviteLink;
+let inviteAddress
 
 // Check valid upgrade key
 document.querySelector("#upgradeKey-input").addEventListener('input', async function() {
@@ -93,7 +94,8 @@ document.querySelector("#upgrade-btn").addEventListener('click', async function(
         document.querySelector('#upgrade-form').style.display = 'none'
         document.querySelector('#success-upgrade').style.display = 'block'
         inviteLink = upgradeData.upgradeData.inviteLink
-        document.querySelector("#inviteAddress").innerHTML = `${upgradeData.upgradeData.inviteAddress}`
+        inviteAddress = upgradeData.upgradeData.inviteAddress
+        document.querySelector("#inviteAddress").innerHTML = `Click me to copy the address`
         document.querySelector("#inviteCountry").innerHTML = `${upgradeData.upgradeData.inviteCountry}`
         document.querySelector("#switch-btn").href = '/discord'
         document.querySelector("#switch-btn").innerHTML = `<i class="fa-brands fa-discord"></i> Join Discord`
@@ -106,7 +108,6 @@ async function upgradeKey(key, email) {
     const params = {
         key,
         email,
-        countryC: "AU"
     }
 
     const options = {
@@ -132,7 +133,7 @@ document.querySelector("#inviteLink").addEventListener('click', () => {
 })
 
 document.querySelector("#inviteAddress").addEventListener("click", function() {
-    const copyText = document.querySelector("#inviteAddress").textContent;
+    const copyText = inviteAddress;
     navigator.clipboard.writeText(copyText);
     copiedAddress = true
     toastr.message("Address successfully copied", "success", 3000)

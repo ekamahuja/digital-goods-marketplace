@@ -44,7 +44,7 @@ export const spotifyUser = async (bearerToken) => {
 
         return {
                 id: response.id,
-                email: response.email,
+                email: (response.email).toLowerCase(),
                 plan: (response.product) ? response.product : null,
                 country: response.country,
             }

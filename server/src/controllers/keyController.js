@@ -35,7 +35,8 @@ export async function generateKeys(req, res, next) {
 
 export async function getKeyInfo(req, res, next) {
     try {
-        const {key, adminData} = req.query
+        let {key, adminData} = req.query
+        key = key.toUpperCase()
         if (!key) throw new Error("Key missing")
 
         const keyInfo = await Key.findOne({value: key}).select("-__v").select("-createdAt").select("-updatedAt")
@@ -58,16 +59,21 @@ export async function getKeyInfo(req, res, next) {
             }
         } else {
             if (adminData) {
-                if (req.user && req.user.role == 'admin') {
-                    keyData = {
-                        key,
-                        email: keyUpgradeData.email,
-                        used: keyInfo.used,
-                        type: keyInfo.type,
-                        replacementsClaimed: keyInfo.replacementsClaimed,
-                        totalReplacementsClaimed: keyInfo.totalReplacementsClaimed,
-                        upgradeData: keyUpgradeData
+                if (req.user) {
+                    if (req.user.role == 'admin' || req.user.role == 'moderator') {
+                        keyData = {
+                            key,
+                            email: keyUpgradeData.email,
+                            used: keyInfo.used,
+                            type: keyInfo.type,
+                            replacementsClaimed: keyInfo.replacementsClaimed,
+                            totalReplacementsClaimed: keyInfo.totalReplacementsClaimed,
+                            upgradeData: keyUpgradeData
+                        }
+                    } else {
+                        throw new Error("Must be an admin or a moderator to perform this action")
                     }
+                    
                 } else {
                     throw new Error("Invalid session")
                 }

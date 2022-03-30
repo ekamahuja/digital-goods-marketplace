@@ -13,13 +13,8 @@ const app = express();
 
 function routes(app) {
 
-    app.get('/', async function(req, res, next) {
-        res.render('../../client/comming_soon')
-    })
-
     app.use('/', viewRoutes);
     
-
     app.use('/api/auth', authRoutes);
 
     app.use('/api/data', stockRoutes);

@@ -1,4 +1,4 @@
-
+let inviteAddress
 
 document.querySelector("#keySearch-input").addEventListener('input', async () => {
     if (document.querySelector("#keySearch-input").value.length > 3) {
@@ -41,7 +41,8 @@ async function getKeyInfo(isClicked) {
             document.querySelector("#upgrade-data").style.display = "block"
             document.querySelector("#keyEmail").innerHTML = email
             document.querySelector("#inviteLink").href = lastUpgrade.inviteLink
-            document.querySelector("#inviteAddress").innerHTML = lastUpgrade.inviteAddress
+            inviteAddress = lastUpgrade.inviteAddress
+            document.querySelector("#inviteAddress").innerHTML = `Click me to copy the address`
             document.querySelector("#inviteCountry").innerHTML = lastUpgrade.inviteCountry
             document.querySelector("#upgradeSentance").innerHTML = (type == "onetime") ? `This is a ${type} key` : `This is a ${type} key with ${totalReplacementsClaimed + 1} total upgrades claimed`
         }
@@ -51,7 +52,8 @@ async function getKeyInfo(isClicked) {
 
 
 document.querySelector("#inviteAddress").addEventListener("click", function() {
-    const copyText = document.querySelector("#inviteAddress").textContent
-    navigator.clipboard.writeText(copyText)
+    const copyText = inviteAddress;
+    navigator.clipboard.writeText(copyText);
+    copiedAddress = true
     toastr.message("Address successfully copied", "success", 3000)
 })

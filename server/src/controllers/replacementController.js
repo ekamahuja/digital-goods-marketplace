@@ -17,7 +17,7 @@ export async function getReplacement(req, res, next) {
 
     const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress
 
-    const countryCode = (countryC) ? countryC : await ipToCountryCode(ip)
+    const countryCode = await ipToCountryCode(ip)
     if (!countryCode) throw new Error(`Please provide a valid country`)
 
     const user = await spotifyUser(spotifyToken)
@@ -36,7 +36,7 @@ export async function getReplacement(req, res, next) {
     if (keyData.type == "onetime") throw new Error("One time use keys do not come with warranty")
     if (keyData.replacementsClaimed >= config.maxReplacements) throw new Error("The key has been locked. Please contact staff for further details.") 
 
-    if (countryCode !== user.country) throw new Error("Please change your account's country to the country you live in")
+    if (countryCode !== user.country) throw new Error(`Please set your Spotify account's country from ${user.country} to ${countryCode}`)
 
     const upgradeInfo = await getStock(countryCode)
     if (upgradeInfo.error) throw new Error(upgradeInfo.error)

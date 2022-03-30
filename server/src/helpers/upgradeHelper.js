@@ -93,7 +93,7 @@ export const checkInviteLink = async (cookie, inviteLink) => {
             return true
         } else {
             // this should be false in production
-            return true
+            return false
         }
     
 }
@@ -101,10 +101,9 @@ export const checkInviteLink = async (cookie, inviteLink) => {
 
 export async function ipToCountryCode(ip) {
     try {
-        const request = await fetch(`http://ip-api.com/json/${ip}`)
+        const request = await fetch(`https://ipapi.co/${ip}/json`)
         const response = await request.json();
-        return response.countryCode
-        // return {country: response.country, countryCode: response.countryCode}
+        return response.country_code
     } catch (err) {
         return {success: false, error: err.message, stack: err}
     }

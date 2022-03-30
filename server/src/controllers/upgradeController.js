@@ -6,7 +6,8 @@ import { upgradeLog } from '../schemas/upgradeLogSchema.js'
 
 export async function upgradeUser(req, res, next) {
     try {
-        const { email, key, countryC } = req.body
+        let { email, key, countryC } = req.body
+        email = email.toLowerCase()
         if (!email || !key) throw new Error("Missing params")
         if (!validator.isEmail(email)) throw new Error(`Invalid email address`)
 
@@ -19,7 +20,8 @@ export async function upgradeUser(req, res, next) {
         if (emailAlreadyUsed) throw new Error(`The email is already linked with another key`)
 
         const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress
-        const countryCode = (countryC) ? countryC : await ipToCountryCode(ip)
+
+        const countryCode = await ipToCountryCode(ip)
         if (!countryCode) throw new Error(`Please provide a valid country`)
         
         const upgradeInfo = await getStock(countryCode)
