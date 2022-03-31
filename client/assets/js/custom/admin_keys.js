@@ -162,6 +162,11 @@ async function copyGeneratedKeys() {
 document
   .querySelector("#searchKeys-confirm")
   .addEventListener("click", async () => {
+    searchKey()
+  });
+
+
+  async function searchKey() {
     try {
       const searchKeyBtn = document.querySelector("#searchKeys-confirm");
       const keySearchInput = document.querySelector("#keys-search").value;
@@ -213,17 +218,21 @@ document
       document.querySelector("#dataKeyInfo-totalRepalcements").innerHTML =
         totalReplacementsClaimed;
 
+
+      document.querySelector("#dataKeyInfo-intialUpgradeTime").innerHTML = response.keyData.upgradeData.createdAt
+      document.querySelector("#dataKeyInfo-latestReplacementTime").innerHTML = response.keyData.upgradeData.updatedAt
+
       upgradeData.upgrades.forEach((upgrade) => {
         const upgradeDataDiv = document.createElement("div");
         upgradeDataDiv.classList.add("keyinfo-upgrades");
         upgradeDataDiv.innerHTML = `<p>Upgrade Link: <a href="${upgrade.inviteLink}">Invite Link</a></p><p>Upgrade Address: ${upgrade.inviteAddress}</p><p>Upgrade Country: ${upgrade.inviteCountry}</p><p>User Email: ${upgrade.userEmail}</p><p>User IP: ${upgrade.userIp}</p>`;
         document.querySelector("#keyinfo-data").appendChild(upgradeDataDiv);
       });
+
     } catch (err) {
       toastr.message(err.message, "error", 5000);
     }
-  });
-
+  }
 document
   .querySelector("#unlockKeys-confirm")
   .addEventListener("click", async () => {
@@ -330,3 +339,9 @@ document
     }
 
   })
+
+
+  async function searchAnotherKey() {
+    document.querySelector("#searchKeys-modal-content").innerHTML = `<h5 class="modal-heading"  id="search-key-heading">Search Key</h5><p id="searchKeyHeading">Searching key will grab all data stored including the key info itself as well as it's upgrade data</p><div id="search-keys-body" class="no-scroll"> <div class="inputGroup"><label for="keySearch">Key</label><input type="text"  name="keySearch" id="keys-search" class="form-control keys-input"></div><button type="button" onclick="searchKey()" class="confirm-btn" id="searchKeys-confirm">Search</button></div><div class="keyinfo-content" id="keyinfo-data"><p class="keyinfo-info">Key: <span id="dataKeyInfo-key"></span></p><p class="keyinfo-info">Current Email: <span id="dataKeyInfo-email"></span></p><p class="keyinfo-info">Used: <span id="dataKeyInfo-used"></span></p><p class="keyinfo-info">Type: <span id="dataKeyInfo-type"></span></p><p class="keyinfo-info">Current Replacements: <span id="dataKeyInfo-currentReplacements"></span></p><p class="keyinfo-info">Total Replacements: <span id="dataKeyInfo-totalRepalcements"></span></p><button onclick="searchAnotherKey()"type="button" class="confirm-btn search-another-key" id="search-another-key-btn">Search Another Key</button></div>`
+  }
+

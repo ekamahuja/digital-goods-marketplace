@@ -143,6 +143,10 @@
 
                                     <form id="replacement-form" action="javascript:getReplacement()" class="account-form">
                                         <div class="form-group text-center">
+                                            <div class="form-group" id="upgradeCountry-input-formGroup">
+                                                <label for="upgradeCountry-input">Country Auto Selected Based on Your IP</label>
+                                                <input type="text" id="upgradeCountry-input" value="Loading..." disabled>
+                                            </div>
                                             <button id="replacement-btn" class="mt-2 mb-2"><i class="fa-brands fa-spotify"></i> Claim Replacement</button>
                                             <a id="delete-replacement-token" class="cursor">Sign out</a>
                                         </div>
@@ -162,10 +166,10 @@
                                 </div>
                             </div>
 
-                        <!-- <div class="banner-button-group">
-                            <a href="/#pricing" class="button-4">Purchase a key</a>
-                            <a target="_tab" href="//youtube.com" class="button-4 active">How to upgrade</a>
-                        </div> -->
+                            <div class="banner-button-group">
+                                <a href="#" class="button-4" id="switch-btn">Tutorials</a>
+                                <a id="check-stock" class="button-4 active cursor" disabled>Check Stock</a>
+                            </div>
                     </div>
                 </div>
                 <div class="col-lg-5">
@@ -284,9 +288,15 @@
     <!--============= Footer Section Ends Here =============-->
 
 
-
-
-
+     <!--============= Modals Section Starts Here =============-->
+    <!-- Country Stock Data Modal -->
+    <div id="countryStock-modal" class="modal">
+        <!-- Modal Content -->
+        <div id="countryStock-modal-content" class="modal-content">
+            <!-- <span class="close">&times;</span> -->
+        </div>
+    </div>
+    <!--============= Modals Section Ends Here =============-->
 
 
     <!-- Scripts -->
@@ -304,6 +314,7 @@
     <script src="./assets/js/paroller.js"></script>
     <script src="./assets/js/main.js"></script>    
     <script src="./assets/js/custom/client_repalcement.js"></script>
+    <script src="./assets/js/custom/stock_popup.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/js-toastr@1.1.1/toast.min.js"></script>
 </body>
 </html>

@@ -73,3 +73,13 @@ window.onclick = function (event) {
       document.querySelector("#countryStock-modal").style.display = "none";
     }
 };
+
+
+window.addEventListener('load', async () => {
+    const request = await fetch("https://ipapi.co/json")
+    const response = await request.json()
+
+    const country = response.country_name
+
+    document.querySelector("#upgradeCountry-input").value = country || "Could not fetch country"
+})
