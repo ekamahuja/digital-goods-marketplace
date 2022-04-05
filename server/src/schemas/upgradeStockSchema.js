@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 
-export const countrySchema = mongoose.Schema({
+export const upgradeStockSchema = mongoose.Schema({
     name: {
         type: String,
         required: true,
@@ -27,4 +27,4 @@ export const countrySchema = mongoose.Schema({
 
 
 
-export const Country = mongoose.model('Stock', countrySchema)
+export const upgradeStock = mongoose.model('Stock', upgradeStockSchema)

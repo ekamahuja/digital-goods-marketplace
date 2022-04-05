@@ -14,7 +14,7 @@ stockModalFetchBtn.addEventListener("click", async () => {
 
 
 const grabStock = async () => {
-    const {success, message, totalCountries, totalStock, data} = await stockDataFetchAPI
+    const {success, stockWithCountries, totalStock, data} = await stockDataFetchAPI
 
 
     if (success) {
@@ -22,7 +22,7 @@ const grabStock = async () => {
         
         const stockInfo = document.createElement("div")
         stockInfo.className = "countryStock-modal-item bg-diff";
-        stockInfo.innerHTML = `<p>Total Countries: ${totalCountries}</p><p>Total Stock: ${totalStock}</p>`
+        stockInfo.innerHTML = `<p>Total Countries With Stock: ${stockWithCountries}</p><p>Total Stock Avaliable: ${totalStock}</p>`
         document.querySelector("#countryStock-modal-content").appendChild(stockInfo);
 
         document.querySelector("#countryStock-modal").style.display = "block";
@@ -51,14 +51,19 @@ window.addEventListener('load', async () => {
     })
 
     let totalStock = 0
+    let stockWithCountries = 0
     data.forEach(item => {
         totalStock = totalStock + item.stock
+        if (item.stock > 0) {
+            stockWithCountries++
+        }
     })
 
     stockDataFetchAPI = {
         success,
         message,
         totalCountries,
+        stockWithCountries,
         totalStock,
         data
     }

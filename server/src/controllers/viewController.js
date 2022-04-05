@@ -2,7 +2,7 @@ import fetch from "node-fetch";
 import { generateAuthUrl } from "../helpers/replacementHelper.js";
 import { Config } from "../schemas/configSchema.js";
 import { getStats } from "../helpers/adminHelper.js";
-import { Country } from "../schemas/countrySchema.js";
+import { upgradeStock } from "../schemas/upgradeStockSchema.js";
 
 
 
@@ -192,7 +192,7 @@ export const adminDashboardPage = async (req, res, next) => {
 export const adminStockPage = async (req, res, next) => {
   try {
     const { totalCountries, totalKeys, totalStock } = await getStats();
-    const stock = await Country.find({});
+    const stock = await upgradeStock.find({});
     res.render("../../client/admin_stocks", {
       totalCountries,
       totalKeys,

@@ -31,6 +31,7 @@
     "nodemailer": "^6.7.3",
     "puppeteer-extra": "^3.2.3",
     "puppeteer-extra-plugin-recaptcha": "^3.5.0",
+    "puppeteer-page-proxy": "^1.2.8",
     "puppeteer-screen-recorder": "^2.0.2",
     "random-key": "^0.3.2",
     "spotify-web-api-node": "^5.0.2",

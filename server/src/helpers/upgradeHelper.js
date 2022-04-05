@@ -1,4 +1,4 @@
-import {Country} from '../schemas/countrySchema.js'
+import {upgradeStock} from '../schemas/upgradeStockSchema.js'
 import {cookie} from './getCookies.js'
 import fetch from 'node-fetch'
 import {Config} from '../schemas/configSchema.js'
@@ -10,7 +10,7 @@ export const getStock = async (countryCode) => {
     try {
         if (countryCode.length !== 2) throw new Error("Invalid country code provided")
 
-        const country = await Country.findOne( { countryCode })
+        const country = await upgradeStock.findOne( { countryCode })
         if (!country) throw new Error('Country does not exist')
 
         const stock = (country) ? country.stock : null
@@ -40,7 +40,7 @@ export const getStock = async (countryCode) => {
 
             validStock = await checkInviteLink(authCookie, inviteLink)
 
-            await Country.updateOne({ countryCode }, {"$pull": {stock: {"_id": stockId}}})
+            await upgradeStock.updateOne({ countryCode }, {"$pull": {stock: {"_id": stockId}}})
             amountOfFails++
             i++
         }

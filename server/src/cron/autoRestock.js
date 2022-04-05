@@ -1,6 +1,6 @@
 import cron from 'cron'
 import { Config } from '../schemas/configSchema.js'
-import { Country } from '../schemas/countrySchema.js'
+import { upgradeStock } from '../schemas/upgradeStockSchema.js'
 import { checkInviteLink } from '../helpers/upgradeHelper.js'
 import { usedStock } from '../schemas/usedStock.js'
 
