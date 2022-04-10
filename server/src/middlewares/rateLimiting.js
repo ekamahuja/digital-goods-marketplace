@@ -34,7 +34,7 @@ export const apiStockLimiter = rateLimit({
     windowMs: 30 * 60 * 1000,
     max: async (req, res) => {
         if (req.user) return 9999 
-        return 30
+        return 3
     },
     standardHeaders: true,
     legacyHeaders: false,
