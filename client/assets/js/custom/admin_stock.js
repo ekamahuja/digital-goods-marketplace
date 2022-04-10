@@ -177,7 +177,7 @@ document.querySelector("#add-stock-btn").addEventListener("click", async () => {
 
     const stockSeperatedByLine = stockInput.value.split("\n");
     stockSeperatedByLine.forEach((line) => {
-      let lineSplit = line.split("|");
+      let lineSplit = line.split("	");
       let link = lineSplit[1].match("https")
         ? lineSplit[1]
         : `https://www.spotify.com/us/family/join/invite/${lineSplit[1]}`;
