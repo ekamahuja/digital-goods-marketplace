@@ -39,6 +39,7 @@ export const apiStockLimiter = rateLimit({
     standardHeaders: true,
     legacyHeaders: false,
     handler: (req, res, next, options) => {
+        console.log("Ratelimited")
         res.status(options.statusCode).json({success: false, message: options.message})
     }
 })
