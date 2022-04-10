@@ -18,7 +18,7 @@ function routes(app) {
     
     app.use('/api/auth', authRoutes);
 
-    app.use('/api/data', apiStockLimiter, stockRoutes);
+    app.use('/api/data', stockRoutes);
 
     app.use('/api/',  apiKeyLimiter, keyRoutes);
 

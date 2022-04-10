@@ -5,7 +5,7 @@ export const apiLimiter = rateLimit({
     windowMs: 60 * 60 * 1000,
     max: async (req, res) => {
         if (req.user) return 9999 
-        return 120
+        return 100
     },
     standardHeaders: true,
     legacyHeaders: false,
