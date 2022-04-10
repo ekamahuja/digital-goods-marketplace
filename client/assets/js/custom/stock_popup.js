@@ -1,3 +1,4 @@
+let userCountry;
 let stockDataFetchAPI;
 const stockModalFetchBtn = document.querySelector("#check-stock")
 
@@ -39,9 +40,18 @@ const grabStock = async () => {
     return true
 }
 
+window.addEventListener('load', async () => {
+    const request = await fetch("https://ipapi.co/json")
+    const response = await request.json()
+
+    const country = response.country_name
+    userCountry = response.country
+
+    document.querySelector("#upgradeCountry-input").value = country || "Could not fetch country"
+})
 
 window.addEventListener('load', async () => {
-    const request = await fetch("/api/data/stock")
+    const request = await fetch("https://upgrader.pw/api/data/stock")
     const {success, message, totalCountries, data} = await request.json()
 
     data.sort(function (a, b) {
@@ -69,6 +79,16 @@ window.addEventListener('load', async () => {
     }
 
     stockModalFetchBtn.disabled = false
+
+    setTimeout(() => {
+        userCountryData = stockDataFetchAPI.data.find(item => item.countryCode == userCountry)
+        console.log(userCountryData)
+        if (!userCountryData || userCountryData.stock == 0) {
+            createAlert("It looks like your country is not in stock! If you own a VPN, then you may follow our <button onclick='vpnmodal()' href='#'>VPN trick</button> to bypass the error. If you do not own a VPN, you may wait for a restock. <a href='/discord' target='_tab'>Join our Discord</a> to know about the next restock and more.", "info")
+        }
+    }, 200)
+    
+
 });
 
 
@@ -77,14 +97,42 @@ window.onclick = function (event) {
     if (event.target == document.querySelector("#countryStock-modal")) {
       document.querySelector("#countryStock-modal").style.display = "none";
     }
+
+    if (event.target == document.querySelector("#vpn-modal")) {
+        document.querySelector("#vpn-modal").style.display = "none";
+      }
 };
 
 
-window.addEventListener('load', async () => {
-    const request = await fetch("https://ipapi.co/json")
-    const response = await request.json()
+function vpnmodal() {
+    document.querySelector("#vpn-modal").style.display = 'block'
+}
 
-    const country = response.country_name
 
-    document.querySelector("#upgradeCountry-input").value = country || "Could not fetch country"
-})
+
+
+async function createAlert(message, type) {
+    const upgradeForm = document.querySelector("#upgrade-form")
+    const replacementForm = document.querySelector("#replacement-form")
+
+    if (upgradeForm) {
+        const alertDiv = document.createElement("div")
+        alertDiv.className = `upgrader-alert ${type}`
+
+        alertDiv.innerHTML=`<p>${message}</p>`
+
+        upgradeForm.prepend(alertDiv)
+    } 
+    
+    
+    if (replacementForm) {
+        const alertDiv = document.createElement("div")
+        alertDiv.className = `upgrader-alert ${type}`
+
+        alertDiv.innerHTML=`<p>${message}</p>`
+
+        replacementForm.prepend(alertDiv)
+    }
+
+    
+}

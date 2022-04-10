@@ -66,7 +66,7 @@ document.querySelector("#upgrade-btn").addEventListener('click', async function(
     }
 
     upgradeBtn.disabled = true
-    upgradeBtn.innerHTML = '<i class="fa-brands fa-discord"></i> Loading...'
+    upgradeBtn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Loading...'
     emailInput.disabled = true
 
     const upgradeData = await upgradeKey(document.querySelector('#upgradeKey-input').value, (document.querySelector('#upgradeEmail-input').value).toLowerCase())
@@ -138,4 +138,5 @@ document.querySelector("#inviteAddress").addEventListener("click", function() {
     copiedAddress = true
     toastr.message("Address successfully copied", "success", 3000)
 })
+
 

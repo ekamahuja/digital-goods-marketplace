@@ -2,6 +2,10 @@ let copiedAddress = false;
 let inviteLink
 let inviteAddress
 
+document.querySelector("#replacement-btn").addEventListener("click", () => {
+    getReplacement()
+  })
+
 async function getReplacement() {
     document.querySelector("#replacement-btn").disabled = true
     document.querySelector("#replacement-btn").innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Loading...'

@@ -7,7 +7,7 @@ import chalk from 'chalk'
 async function connectDB() {
     try {
         const connect = await mongoose.connect(process.env.MONGO_URI)
-        consola.success(`Successfully connected to MongoDB: ${chalk.bold.blue(connect.connection.host)}`)
+        consola.success(`Successfully connected to MongoDB: ${chalk.bold.green(connect.connection.host)}`)
     } catch (err) {
         consola.error(`Database connection error: ${chalk.bold.red(err.message)}`)
         process.exit()

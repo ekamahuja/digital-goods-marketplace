@@ -40,11 +40,12 @@ async function startApp() {
     console.log('=========================================================================================')
     await connectDB()
     const port = process.env.PORT || 8000
+    const ip = process.env.IP || '127.0.0.1'
     app.listen(port, () => {
-        consola.success(`The server is successfully listening on port ${chalk.bold.blue(port)}`)
+        consola.success(`The server is successfully listening on ${chalk.bold.green(ip)}:${chalk.bold.green(port)} (IP:PORT)`)
+        consola.success(`Website: ${chalk.bold.green(process.env.CLIENT_URL)}`)
         console.log('=========================================================================================')
     })
-
 
     // Intialize server routes from routes folder
     routes(app)
