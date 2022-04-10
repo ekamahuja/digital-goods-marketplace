@@ -2,7 +2,7 @@ import rateLimit from 'express-rate-limit'
 
 
 export const apiLimiter = rateLimit({
-    windowMs: 60 * 60 * 1000,
+    windowMs: 60 * 60000,
     max: async (req, res) => {
         if (req.user) return 9999 
         return 100
@@ -16,7 +16,7 @@ export const apiLimiter = rateLimit({
 
 
 export const apiKeyLimiter = rateLimit({
-    windowMs: 30 * 60 * 1000,
+    windowMs: 30 * 60000,
     max: async (req, res) => {
         if (req.user) return 9999 
         return 180
@@ -31,7 +31,7 @@ export const apiKeyLimiter = rateLimit({
 
 
 export const apiStockLimiter = rateLimit({
-    windowMs: 30 * 60 * 1000,
+    windowMs: 30 * 60000,
     max: async (req, res) => {
         if (req.user) return 9999 
         return 3
