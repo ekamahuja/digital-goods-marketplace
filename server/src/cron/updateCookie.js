@@ -4,7 +4,7 @@ import { cookie } from '../helpers/getCookies.js'
 import { Config } from '../schemas/configSchema.js'
 
 
-const updateAuthCookie = new CronJob('* * * * *', async function() {
+const updateAuthCookie = new CronJob('0 */12 * * *', async function() {
     try {
         consola.info("Updating auth cookies")
         const newAuthCookie = await cookie()
