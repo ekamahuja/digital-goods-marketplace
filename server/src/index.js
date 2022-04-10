@@ -15,7 +15,7 @@ import './cron/cronjob.js'
 
 
 // Variables
-const numberOfCores = cpus().length / 2
+const numberOfCores = cpus().length
 console.log(numberOfCores)
 const app = express()
 
