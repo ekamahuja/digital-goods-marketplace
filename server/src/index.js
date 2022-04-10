@@ -1,5 +1,7 @@
 // Import packages and files
 import 'dotenv/config'
+import cluster from 'cluster'
+import { cpus } from 'os'
 import express from 'express'
 import cors from 'cors'
 import consola from 'consola'
@@ -13,6 +15,8 @@ import './cron/cronjob.js'
 
 
 // Variables
+const numberOfCores = cpus().length / 2
+console.log(numberOfCores)
 const app = express()
 
 // EJS setup
@@ -34,14 +38,38 @@ app.use(cors({
 }))
 
 
+
+
+if (cluster.isPrimary) {
+    console.log(`Primary ${process.pid} is running`);
+
+    for (let i = 0; i < numberOfCores; i++) {
+        cluster.fork()
+    }
+
+    cluster.on('exit', (worker, code, signal) => {
+        console.log(`worker ${worker.process.pid} died`);
+        cluster.fork()
+    });
+
+} else {
+    startApp();
+}
+
+
+
+
+
+
 // Application
 async function startApp() {
-    console.clear();
+    // console.clear();
     console.log('=========================================================================================')
     await connectDB()
     const port = process.env.PORT || 8000
     const ip = process.env.IP || '127.0.0.1'
     app.listen(port, ip, () => {
+        consola.success(`Worker ${process.pid} started`)
         consola.success(`The server is successfully listening on ${chalk.bold.green(ip)}:${chalk.bold.green(port)} (IP:PORT)`)
         consola.success(`Website: ${chalk.bold.green(process.env.CLIENT_URL)}`)
         console.log('=========================================================================================')
@@ -55,5 +83,5 @@ async function startApp() {
 
 
 // Start application
-startApp();
+
 
