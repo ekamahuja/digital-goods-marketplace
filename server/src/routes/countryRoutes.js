@@ -2,7 +2,6 @@ import express from 'express'
 const stockRoutes = express.Router();
 import { addStock, getStock, createCountry, deleteCountry } from '../controllers/countryController.js'
 import { adminApiOnly } from '../middlewares/apiRouteProtection.js'
-import { apiStockLimiter } from '../middlewares/rateLimiting.js'
 
 
 // create country
@@ -15,7 +14,7 @@ stockRoutes.delete('/country', adminApiOnly, deleteCountry)
 stockRoutes.post('/stock', adminApiOnly, addStock)
 
 //get stock
-stockRoutes.get('/stock', apiStockLimiter, getStock)
+stockRoutes.get('/stock', getStock)
 
 
 

@@ -8,7 +8,6 @@ import replacementRoutes from './replacementRoutes.js'
 import viewRoutes from './viewRoutes.js'
 import sellixRoutes from './sellixRoutes.js'
 import adminRoutes from './adminRoutes.js'
-import { apiKeyLimiter, apiStockLimiter, apiLimiter } from '../middlewares/rateLimiting.js'
 
 const app = express();
 
@@ -20,11 +19,11 @@ function routes(app) {
 
     app.use('/api/data', stockRoutes);
 
-    app.use('/api/',  apiKeyLimiter, keyRoutes);
+    app.use('/api/', keyRoutes);
 
-    app.use('/api/', apiLimiter, upgradeRoutes);
+    app.use('/api/', upgradeRoutes);
 
-    app.use('/api/', apiLimiter, replacementRoutes)
+    app.use('/api/', replacementRoutes)
 
     app.use('/api/', sellixRoutes)
 
