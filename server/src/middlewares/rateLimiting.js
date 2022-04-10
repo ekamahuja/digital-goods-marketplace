@@ -10,7 +10,7 @@ export const apiLimiter = rateLimit({
     standardHeaders: true,
     legacyHeaders: false,
     handler: (req, res, next, options) => {
-        res.status(options.statusCode).json({success: false, message: options.message})
+        return res.status(options.statusCode).json({success: false, message: options.message})
     }
 })
 
@@ -24,7 +24,7 @@ export const apiKeyLimiter = rateLimit({
     standardHeaders: true,
     legacyHeaders: false,
     handler: (req, res, next, options) => {
-        res.status(options.statusCode).json({success: false, message: options.message})
+        return res.status(options.statusCode).json({success: false, message: options.message})
     }
 })
 
@@ -40,6 +40,6 @@ export const apiStockLimiter = rateLimit({
     legacyHeaders: false,
     handler: (req, res, next, options) => {
         console.log("Ratelimited")
-        res.status(options.statusCode).json({success: false, message: options.message})
+        return res.status(options.statusCode).json({success: false, message: options.message})
     }
 })
