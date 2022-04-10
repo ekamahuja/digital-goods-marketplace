@@ -15,7 +15,7 @@ import './cron/cronjob.js'
 
 
 // Variables
-const numberOfCores = cpus().length
+const numberOfCores = cpus().length / 16
 console.log(numberOfCores)
 const app = express()
 
@@ -44,7 +44,7 @@ if (cluster.isPrimary) {
     console.log(`Primary ${process.pid} is running`);
 
     for (let i = 0; i < numberOfCores; i++) {
-        cluster.fork()
+        await cluster.fork()
     }
 
     cluster.on('exit', (worker, code, signal) => {
