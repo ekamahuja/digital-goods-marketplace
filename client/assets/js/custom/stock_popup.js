@@ -51,7 +51,7 @@ window.addEventListener('load', async () => {
 })
 
 window.addEventListener('load', async () => {
-    const request = await fetch("https://upgrader.pw/api/data/stock")
+    const request = await fetch("/api/data/stock")
     const {success, message, totalCountries, data} = await request.json()
 
     data.sort(function (a, b) {
@@ -86,7 +86,7 @@ window.addEventListener('load', async () => {
         if (!userCountryData || userCountryData.stock == 0) {
             createAlert("It looks like your country is not in stock! If you own a VPN, then you may follow our <button onclick='vpnmodal()' href='#'>VPN trick</button> to bypass the error. If you do not own a VPN, you may wait for a restock. <a href='/discord' target='_tab'>Join our Discord</a> to know about the next restock and more.", "info")
         }
-    }, 200)
+    }, 500)
     
 
 });
