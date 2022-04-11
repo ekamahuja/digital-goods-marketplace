@@ -31,15 +31,14 @@ export const apiKeyLimiter = rateLimit({
 
 
 export const apiStockLimiter = rateLimit({
-    windowMs: 30 * 60000,
+    windowMs: 60 * 60000,
     max: async (req, res) => {
         if (req.user) return 9999 
-        return 3
+        return 60
     },
     standardHeaders: true,
     legacyHeaders: false,
     handler: (req, res, next, options) => {
-        console.log("Ratelimited")
         return res.status(options.statusCode).json({success: false, message: options.message})
     }
 })

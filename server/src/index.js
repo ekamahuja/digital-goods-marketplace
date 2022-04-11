@@ -39,31 +39,30 @@ app.use(cors({
 
 
 
-
-if (cluster.isPrimary) {
-    console.log(`Primary ${process.pid} is running`);
-
-    for (let i = 0; i < numberOfCores; i++) {
-        await cluster.fork()
+async function startMultiCores() {
+    if (cluster.isPrimary) {
+        console.log(`Primary ${process.pid} is running`);
+    
+        for (let i = 0; i < numberOfCores; i++) {
+            await cluster.fork()
+        }
+    
+        cluster.on('exit', (worker, code, signal) => {
+            console.log(`worker ${worker.process.pid} died`);
+            cluster.fork()
+        });
+    
+    } else {
+        startApp();
     }
-
-    cluster.on('exit', (worker, code, signal) => {
-        console.log(`worker ${worker.process.pid} died`);
-        cluster.fork()
-    });
-
-} else {
-    startApp();
 }
-
-
 
 
 
 
 // Application
 async function startApp() {
-    // console.clear();
+    console.clear();
     console.log('=========================================================================================')
     await connectDB()
     const port = process.env.PORT || 8000
@@ -83,5 +82,6 @@ async function startApp() {
 
 
 // Start application
-
+//startMultiCores()
+startApp()
 
