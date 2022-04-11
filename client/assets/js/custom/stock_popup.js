@@ -46,6 +46,7 @@ window.addEventListener('load', async () => {
 
     const country = response.country_name
     userCountry = response.country
+    
 
     document.querySelector("#upgradeCountry-input").value = country || "Could not fetch country"
 })
@@ -79,17 +80,25 @@ window.addEventListener('load', async () => {
     }
 
     stockModalFetchBtn.disabled = false
-
-    setTimeout(() => {
-        userCountryData = stockDataFetchAPI.data.find(item => item.countryCode == userCountry)
-        console.log(userCountryData)
-        if (!userCountryData || userCountryData.stock == 0) {
-            createAlert("It looks like your country is not in stock! If you own a VPN, then you may follow our <button onclick='vpnmodal()' href='#'>VPN trick</button> to bypass the error. If you do not own a VPN, you may wait for a restock. <a href='/discord' target='_tab'>Join our Discord</a> to know about the next restock and more.", "info")
-        }
-    }, 500)
     
+    noStockMessage()
 
 });
+
+
+function noStockMessage() {
+    if (userCountry) {
+        userCountryData = stockDataFetchAPI.data.find(item => item.countryCode == userCountry)
+        if (!userCountryData || userCountryData.stock == 0) {
+            createAlert("It looks like your country is not in stock! If you own a VPN, then you may follow our <button onclick='vpnmodal()' href='#'>VPN trick</button> to bypass the error. If you do not own a VPN, you may wait for a restock. <a href='/discord' target='_tab'>Join our Discord</a> to know about the next restock and more.", "info")
+        } 
+    } else {
+        console.log('ok')
+        setTimeout(() => {
+            noStockMessage()
+        }, 250)
+    }
+}
 
 
 
@@ -115,24 +124,14 @@ async function createAlert(message, type) {
     const upgradeForm = document.querySelector("#upgrade-form")
     const replacementForm = document.querySelector("#replacement-form")
 
+    const alertDiv = document.createElement("div")
+    alertDiv.className = `upgrader-alert ${type}`
+    alertDiv.innerHTML=`<p>${message}</p>`
+
     if (upgradeForm) {
-        const alertDiv = document.createElement("div")
-        alertDiv.className = `upgrader-alert ${type}`
-
-        alertDiv.innerHTML=`<p>${message}</p>`
-
         upgradeForm.prepend(alertDiv)
-    } 
-    
-    
-    if (replacementForm) {
-        const alertDiv = document.createElement("div")
-        alertDiv.className = `upgrader-alert ${type}`
-
-        alertDiv.innerHTML=`<p>${message}</p>`
-
+    } else if (replacementForm) {
         replacementForm.prepend(alertDiv)
     }
-
     
 }
