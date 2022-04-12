@@ -366,3 +366,23 @@
     margin-bottom: 1rem;
     border-radius: 0.5rem;
 }
+
+
+
+.support-response-btn {
+  display: block;
+  width: 100%;
+  font-weight: bold;
+  background: -webkit-linear-gradient(0deg, #5300cc 0%, #9500e7 100%);
+  box-shadow: 2.419px 9.703px 12.48px 0.52px rgb(210 165 243)
+}
+
+
+.response-box {
+  margin-top: 20%;
+}
+
+
+.some-background {
+  background: #3b36aa;
+}

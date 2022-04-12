@@ -218,3 +218,18 @@ export const adminKeysPage = async (req, res, next) => {
     res.render("../../client/500", { err });
   }
 };
+
+
+
+export const adminSupportResponsesPage = async (req, res, next) => {
+  try {
+    const { totalCountries, totalKeys, totalStock } = await getStats();
+    res.render("../../client/admin_support_responses", {
+      totalCountries,
+      totalKeys,
+      totalStock,
+    });
+  } catch(err) {
+    next(err)
+  }
+}

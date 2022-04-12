@@ -93,7 +93,6 @@ function noStockMessage() {
             createAlert("It looks like your country is not in stock! If you own a VPN, then you may follow our <button onclick='vpnmodal()' href='#'>VPN trick</button> to bypass the error. If you do not own a VPN, you may wait for a restock. <a href='/discord' target='_tab'>Join our Discord</a> to know about the next restock and more.", "info")
         } 
     } else {
-        console.log('ok')
         setTimeout(() => {
             noStockMessage()
         }, 250)

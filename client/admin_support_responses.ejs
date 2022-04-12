@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premade Responses</title>
+    <link rel="stylesheet" href="./assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./assets/css/all.min.css">
+    <link rel="stylesheet" href="./assets/css/animate.css">
+    <link rel="stylesheet" href="./assets/css/nice-select.css">
+    <link rel="stylesheet" href="./assets/css/owl.min.css">
+    <link rel="stylesheet" href="./assets/css/jquery-ui.min.css">
+    <link rel="stylesheet" href="./assets/css/magnific-popup.css">
+    <link rel="stylesheet" href="./assets/css/flaticon.css">
+    <link rel="stylesheet" href="./assets/css/main.css">
+    <link rel="stylesheet" href="./assets/css/admin.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/js-toastr@1.1.1/toast.css">
+    <link rel="icon" type="image/png" href="/assets/images/logo.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body class="some-background">
+    <!--============= ScrollToTop Section Starts Here =============-->
+    <div class="preloader">
+        <div class="preloader-inner">
+            <div class="preloader-icon">
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </div>
+    <a href="#0" class="scrollToTop"><i class="fas fa-angle-up"></i></a>
+    <div class="overlay"></div>
+    <!--============= ScrollToTop Section Ends Here =============-->
+
+
+
+    <div style="display: none;" class="config-box">
+        <textarea type="text" id="lockedKey-textarea" disabled>**:logo:  Your key gets locked after 5+ replacements. :Padlock: Spotify sends you a email each time you are removed from the plan. :envelope: **
+
+**:Resell: Please provide all 5 screenshots (or more) along with your key (If you cannot find your key, you may also provide your Order ID) :key:**
+                
+**:busts_in_silhouette: Also please let the staff know if you ever received Invalid stock (Such as "Address Does Not Match" error) :x:**
+                
+``ℹ️ Once you have provided all the requested information. Feel free to ping any one staff``
+```NOTE: Do Not ping staff multiple times or Mass ping roles.```</textarea>
+    
+    <textarea type="text" id="outOfStock-textarea" disabled>***:logo: If the country you are trying to upgrade to is out of stock, you can do one of the following. :Resell:***
+
+**1) If you a VPN, you may follow our #vpn-trick in order to bypass this error. If you do decide this, please make sure to read and follow everything carefully. **
+                    
+**2) If you do not have a VPN, you can simply wait for another restock! You can find updates on restock in #restock-notifications and If you want to be notified of when restock (be pinged), please follow the instructions provided in #roles.**
+                    
+                    
+ ``💎 We usually restock every 24 - 72 hours (Based on how necessary is the restock). If you have any other questions, feel free to ping a staff. ❓``
+```NOTE: Do Not ping staff multiple times or Mass ping roles.```</textarea>
+
+    <textarea type="text" id="12MonthError-textarea" disabled>**:logo: If you are receiving "You can't join this plan" or "You can join someone else's Premium plan only once every 12 months". :Padlock: Then please read and follow #12-month-error instructions carefully. :white_check_mark:**
+
+**:notebook_with_decorative_cover: Things to note:**
+**- If you loose or have lost your Invite link or Invite Address, then instead of claiming another replacement, please grab the details from #key-info **
+**- If you need your email change on your key, please provide us with your key and new email.**
+                        
+``If you have any further questions, or need an email change (If you are looking for an email change, please provide your key and new email before pinging a staff) - you may ping one staff.``
+```NOTE: Do Not ping staff multiple times or Mass ping roles.```</textarea>
+
+    <textarea type="text" id="addressDidNotMatch-textarea" disabled>**:logo: If you get "Your addresses didn't match, please make sure you are copying and pasting the address correctly and you have tried all suggested addresses.:Mouse:**
+
+**:FAQ: If you continue to receive the error, please take a screenshot of the error (for future reference) and then claim another #replacements **
+**:Support: If you get "You are not eligible for a replacement" error, then please wait 5 mins and then try. If the error continues, please ask staff for further assistance.**
+                           
+``❓ If you need any further questions or require any help, please explain the issue in much detail as possible, then ping a staff.``
+```NOTE: Do Not ping staff multiple times or Mass ping roles.```</textarea>
+    <textarea type="text" id="keepLoosingPremium-textarea" disabled>**:logo: It is all based on luck. :fingers_crossed: However you stay in a plan for 2 - 3 weeks, you will most likely stay premium for 1+ year! :Mouse: Please read #keep-getting-kicked-out to maximize your chances to stay in a plan! :white_check_mark:**
+
+``❓ If you need any further questions or require any help, please explain the issue in much detail as possible, then ping a staff.``
+```NOTE: Do Not ping staff multiple times or Mass ping roles.```</textarea>
+    </div>
+
+
+
+    <div class="config-box response-box" id="premade-responses-div">
+        <div class="config-info">
+            <h4>Premade Responses (Public)</h4>
+        </div>
+            <button class="btn btn-primary config-btn cookie-btn support-response-btn" id="lockedKey">Locked Key</button>
+            <button class="btn btn-primary config-btn cookie-btn support-response-btn" id="outOfStock">Out of Stock</button>
+            <button class="btn btn-primary config-btn cookie-btn support-response-btn" id="12MonthError">12 Month Error</button>
+            <button class="btn btn-primary config-btn cookie-btn support-response-btn" id="addressDidNotMatch">Address Did Not Match</button>
+            <button class="btn btn-primary config-btn cookie-btn support-response-btn" id="keepLoosingPremium">Keep loosing premium</button>
+        </div>
+    </div>
+
+
+    <!--============= Modals Section Ends Here =============-->
+    <script src="./assets/js/jquery-3.3.1.min.js"></script>
+    <script src="./assets/js/modernizr-3.6.0.min.js"></script>
+    <script src="./assets/js/plugins.js"></script>
+    <script src="./assets/js/bootstrap.min.js"></script>
+    <script src="./assets/js/magnific-popup.min.js"></script>
+    <script src="./assets/js/jquery-ui.min.js"></script>
+    <script src="./assets/js/wow.min.js"></script>
+    <script src="./assets/js/waypoints.js"></script>
+    <script src="./assets/js/nice-select.js"></script>
+    <script src="./assets/js/owl.min.js"></script>
+    <script src="./assets/js/counterup.min.js"></script>
+    <script src="./assets/js/paroller.js"></script>
+    <script src="./assets/js/countdown.js"></script>
+    <script src="./assets/js/main.js"></script>
+    <script src="./assets/js/custom/admin_premade_responses.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-toastr@1.1.1/toast.min.js"></script>
+</body>
+</html>
