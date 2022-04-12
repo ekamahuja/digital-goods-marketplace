@@ -48,7 +48,7 @@ viewRoutes.get("/admin/stocks", adminViewOnly, adminStockPage);
 
 viewRoutes.get("/admin/keys", adminAndModeratorViewOnly, adminKeysPage);
 
-viewRoutes.get("/admin/support-responses", adminAndModeratorViewOnly, adminSupportResponsesPage);
+viewRoutes.get("/admin/support-responses", adminSupportResponsesPage);
 
 
 
