@@ -435,7 +435,8 @@
                                     <li class="disabled">Reseller Panel</li>
                                 </ul>
                                 <h2 class="title"><sup>$</sup>108.95</h2>
-                                <a class="button-3 active" data-sellix-product="5facd47e17888">PayPal <i class="fab fa-paypal"></i></a>
+                                <!-- <a class="button-3 active" data-sellix-product="5facd47e17888">PayPal <i class="fab fa-paypal"></i></a> -->
+                                <a class="button-3 active" onclick="resellerPayPalPurchase();">PayPal <i class="fab fa-paypal"></i></a>
                                 <br>
                                 <a class="button-3 active" data-sellix-product="5facd5d412c23">Cryptocurrency <i class="fab fa-bitcoin"></i></a>
                             </div>
@@ -453,7 +454,8 @@
                                     <li>Basic Panel</li>
                                 </ul>
                                 <h2 class="title"><sup>$</sup>210.00</h2>
-                                <a class="button-3 active" data-sellix-product="5facd79c8c3bc">PayPal <i class="fab fa-paypal"></i></a>
+                                <!-- <a class="button-3 active" data-sellix-product="5facd79c8c3bc">PayPal <i class="fab fa-paypal"></i></a> -->
+                                <a class="button-3 active" onclick="resellerPayPalPurchase();">PayPal <i class="fab fa-paypal"></i></a>
                                 <br>
                                 <a class="button-3 active" data-sellix-product="5facd685d5262">Cryptocurrency <i class="fab fa-bitcoin"></i></a>
                             </div>
@@ -472,7 +474,8 @@
                                     <li>Advance Panel</li>
                                 </ul>
                                 <h2 class="title"><sup>$</sup>375.00</h2>
-                                <a class="button-3 active" data-sellix-product="5facdb778f00f">PayPal <i class="fab fa-paypal"></i></a>
+                                <!-- <a class="button-3 active" data-sellix-product="5facdb778f00f">PayPal <i class="fab fa-paypal"></i></a> -->
+                                <a class="button-3 active" onclick="resellerPayPalPurchase();">PayPal <i class="fab fa-paypal"></i></a>
                                 <br>
                                 <a class="button-3 active" data-sellix-product="5facd8780daeb">Cryptocurrency <i class="fab fa-bitcoin"></i></a>
                             </div>
@@ -490,7 +493,8 @@
                                     <li>Custom Panel</li>
                                 </ul>
                                 <h2 class="title"><sup>$</sup>695.50</h2>
-                                <a class="button-3 active" data-sellix-product="5facdc3928e1f">PayPal <i class="fab fa-paypal"></i></a>
+                                <!-- <a class="button-3 active" data-sellix-product="5facdc3928e1f">PayPal <i class="fab fa-paypal"></i></a> -->
+                                <a class="button-3 active" onclick="resellerPayPalPurchase();">PayPal <i class="fab fa-paypal"></i></a>
                                 <br>
                                 <a class="button-3 active" data-sellix-product="5facd971eeef8">Cryptocurrency <i class="fab fa-bitcoin"></i></a>
                             </div>
@@ -625,6 +629,18 @@
     </footer>
     <!--============= Footer Section Ends Here =============-->
 
+    <!--============= Modals Section Starts Here =============-->
+    <!-- Country Stock Data Modal -->
+
+    <!-- VPN Modal -->
+    <div id="resellerPlanPaypal-modal" class="modal">
+        <!-- Modal Content -->
+        <div id="resellerPlanPaypal-content" class="modal-content">
+            <h5>Purchase Reseller Plan</h5>
+            <h6>To purchase a reseller plan via Paypal, please contact us on <a href="/discord">our Discord</a></h6>
+        </div>
+    </div>
+    <!--============= Modals Section Ends Here =============-->
 
     <!-- Scripts -->
     <script src="./assets/js/jquery-3.3.1.min.js"></script>
@@ -641,5 +657,6 @@
     <script src="./assets/js/paroller.js"></script>
     <script src="./assets/js/main.js"></script>
     <script src="./assets/js/custom/client_sellix.js"></script>
+    <script src="./assets/js/custom/client_landing.js"></script>
 </body>
 </html>
