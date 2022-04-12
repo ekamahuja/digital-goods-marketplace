@@ -179,27 +179,29 @@ export async function changeKeyEmail(req, res, next) {
 
 
 
-export async function blacklistKeys(req, res, next) {
+export async function updateKeyStatus(req, res, next) {
     try {
-        const {keys} = req.body
+        const {keys, blacklist} = req.body
         if (!keys) throw new Error("No key(s) provided")
+        if (!blacklist) throw new Error("No blacklist param sent")
 
-        let successfullBlacklistedAmount= 0
-
+        let successfullyUpdated = 0
+        const type = (blacklist == 'true') ? 'blacklisted' : 'whitelisted'
 
         for (let i = 0; i < keys.length; i++) {
             let keyData = await Key.findOne({value: keys[i]})
 
             if (keyData) {
-                keyData.blacklisted = true
+                keyData.blacklisted = blacklist
                 await keyData.save()
-                successfullBlacklistedAmount++
+                successfullyUpdated++
             }
         }
 
-        return res.status(200).json({success: true, message: `Successfully blacklisted ${successfullBlacklistedAmount} key(s)`})
+        return res.status(200).json({success: true, message: `Successfully ${type} ${successfullyUpdated} key(s)`})
 
     } catch(err) {
         next(err)
     }
 }
+

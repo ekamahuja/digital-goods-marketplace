@@ -313,6 +313,7 @@ document
   document.querySelector("#blacklistKeys-confirm").addEventListener("click", async () => {
     try {
       const keyTextArea = document.querySelector("#blacklist-keys-textarea")
+      const typeOfStatus = document.querySelector("#keyUpdateStatusSelect").value
 
       let keys = []
 
@@ -323,10 +324,10 @@ document
           'Content-Type': 'application/json'
         },
         method: "POST",
-        body: JSON.stringify({keys})
+        body: JSON.stringify({keys, blacklist: typeOfStatus})
       }
 
-      const request = await fetch("/api/blacklistkeys", options)
+      const request = await fetch("/api/updatekeystatus", options)
       const response = await request.json()
 
       toastr.message(response.message, (response.success) ? 'success' : 'error', 5000)

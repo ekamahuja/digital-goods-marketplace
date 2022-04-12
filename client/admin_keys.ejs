@@ -72,8 +72,9 @@
             <button type="button" id="keys-generate-modal" class="btn-one">Generate Keys</button>
             <button type="button" id="keys-search-modal" class="btn-two">Search Key</button>
             <button type="button" id="keys-unlock-modal" class="btn-three">Unlock Key</button>
-            <button type="button" id="keys-change-email-modal" class="btn-four">Change email</button>
-            <button type="button" id="keys-blacklist-modal" class="btn-five">Blackist Keys</button>
+            <button type="button" id="keys-change-email-modal" class="btn-four">Change Email</button>
+            <button type="button" id="keys-blacklist-modal" class="btn-five">Update Key Status</button>
+            <!-- <button type="button" id="keys-whitelist-modal" class="btn-five btn-six">Whitelist Keys</button> -->
         </div>
     </div>
     <!--============= Mange Keys Section Ends Here =============-->
@@ -183,22 +184,32 @@
         </div>
     </div>
 
-    <!-- Unlock Key -->
+    <!-- Blacklist Key -->
     <div id="blacklistKeys-modal" class="modal">
         <!-- Modal Content -->
         <div id="changeEmail-modal-content" class="modal-content">
             <!-- <span class="close">&times;</span> -->
-            <h5 class="modal-heading" id="change-email-heading">Blacklist Keys</h5>
+            <h5 class="modal-heading" id="change-email-heading">Update Key Status</h5>
             <!-- <p id="unlockKeyHeading">If the key is locked - this will unlock it</p> -->
             <div id="blacklist-key-body" class="no-scroll"> 
                 <div class="inputGroup">
-                    <label for="keystoBlacklist">Keys</label>
-                    <textarea name="keystoBlacklist" class="blacklist-keys-textarea" id="blacklist-keys-textarea" placeholder="Paste keys to blacklist (Oner per line)"></textarea>
+                    <label for="keyUpdateStatusSelect">Update The Key Status To</label>
+                    <select id="keyUpdateStatusSelect" class="key-select">
+                        <option value="true">Blacklist</option>
+                        <option value="false">Whitelist</option>
+                    </select>
+                    <div class="inputGroup-top">
+                        <label for="keystoBlacklist">Keys</label>
+                        <textarea name="keystoBlacklist" class="blacklist-keys-textarea" id="blacklist-keys-textarea" placeholder="Paste keys to blacklist (Oner per line)"></textarea>
+                    </div>
                 </div>
-                <button type="button" class="confirm-btn" id="blacklistKeys-confirm">Blacklist</button>
+                <button type="button" class="confirm-btn" id="blacklistKeys-confirm">Update Key Status</button>
             </div>
         </div>
     </div>
+
+
+
 
     <!--============= Modals Section Ends Here =============-->
     <script src="./assets/js/jquery-3.3.1.min.js"></script>

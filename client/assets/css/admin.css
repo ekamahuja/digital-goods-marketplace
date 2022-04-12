@@ -360,6 +360,11 @@
 }
 
 
+.btn-six {
+  background: -webkit-linear-gradient(0deg, #7c5aff 0%, #1b00e0 100%);
+}
+
+
 
 .search-another-key {
     background: #ff6454;
@@ -385,4 +390,10 @@
 
 .some-background {
   background: #3b36aa;
+}
+
+
+
+.inputGroup-top {
+  margin-top: 1rem;
 }

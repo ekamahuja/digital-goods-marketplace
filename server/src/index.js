@@ -82,6 +82,6 @@ async function startApp() {
 
 
 // Start application
-startMultiCores()
-// startApp()
+// startMultiCores()
+startApp()
 
