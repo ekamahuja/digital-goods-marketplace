@@ -8,6 +8,7 @@ const sellix = Sellix(`${process.env.SELLIX_API_KEY}`);
 export async function sellixWebhook(req, res, next) {
   try {
     const { event, data } = req.body;
+    if (!event || !data) throw new Error("Event or data not provided in the body")
 
     if (event.split(":")[1] == "disputed") {
       const keysToBlacklist = data.serials;
