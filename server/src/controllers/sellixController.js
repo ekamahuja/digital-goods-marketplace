@@ -1,215 +1,49 @@
-import Sellix from '@sellix/node-sdk'
-const sellix = Sellix("RqxQrDBCFEu3iEEK9bg3eatgHGUn9YJA3kW6CI90Vj5zXLzoFstae1OJwTFWhsbX")
+import Sellix from "@sellix/node-sdk";
+import { Key } from "../schemas/keySchema.js";
+import { sendDiscordWebhook } from "../utils/discordWebhook.js";
+const sellix = Sellix(`${process.env.SELLIX_API_KEY}`);
 
-
-
-
-export const sellixProducts = async (req, res, next) => {
-    try {
-        const products = await sellix.products.list()
-        res.send(products)
-    } catch (err) {
-       next(err) 
-    }
-}
 
 
 export async function sellixWebhook(req, res, next) {
-    try {
-        console.log(req.body)
-        res.send("OK")
-    } catch (err) {
-        next(err)
+  try {
+    const { event, data } = req.body;
+
+    if (event.split(":")[1] == "disputed") {
+      const keysToBlacklist = data.serials;
+      let blacklistedKeys = [];
+
+      for (let i = 0; i < keysToBlacklist.length; i++) {
+        let key = await Key.findOne({ value: keysToBlacklist[i] });
+        if (!key) continue;
+        key.blacklisted = true;
+        await key.save();
+        blacklistedKeys.push(key.value);
+      }
+
+      const discordTitle = `❌ Blacklisted ${blacklistedKeys.length} key(s)!`;
+      const discordDesc = `Event: ${
+        event.split(":")[1].charAt(0).toUpperCase() +
+        event.split(":")[1].slice(1).toLowerCase()
+      }\n Product: ${data.product_title}\n Amount of Keys Blacklisted: ${
+        blacklistedKeys.length
+      }\n Key(s): ${blacklistedKeys.join(", ")}\n Order ID: ${
+        data.uniqid
+      }\n Email: ${data.customer_email}\n IP: ${data.ip}\n Paid: $${
+        data.total
+      } USD`;
+      sendDiscordWebhook(discordTitle, discordDesc);
+
+      return res.status(201).json({
+        success: true,
+        message: `Successfully blacklisted ${blacklistedKeys.length} keys`,
+        amountOfKeysBlacklisted: blacklistedKeys.length,
+        blacklistedKeys,
+      });
     }
+
+    return res.status(204).json({ success: false, message: "No action taken" });
+  } catch (err) {
+    next(err);
+  }
 }
-
-
-
-const paidOne = {
-    event: 'order:paid',
-    data: {
-      id: 1141843,
-      uniqid: 'dummy',
-      recurring_billing_id: null,
-      type: 'PRODUCT',
-      subtype: null,
-      total: 0,
-      total_display: 0,
-      exchange_rate: 0,
-      crypto_exchange_rate: 0,
-      currency: 'USD',
-      shop_id: 0,
-      shop_image_name: null,
-      shop_image_storage: null,
-      cloudflare_image_id: null,
-      name: null,
-      customer_email: 'dummy@dummy.com',
-      paypal_email_delivery: false,
-      product_id: 'dummy',
-      product_title: 'Dummy Product',
-      product_type: 'SERIALS',
-      subscription_id: null,
-      subscription_time: null,
-      gateway: null,
-      paypal_apm: null,
-      stripe_apm: null,
-      paypal_email: null,
-      paypal_order_id: null,
-      paypal_payer_email: null,
-      paypal_fee: 0,
-      paypal_subscription_id: null,
-      paypal_subscription_link: null,
-      lex_order_id: null,
-      lex_payment_method: null,
-      paydash_paymentID: null,
-      stripe_client_secret: null,
-      stripe_price_id: null,
-      skrill_email: null,
-      skrill_sid: null,
-      skrill_link: null,
-      perfectmoney_id: null,
-      binance_invoice_id: null,
-      binance_qrcode: null,
-      binance_checkout_url: null,
-      crypto_address: null,
-      crypto_amount: 0,
-      crypto_received: 0,
-      crypto_uri: null,
-      crypto_confirmations_needed: 1,
-      crypto_scheduled_payout: false,
-      crypto_payout: 0,
-      fee_billed: true,
-      bill_info: null,
-      cashapp_qrcode: null,
-      cashapp_note: null,
-      cashapp_cashtag: null,
-      country: null,
-      location: ',  ()',
-      ip: null,
-      is_vpn_or_proxy: false,
-      user_agent: null,
-      quantity: 1,
-      coupon_id: null,
-      custom_fields: null,
-      developer_invoice: false,
-      developer_title: null,
-      developer_webhook: null,
-      developer_return_url: null,
-      status: 'VOIDED',
-      status_details: null,
-      void_details: null,
-      discount: 0,
-      fee_percentage: 0,
-      day_value: 1,
-      day: 'Mon',
-      month: 'Jan',
-      year: 2020,
-      created_at: 1577836800,
-      updated_at: 0,
-      updated_by: 0,
-      ip_info: null,
-      serials: [],
-      webhooks: [],
-      paypal_dispute: null,
-      status_history: [ [Object] ],
-      crypto_transactions: [],
-      gateways_available: [ '' ],
-      shop_paypal_credit_card: false,
-      shop_force_paypal_email_delivery: false
-    }
-  }
-  
-
-  const paidTwo = {
-    event: 'order:paid:product',
-    data: {
-      id: 1141843,
-      uniqid: 'dummy',
-      recurring_billing_id: null,
-      type: 'PRODUCT',
-      subtype: null,
-      total: 0,
-      total_display: 0,
-      exchange_rate: 0,
-      crypto_exchange_rate: 0,
-      currency: 'USD',
-      shop_id: 0,
-      shop_image_name: null,
-      shop_image_storage: null,
-      cloudflare_image_id: null,
-      name: null,
-      customer_email: 'dummy@dummy.com',
-      paypal_email_delivery: false,
-      product_id: 'dummy',
-      product_title: 'Dummy Product',
-      product_type: 'SERIALS',
-      subscription_id: null,
-      subscription_time: null,
-      gateway: null,
-      paypal_apm: null,
-      stripe_apm: null,
-      paypal_email: null,
-      paypal_order_id: null,
-      paypal_payer_email: null,
-      paypal_fee: 0,
-      paypal_subscription_id: null,
-      paypal_subscription_link: null,
-      lex_order_id: null,
-      lex_payment_method: null,
-      paydash_paymentID: null,
-      stripe_client_secret: null,
-      stripe_price_id: null,
-      skrill_email: null,
-      skrill_sid: null,
-      skrill_link: null,
-      perfectmoney_id: null,
-      binance_invoice_id: null,
-      binance_qrcode: null,
-      binance_checkout_url: null,
-      crypto_address: null,
-      crypto_amount: 0,
-      crypto_received: 0,
-      crypto_uri: null,
-      crypto_confirmations_needed: 1,
-      crypto_scheduled_payout: false,
-      crypto_payout: 0,
-      fee_billed: true,
-      bill_info: null,
-      cashapp_qrcode: null,
-      cashapp_note: null,
-      cashapp_cashtag: null,
-      country: null,
-      location: ',  ()',
-      ip: null,
-      is_vpn_or_proxy: false,
-      user_agent: null,
-      quantity: 1,
-      coupon_id: null,
-      custom_fields: null,
-      developer_invoice: false,
-      developer_title: null,
-      developer_webhook: null,
-      developer_return_url: null,
-      status: 'VOIDED',
-      status_details: null,
-      void_details: null,
-      discount: 0,
-      fee_percentage: 0,
-      day_value: 1,
-      day: 'Mon',
-      month: 'Jan',
-      year: 2020,
-      created_at: 1577836800,
-      updated_at: 0,
-      updated_by: 0,
-      ip_info: null,
-      serials: [],
-      webhooks: [],
-      paypal_dispute: null,
-      status_history: [ [Object] ],
-      crypto_transactions: [],
-      gateways_available: [ '' ],
-      shop_paypal_credit_card: false,
-      shop_force_paypal_email_delivery: false
-    }
-  }
