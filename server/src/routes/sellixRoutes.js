@@ -4,7 +4,6 @@ const sellixRoutes = express.Router()
 
 
 sellixRoutes.post('/sellix/webhook', sellixWebhook)
-sellixRoutes.get('/sellix/blacklist/:blacklist', sellixBlacklist)
 
 export default sellixRoutes
 

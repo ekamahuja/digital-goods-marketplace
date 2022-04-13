@@ -4,18 +4,6 @@ import { sendDiscordWebhook } from "../utils/discordWebhook.js";
 const sellix = Sellix(`${process.env.SELLIX_API_KEY}`);
 
 
-export async function sellixBlacklist(req, res, next) {
-  try {
-    const {blacklist} = req.params
-
-    const blacklistData = await sellix.blacklists.create({type: "ip", data: blacklist, note: "demo"})
-
-    return res.json(blacklistData)
-  } catch(err) {
-    next(err)
-  }
-}
-
 
 export async function sellixWebhook(req, res, next) {
   try {
