@@ -1,5 +1,5 @@
 import express from 'express'
-import {sellixWebhook, sellixBlacklist} from '../controllers/sellixController.js'
+import {sellixWebhook} from '../controllers/sellixController.js'
 const sellixRoutes = express.Router()
 
 
