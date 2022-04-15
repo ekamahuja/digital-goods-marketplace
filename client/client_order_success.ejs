@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/animate.css">
+    <link rel="stylesheet" href="../assets/css/nice-select.css">
+    <link rel="stylesheet" href="../assets/css/owl.min.css">
+    <link rel="stylesheet" href="../assets/css/jquery-ui.min.css">
+    <link rel="stylesheet" href="../assets/css/magnific-popup.css">
+    <link rel="stylesheet" href="../assets/css/flaticon.css">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="../assets/css/order.css">
+    <link rel="stylesheet" href="../assets/css/admin.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/js-toastr@1.1.1/toast.css">
+    <link rel="icon" type="image/png" href="/assets/images/logo.png">
+</head>
+<body>
+    <!--============= ScrollToTop Section Starts Here =============-->
+    <div class="preloader">
+        <div class="preloader-inner">
+            <div class="preloader-icon">
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </div>
+    <a href="#0" class="scrollToTop"><i class="fas fa-angle-up"></i></a>
+    <div class="overlay"></div>
+    <!--============= ScrollToTop Section Ends Here =============-->
+
+    <!--============= NavBar Section Starts Here =============-->
+  
+    <!--============= NavBar Section Ends Here =============-->
+
+     <!--============= Header Section Ends Here =============-->
+     <section class="page-header bg_img" data-background="../assets/images/page-header.png">
+        <div class="bottom-shape d-none d-md-block">
+            <img src="../assets/css/img/page-header.png" alt="css">
+        </div>
+        <div class="container">
+            <div class="page-header-content cl-white">
+                <h2 class="title">Payment Compeleted</h2>
+            </div>
+
+        </div>
+    </section>
+    <!--============= Header Section Ends Here =============-->
+
+    <% const {productTitle, customerEmail, amountPaid, orderId, deliveredGoods, memo} = orderData %>
+    <section id="order-info">
+
+        <div class="order-box">
+
+            <div class="order-info">
+                <div class="order-content">
+                    <p class="title">Your Order: <span>x1 Personal Plan</span></p>
+                    <p class="email"><%- customerEmail -%></p>
+
+                    <div class="info-group">
+                        <p><i class="fa-solid fa-wallet"></i> Amount: <span>$<%- amountPaid-%> USD</span></p>
+                    </div>
+
+                    <div class="info-group">
+                        <p><i class="fa-solid fa-receipt"></i> Order ID: <span><%- orderId %></span></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="order-data">
+                <div class="order-content">
+                    <h5><%- memo %></h5>
+                    <div class="order-divider">ORDER INFO</div>
+
+                    <div class="order-items" id="order-items">
+                        <% deliveredGoods.forEach(item => {%>
+                            <p><%- item %></p>
+                        <% });%>
+                    </div>
+
+                    <!-- btn -->
+                    <% if (deliveredGoods.length == 1) {%>
+                        <button class="primary-btn" onclick="upgradeKey()"><i class="fa-brands fa-spotify"></i> Upgarde</button>
+                    <% } else{ %>
+                        <button class="primary-btn"><i class="fa-solid fa-copy"></i> Copy</button>
+                    <% }%>
+
+                </div>
+            </div>
+        </div>
+
+    </section>
+    
+
+
+    <script src="../assets/js/jquery-3.3.1.min.js"></script>
+    <script src="../assets/js/modernizr-3.6.0.min.js"></script>
+    <script src="../assets/js/plugins.js"></script>
+    <script src="../assets/js/bootstrap.min.js"></script>
+    <script src="../assets/js/magnific-popup.min.js"></script>
+    <script src="../assets/js/jquery-ui.min.js"></script>
+    <script src="../assets/js/wow.min.js"></script>
+    <script src="../assets/js/waypoints.js"></script>
+    <script src="../assets/js/nice-select.js"></script>
+    <script src="../assets/js/owl.min.js"></script>
+    <script src="../assets/js/counterup.min.js"></script>
+    <script src="../assets/js/paroller.js"></script>
+    <script src="../assets/js/countdown.js"></script>
+    <script src="../assets/js/main.js"></script>
+    <script src="../assets/js/custom/client_order.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-toastr@1.1.1/toast.min.js"></script>
+</body>
+</html>

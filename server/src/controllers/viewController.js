@@ -3,7 +3,8 @@ import { generateAuthUrl } from "../helpers/replacementHelper.js";
 import { Config } from "../schemas/configSchema.js";
 import { getStats } from "../helpers/adminHelper.js";
 import { upgradeStock } from "../schemas/upgradeStockSchema.js";
-
+import Payment from '../schemas/paymentSchema.js'
+import ProductData from '../config/productData.js'
 
 
 export async function landingPage(req, res, next) {
@@ -15,9 +16,26 @@ export async function landingPage(req, res, next) {
 }
 
 
+export const orderSuccessPage = async (req, res, next) => {
+  try {
+    const {orderId} = req.params
+    if (!orderId) return res.render("../../client/client_index")
+
+    const orderData = await Payment.findOne({orderId})
+    if (!orderData) throw new Error("Invalid Order ID")
+
+
+    res.render("../../client/client_order_success", {orderData})
+  } catch(err) {
+    res.render("../../client/500", { err });
+  }
+}
+
+
 
 export async function upgradePage(req, res, next) {
   try {
+
     res.render("../../client/client_upgrade");
   } catch (err) {
     res.render("../../client/500", { err });

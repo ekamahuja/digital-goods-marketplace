@@ -4,11 +4,35 @@ import { sendDiscordWebhook } from "../utils/discordWebhook.js";
 const sellix = Sellix(`${process.env.SELLIX_API_KEY}`);
 
 
+export async function sellixCreatePayment(req, res, next) {
+  try {
+    const sellixRequest = {
+      "product_id": "5facc00211e75",
+      "gateway": "PAYPAL",
+      "currency": "USD",
+      "quantity": 1,
+      "email": "user@tempfakemail.com",
+      "white_label": true,
+      "return_url": "http://localhost:12345",
+      "ip": "127.0.0.1",
+    }
+
+
+    const sellixResponse = await sellix.payments.create(sellixRequest)
+
+
+    res.json(sellixResponse)
+  } catch(err) {
+    next(err)
+  }
+}
+
 
 export async function sellixWebhook(req, res, next) {
   try {
     const { event, data } = req.body;
-    if (!event || !data) throw new Error("Event or data not provided in the body")
+    if (!event || !data)
+      throw new Error("Event or data not provided in the body");
 
     if (event.split(":")[1] == "disputed") {
       const keysToBlacklist = data.serials;
@@ -22,10 +46,22 @@ export async function sellixWebhook(req, res, next) {
         blacklistedKeys.push(key.value);
       }
 
-      await sellix.blacklists.create({type: "ip", data: `${data.ip}`, note: "Auto blacklist due to chargeback" })
-      await sellix.blacklists.create({type: "email", data: `${data.customer_email}`, note: "Auto blacklist due to chargeback" })
-      if (data.customer_email != data.paypal_payer_email) await sellix.blacklists.create({type: "email", data: `${data.paypal_payer_email}`, note: "Auto blacklist due to chargeback" })
-    
+      await sellix.blacklists.create({
+        type: "ip",
+        data: `${data.ip}`,
+        note: "Auto blacklist due to chargeback",
+      });
+      await sellix.blacklists.create({
+        type: "email",
+        data: `${data.customer_email}`,
+        note: "Auto blacklist due to chargeback",
+      });
+      if ((data.customer_email).toLowerCase() != (data.paypal_payer_email).toLowerCase())
+        await sellix.blacklists.create({
+          type: "email",
+          data: `${data.paypal_payer_email}`,
+          note: "Auto blacklist due to chargeback",
+        });
 
       const discordTitle = `❌ Blacklisted ${blacklistedKeys.length} key(s)!`;
       const discordDesc = `Event: ${
@@ -35,7 +71,9 @@ export async function sellixWebhook(req, res, next) {
         blacklistedKeys.length
       }\n Key(s): ${blacklistedKeys.join(", ")}\n Order ID: ${
         data.uniqid
-      }\n Email: ${data.customer_email}\n PayPal Email: ${data.paypal_payer_email}\n Reason: ${data.paypal_dispute.reason} \nIP: ${data.ip}\n Paid: $${
+      }\n Email: ${data.customer_email}\n PayPal Email: ${
+        data.paypal_payer_email
+      }\n Reason: ${data.paypal_dispute.reason} \nIP: ${data.ip}\n Paid: $${
         data.total
       } USD`;
       sendDiscordWebhook(discordTitle, discordDesc);

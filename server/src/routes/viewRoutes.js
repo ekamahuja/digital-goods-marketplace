@@ -2,6 +2,7 @@ import { Router } from "express";
 import { adminViewOnly, adminAndModeratorViewOnly } from "../middlewares/viewRouteProtection.js"
 import {
   landingPage,
+  orderSuccessPage,
   upgradePage,
   keyInfoPage,
   replacementCallBack,
@@ -20,6 +21,8 @@ import {
 
 
 const viewRoutes = Router();
+
+viewRoutes.get("/order/:orderId", orderSuccessPage);
 
 viewRoutes.get("/", landingPage);
 

@@ -1,0 +1,152 @@
+.page-header-content .title {
+  margin-bottom: 4rem;
+}
+
+section#order-info {
+  margin-top: 4rem;
+  margin-bottom: 10rem;
+}
+
+.order-box {
+  display: flex;
+  max-width: 50%;
+  margin: 0 auto;
+}
+
+.order-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
+  padding: 2rem;
+  background: -webkit-linear-gradient(-65deg, #c165dd 0%, #1153fc 100%);
+  color: #fff !important;
+  border-top-left-radius: 0.5rem;
+  border-bottom-left-radius: 0.5rem;
+  min-height: 26rem;
+}
+
+.order-data {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 4;
+  padding: 1rem;
+  background: #fff;
+  border-top-right-radius: 0.5rem;
+  border-bottom-right-radius: 0.5rem;
+  min-height: 26rem;
+}
+
+.order-info .title {
+  line-height: 1.2;
+  padding-bottom: 0.5rem;
+}
+
+.order-info .title span {
+  font-weight: bold;
+  display: block;
+  font-size: 1.2rem;
+}
+
+.order-info .email {
+  font-weight: 600;
+  text-transform: capitalize;
+  margin-bottom: 3rem;
+}
+
+.info-group {
+  font-size: 1rem;
+  margin-top: 1.8rem;
+}
+
+.info-group span {
+  font-weight: bold;
+  display: block;
+}
+
+.order-content h5 {
+  margin-top: 0.8rem;
+  font-size: 1.5rem;
+}
+
+.order-divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 0.8rem 0rem;
+  font-size: 0.8rem;
+}
+
+.order-divider::before,
+.order-divider::after {
+  content: "";
+  flex: 1;
+  border-bottom: 0.5px solid grey;
+}
+
+.order-divider:not(:empty)::before {
+  margin-right: 0.25em;
+}
+
+.order-divider:not(:empty)::after {
+  margin-left: 0.25em;
+}
+
+.order-items {
+  white-space: normal;
+  background-color: #f5f5f5;
+  color: #4a4a4a;
+  font-size: 0.875em;
+  padding: 1.25rem 1.5rem;
+  word-wrap: normal;
+  position: relative;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  min-height: 15rem;
+  max-height: 15rem;
+}
+
+.order-items p {
+  margin-bottom: 0.5rem;
+}
+
+
+.primary-btn {
+    margin-top: 1rem;
+    font-weight: bold;
+    background: #715ceb;
+    color: white;
+    border-color: transparent;
+    transition: 0.3s;
+}
+
+.primary-btn:hover {
+    background: #4b35c4;
+}
+
+
+@media only screen and (max-width: 1024px) {
+    .order-box {
+        max-width: 80%;
+    }    
+}
+
+@media only screen and (max-width: 425px) {
+    .order-box {
+        flex-direction: column;
+    }   
+    
+    .order-info {
+        border-radius: 1rem 1rem 0rem 0rem;
+        min-height: 1rem;
+    }
+
+    .order-data {
+        border-radius: 0rem 0rem 1rem 1rem;
+    }
+
+    .order-data .order-content {
+        margin-bottom: 1.5rem;
+    }
+}

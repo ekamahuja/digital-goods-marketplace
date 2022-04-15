@@ -8,6 +8,8 @@ import replacementRoutes from './replacementRoutes.js'
 import viewRoutes from './viewRoutes.js'
 import sellixRoutes from './sellixRoutes.js'
 import adminRoutes from './adminRoutes.js'
+import paymentRoutes from './paymentRoutes.js'
+import productRoutes from './productRoutes.js'
 
 const app = express();
 
@@ -26,6 +28,10 @@ function routes(app) {
     app.use('/api/', replacementRoutes)
 
     app.use('/api/', sellixRoutes)
+
+    app.use('/api/', paymentRoutes)
+
+    app.use('/api', productRoutes)
 
     app.use('/admin/api', adminRoutes);
     

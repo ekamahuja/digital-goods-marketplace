@@ -140,3 +140,19 @@ document.querySelector("#inviteAddress").addEventListener("click", function() {
 })
 
 
+
+
+
+window.addEventListener('load', () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const key = urlParams.get('key');
+
+    if (!key) return
+    const keyInput = document.querySelector('#upgradeKey-input')
+
+
+    keyInput.value = key
+    keyInput.disabled = true
+    keyInput.style.border = '1px solid rgb(0 255 8 / 80%)'
+    isValidKey = true
+})

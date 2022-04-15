@@ -170,3 +170,60 @@ a#howSectionPurchaseButton.darkmode:hover {
 #resellerPlanPaypal-content h6 a {
   color: #ff8b02 !important;
 }
+
+
+#payments-modal {
+  text-transform: capitalize;
+}
+
+#payments-modal .modal-content {
+  padding: 1.8rem;
+}
+
+#payments-modal h5 {
+  font-size: 2rem;
+  margin-top: 0.8rem;
+  margin-bottom: 0.8rem;
+  line-height: 2.2rem;
+}
+
+#payments-modal label {
+  font-size: 18px;
+  font-weight: 600;
+  font-family: "Josefin Sans", sans-serif;
+  color: #3b368c;
+  margin-bottom: 0.2rem
+}
+
+
+.payment-input-group {
+  display: block;
+  margin-bottom: 0.3rem;
+}
+
+
+.payment-input-group input {
+  text-transform: capitalize;
+  height: 60px;
+}
+
+
+#payments-modal button {
+  border-radius: 10px;
+  background: -webkit-linear-gradient(0deg, #7c5aff 0%, #1b00e0 100%);
+  margin-top: 1rem;
+  color: #fff;
+  font-weight: bold;
+  font-size: 16px;
+  height: 3.5rem; 
+  transition: all 2s ease;
+}
+
+.form-control:focus {
+  border: 1px solid #ced4da;
+  box-shadow: none;
+}
+
+.toast-wrap {
+  z-index: 9999999 !important;
+}
