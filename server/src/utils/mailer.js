@@ -8,8 +8,8 @@ const sendMail = async (email, subject, body) => {
 
         const mailer = nodemailer.createTransport({
             host: `${SMTP_HOST}`,
-            port: 587,
-            secure: false,
+            port: 465,
+            secure: true,
             auth: {
                 user: `${SMTP_USER}`,
                 pass: `${SMTP_PASSWORD}`
@@ -21,9 +21,10 @@ const sendMail = async (email, subject, body) => {
               to: `${email}`,
               subject: `${subject}`,
               text: `${body}`,
-              html: `${body}`
+              html: `${body}`,
           })
 
+          console.log("Message sent: %s", sentEmail.messageId);
           return {sucess: true}
     } catch(err) {
         return {sucess: false, message: err.message}

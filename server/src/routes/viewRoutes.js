@@ -14,6 +14,7 @@ import {
   adminDashboardPage,
   adminStockPage,
   adminKeysPage,
+  adminPaymentsPage,
   adminSupportResponsesPage,
   deleteReplacementToken,
 } from "../controllers/viewController.js";
@@ -50,6 +51,8 @@ viewRoutes.get("/admin/dashboard", adminViewOnly, adminDashboardPage);
 viewRoutes.get("/admin/stocks", adminViewOnly, adminStockPage);
 
 viewRoutes.get("/admin/keys", adminAndModeratorViewOnly, adminKeysPage);
+
+viewRoutes.get("/admin/payments", adminViewOnly, adminPaymentsPage);
 
 viewRoutes.get("/admin/support-responses", adminSupportResponsesPage);
 

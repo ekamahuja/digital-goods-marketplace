@@ -188,7 +188,7 @@ export const adminLoginPage = async (req, res, next) => {
 
 export const adminDashboardPage = async (req, res, next) => {
   try {
-    const { totalCountries, totalKeys, totalStock } = await getStats();
+    const { totalCountries, totalKeys, totalStock, totalPayments } = await getStats();
     const {
       maxReplacements,
       authCookie,
@@ -203,6 +203,7 @@ export const adminDashboardPage = async (req, res, next) => {
       totalCountries,
       totalKeys,
       totalStock,
+      totalPayments,
       maxReplacements,
       authCookie,
       twoCaptchaTokenApiKey,
@@ -220,13 +221,14 @@ export const adminDashboardPage = async (req, res, next) => {
 
 export const adminStockPage = async (req, res, next) => {
   try {
-    const { totalCountries, totalKeys, totalStock } = await getStats();
+    const { totalCountries, totalKeys, totalStock, totalPayments } = await getStats();
     const stock = await upgradeStock.find({});
     res.render("../../client/admin_stocks", {
       totalCountries,
       totalKeys,
       totalStock,
       stock,
+      totalPayments
     });
   } catch (err) {
     res.render("../../client/500", { err });
@@ -237,11 +239,26 @@ export const adminStockPage = async (req, res, next) => {
 
 export const adminKeysPage = async (req, res, next) => {
   try {
-    const { totalCountries, totalKeys, totalStock } = await getStats();
+    const { totalCountries, totalKeys, totalStock, totalPayments } = await getStats();
     res.render("../../client/admin_keys", {
       totalCountries,
       totalKeys,
       totalStock,
+      totalPayments
+    });
+  } catch (err) {
+    res.render("../../client/500", { err });
+  }
+};
+
+export const adminPaymentsPage = async (req, res, next) => {
+  try {
+    const { totalCountries, totalKeys, totalStock, totalPayments } = await getStats();
+    res.render("../../client/admin_payments", {
+      totalCountries,
+      totalKeys,
+      totalStock,
+      totalPayments
     });
   } catch (err) {
     res.render("../../client/500", { err });
@@ -249,14 +266,14 @@ export const adminKeysPage = async (req, res, next) => {
 };
 
 
-
 export const adminSupportResponsesPage = async (req, res, next) => {
   try {
-    const { totalCountries, totalKeys, totalStock } = await getStats();
+    const { totalCountries, totalKeys, totalStock, totalPayments } = await getStats();
     res.render("../../client/admin_support_responses", {
       totalCountries,
       totalKeys,
       totalStock,
+      totalPayments
     });
   } catch(err) {
     next(err)

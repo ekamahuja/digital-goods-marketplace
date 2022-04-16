@@ -3,6 +3,7 @@ const sellix = Sellix("RqxQrDBCFEu3iEEK9bg3eatgHGUn9YJA3kW6CI90Vj5zXLzoFstae1OJw
 
 import { Key } from '../schemas/keySchema.js'
 import { upgradeStock } from '../schemas/upgradeStockSchema.js'
+import Payment from '../schemas/paymentSchema.js'
 
 export async function getStats(req, res, next) {
     try {
@@ -16,8 +17,9 @@ export async function getStats(req, res, next) {
             let stockLength = country.stock.length
             totalStock = totalStock + stockLength
         })
+        const totalPayments = await Payment.countDocuments()
 
-        return { totalCountries, totalKeys, totalStock }
+        return { totalCountries, totalKeys, totalStock, totalPayments }
     } catch(err) {
         return {success: false, error: err.message, stack: err}
     }

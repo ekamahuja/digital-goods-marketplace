@@ -44,11 +44,11 @@ async function paymentModal(planName, planId, planMethod, planPrice) {
     const paymentsModal = document.querySelector("#payments-modal")
     paymentsModal.querySelector("button").setAttribute('data-method', `${planMethod}`);
     paymentsModal.querySelector("button").setAttribute('data-pid', `${planId}`);
-    paymentsModal.querySelector("h5").innerHTML = `Purchase ${planName}`
-    paymentsModal.querySelector("#payment-method").value = `${planMethod}`
-    paymentsModal.querySelector("#payment-total").value = `$${planPrice}`
-
-    paymentsModal.style.display = 'block'
+    // paymentsModal.querySelector("h5").innerHTML = `Purchase ${planName}`
+    // paymentsModal.querySelector("#payment-method").value = `${planMethod}`
+    paymentsModal.querySelector("#payment-amount").innerHTML = `$${Number(planPrice).toFixed(2)}`
+    paymentsModal.querySelector("#payment-amount").dataset.amountPerOne = Number(planPrice).toFixed(2)
+    paymentsModal.style.display = "block"
 }
 
 
@@ -59,12 +59,13 @@ document.querySelector("#payment-confirm").addEventListener("click", async () =>
         if (!isValidEmail) throw new Error("Enter a valid email address")
         const paymentBtn = document.querySelector("#payment-confirm")
         const paymentEmail = document.querySelector("#payment-email")
+        const paymentQuantity = document.querySelector("#payment-quantity").value
 
         paymentBtn.disabled = true
         paymentEmail.disabled = true
         paymentBtn.innerHTML = `<i class="fas fa-circle-notch fa-spin"></i> Loading...`
 
-        createPaymentSession(paymentBtn.dataset.pid, paymentBtn.dataset.method, paymentEmail.value)
+        createPaymentSession(paymentBtn.dataset.pid, paymentBtn.dataset.method, paymentEmail.value, paymentQuantity)
     } catch(err) {
         toastr.message(err.message, 'error', 500000000)
     }
@@ -72,9 +73,9 @@ document.querySelector("#payment-confirm").addEventListener("click", async () =>
 })
 
 
-async function createPaymentSession(productId, paymentMethod, email) {
+async function createPaymentSession(productId, paymentMethod, email, quantity) {
     try {
-        const request = await fetch(`/api/payments/${paymentMethod}/create?pid=${productId}&email=${email}&quantity=2`, {method: "POST"})
+        const request = await fetch(`/api/payments/${paymentMethod}/create?pid=${productId}&email=${email}&quantity=${quantity}`, {method: "POST"})
         const {success, message, session} = await request.json()
 
         if (success && session) return window.location.href = session
@@ -116,4 +117,40 @@ document.querySelector("#payment-email").addEventListener('input', async functio
 
 })
 
+
+document.querySelector("#payment-close").addEventListener("click", () => {
+    document.querySelector("#payments-modal").style.display = 'none'
+})
+
+
+document.querySelector("#payment-terms").querySelector("a").addEventListener("click", () => {
+    document.querySelector("#payment-img").style.display = 'none'
+
+    document.querySelector("#payments-modal").querySelector("h5").style.display = 'block'
+    document.querySelector("#termsandconditions").style.display = 'block'
+})
+
+
+
+const quantityBtns = document.querySelector("#payment-quantity-input").querySelectorAll("span")
+
+for (let i = 0; i < quantityBtns.length; i++) {
+    quantityBtns[i].addEventListener("click", async () => {
+        const currentQuantityElement = document.querySelector("#payment-quantity")
+        const priceElement = document.querySelector("#payment-amount")
+        let currentQuantity = currentQuantityElement.value
+        let pricePerOne = priceElement.dataset.amountPerOne
+
+        if (quantityBtns[i].dataset.job == "add") {
+            currentQuantity++
+            currentQuantity = (currentQuantity > 9) ? 10 : currentQuantity
+        } else {
+            currentQuantity--
+            currentQuantity = (currentQuantity < 1) ? 1 : currentQuantity
+        }
+
+        currentQuantityElement.value = currentQuantity
+        priceElement.innerHTML = `$${(Number(pricePerOne * currentQuantity).toFixed(2))}`
+    })
+}
 
