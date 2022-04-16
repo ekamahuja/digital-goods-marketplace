@@ -74,7 +74,7 @@ document.querySelector("#payment-confirm").addEventListener("click", async () =>
 
 async function createPaymentSession(productId, paymentMethod, email) {
     try {
-        const request = await fetch(`/api/payments/${paymentMethod}/create?pid=${productId}&email=${email}&quantity=1`, {method: "POST"})
+        const request = await fetch(`/api/payments/${paymentMethod}/create?pid=${productId}&email=${email}&quantity=2`, {method: "POST"})
         const {success, message, session} = await request.json()
 
         if (success && session) return window.location.href = session

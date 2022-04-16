@@ -4,7 +4,7 @@ import { Config } from "../schemas/configSchema.js";
 import { getStats } from "../helpers/adminHelper.js";
 import { upgradeStock } from "../schemas/upgradeStockSchema.js";
 import Payment from '../schemas/paymentSchema.js'
-import ProductData from '../config/productData.js'
+import productData from '../config/productData.js'
 
 
 export async function landingPage(req, res, next) {
@@ -24,8 +24,19 @@ export const orderSuccessPage = async (req, res, next) => {
     const orderData = await Payment.findOne({orderId})
     if (!orderData) throw new Error("Invalid Order ID")
 
+    const {name, description} = productData[orderData.productId]
 
-    res.render("../../client/client_order_success", {orderData})
+    const data = {
+      productName: name,
+      customerEmail: orderData.customerEmail,
+      amountPaid: orderData.amountPaid,
+      quantity: orderData.quantity,
+      orderId: orderData.orderId,
+      deliveredGoods: orderData.deliveredGoods,
+      description
+    }
+
+    res.render("../../client/client_order_success", {data})
   } catch(err) {
     res.render("../../client/500", { err });
   }

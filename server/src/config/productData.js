@@ -43,6 +43,17 @@ const productData = {
         keyPrefix: "UPGRADERPW",
         keyType: "lifetime",
         keyQuantity: 9
+    },
+    4: {
+        name: "Starter Plan",
+        amount: 112.50,
+        cryptoAmount: 108.95,
+        description: "Reseller Pack (Lifetime Warranty Keys)",
+        paymentType: "single",
+        planType: "reseller",
+        keyPrefix: "KEY",
+        keyType: "lifetime",
+        keyQuantity: 25
     }
 }
 

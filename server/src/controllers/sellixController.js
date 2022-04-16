@@ -76,7 +76,7 @@ export async function sellixWebhook(req, res, next) {
       }\n Reason: ${data.paypal_dispute.reason} \nIP: ${data.ip}\n Paid: $${
         data.total
       } USD`;
-      sendDiscordWebhook(discordTitle, discordDesc);
+      sendDiscordWebhook(discordTitle, discordDesc, "notification");
 
       return res.status(201).json({
         success: true,

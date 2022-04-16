@@ -1,6 +1,23 @@
 import fetch from "node-fetch";
 
-export async function sendDiscordWebhook(title, desc) {
+export async function sendDiscordWebhook(title, desc, type) {
+  let webhookUrl;
+
+  switch(type) {
+    case "notification":
+      webhookUrl = process.env.DISCORD_WEBHOOK_URL
+      break;
+    case "payment":
+      webhookUrl = process.env.DISCORD_WEBHOOK_PAYMENT
+      break;
+    case "error":
+      webhookUrl = process.env.DISCORD_WEBHOOK_ERROR
+      break;
+    default:
+      webhookUrl = process.env.DISCORD_WEBHOOK_URL
+      break;
+  }
+
   try {
     const params = {
       content: null,
@@ -24,7 +41,7 @@ export async function sendDiscordWebhook(title, desc) {
       body: JSON.stringify(params),
     };
 
-    const request = await fetch(`${process.env.DISCORD_WEBHOOK_URL}`, options);
+    const request = await fetch(webhookUrl, options);
     return;
   } catch (err) {
     return null;

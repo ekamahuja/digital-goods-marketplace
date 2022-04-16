@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard</title>
+    <title>Successfull Order</title>
     <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="../assets/css/all.min.css">
     <link rel="stylesheet" href="../assets/css/animate.css">
@@ -35,7 +35,7 @@
     <!--============= ScrollToTop Section Ends Here =============-->
 
     <!--============= NavBar Section Starts Here =============-->
-  
+    <%- include('./components/userNavbar'); %>
     <!--============= NavBar Section Ends Here =============-->
 
      <!--============= Header Section Ends Here =============-->
@@ -52,14 +52,14 @@
     </section>
     <!--============= Header Section Ends Here =============-->
 
-    <% const {productTitle, customerEmail, amountPaid, orderId, deliveredGoods, memo} = orderData %>
+    <% const {productName, customerEmail, amountPaid, quantity, orderId, deliveredGoods, description} = data %>
     <section id="order-info">
 
         <div class="order-box">
 
             <div class="order-info">
                 <div class="order-content">
-                    <p class="title">Your Order: <span>x1 Personal Plan</span></p>
+                    <p class="title">Your Order: <span>x<%- quantity %> <%- productName %></span></p>
                     <p class="email"><%- customerEmail -%></p>
 
                     <div class="info-group">
@@ -74,7 +74,7 @@
 
             <div class="order-data">
                 <div class="order-content">
-                    <h5><%- memo %></h5>
+                    <h5><%- description %></h5>
                     <div class="order-divider">ORDER INFO</div>
 
                     <div class="order-items" id="order-items">
@@ -83,11 +83,10 @@
                         <% });%>
                     </div>
 
-                    <!-- btn -->
                     <% if (deliveredGoods.length == 1) {%>
                         <button class="primary-btn" onclick="upgradeKey()"><i class="fa-brands fa-spotify"></i> Upgarde</button>
                     <% } else{ %>
-                        <button class="primary-btn"><i class="fa-solid fa-copy"></i> Copy</button>
+                        <button class="primary-btn" onclick="copyKeys()"><i class="fa-solid fa-copy"></i> Copy</button>
                     <% }%>
 
                 </div>
