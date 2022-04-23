@@ -1,3 +1,5 @@
+let deliverdGoodsAmount = 0
+
 async function upgradeKey() {
     const orderItems = document.querySelector("#order-items").querySelector("p").innerHTML
     window.location.href = `/upgrade?key=${orderItems}`
@@ -49,11 +51,15 @@ async function processPaymentData() {
 
         document.querySelector("#payment-loader").style.display = "none"
         document.querySelector("#deliverdgoods").style.display = "block"
+
+        deliverdGoodsAmount = (data.orderData.deliveredGoods).length
     }
 
     if (data.orderData.deliveredGoods == 0) {
         setTimeout(function() {
-            processPaymentData()
+            if (deliverdGoodsAmount == 0) {
+                processPaymentData()
+            }
           }, 3000);
     }
 }
