@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/css/all.min.css">
+    <link rel="stylesheet" href="/assets/css/animate.css">
+    <link rel="stylesheet" href="/assets/css/nice-select.css">
+    <link rel="stylesheet" href="/assets/css/owl.min.css">
+    <link rel="stylesheet" href="/assets/css/jquery-ui.min.css">
+    <link rel="stylesheet" href="/assets/css/magnific-popup.css">
+    <link rel="stylesheet" href="/assets/css/flaticon.css">
+    <link rel="stylesheet" href="/assets/css/main.css">
+    <link rel="stylesheet" href="/assets/css/admin.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/js-toastr@1.1.1/toast.css">
+    <link rel="icon" type="image/png" href="/assets/images/logo.png">
+</head>
+<body>
+    <!--============= ScrollToTop Section Starts Here =============-->
+    <div class="preloader">
+        <div class="preloader-inner">
+            <div class="preloader-icon">
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </div>
+    <a href="#0" class="scrollToTop"><i class="fas fa-angle-up"></i></a>
+    <div class="overlay"></div>
+    <!--============= ScrollToTop Section Ends Here =============-->
+
+    <!--============= NavBar Section Starts Here =============-->
+    <%- include('./components/adminNavbar'); %>
+    <!--============= NavBar Section Ends Here =============-->
+
+     <!--============= Header Section Ends Here =============-->
+     <section class="page-header bg_img" data-background="/assets/images/page-header.png">
+        <div class="bottom-shape d-none d-md-block">
+            <img src="/assets/css/img/page-header.png" alt="css">
+        </div>
+        <div class="container">
+            <div class="page-header-content cl-white">
+                <h2 class="title">Admin Payments</h2>
+                <ul class="breadcrumb">
+                    <li>
+                        <a href="/admin">Admin</a>
+                    </li>
+                    <li>
+                       <a href="/admin/payment">Payment</a>
+                    </li>
+                    <li>
+                        <%- orderData.orderId %>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+    <!--============= Header Section Ends Here =============-->
+
+
+    <!--============= Payments Section Ends Here =============-->
+    <section id="payments">
+        <div class="payment-detatil container">
+            <div id="payment-header">
+                <div id="payment-header-left" class="payments-table-cell">
+                    <img class="flag-icon payment-icon" src="https://cdn.sellix.io/static/gateways/<%-orderData.paymentMethod%>.svg">
+                    <div>
+                        <span class="d-flex txt-captialize little-top-margin" href="mailto:<%-orderData.customerEmail%>"><%- orderData.customerName %> - <%-orderData.customerEmail%></span>
+                        <span class="d-flex"><%-orderData.orderId%></span>
+                    </div>
+                </div>
+                <div id="payment-header-right" class="d-flex">
+                    <span class="payment-badge badge-<%-orderData.status.toLowerCase()%> ml-2"><%-orderData.status%></span>
+                    <span class="payment-badge badge-pending ml-2">$<%-(orderData.amountPaid - orderData.fee).toFixed(2)%> of $<%-(orderData.amountPaid).toFixed(2)%> due to <%-orderData.paymentMethod%> fees</span>
+                </div>
+            </div>
+            <div id="payment-body">
+                <div>
+                    <span>Product</span>
+                    <span><%-orderData.productName%></span>
+                </div>
+                <div>
+                    <span>Quantity</span>
+                    <span><%-orderData.quantity%></span>
+                </div>
+                <div>
+                    <div>
+                        <span>IP Address: </span>
+                        <span><%-orderData.customerIp%></span>
+                    </div>
+                    <div>
+                        <span>Fraud Score: </span>
+                        <span><%-ipData.fraudScore%>/100</span>
+                    </div>
+                    <div>
+                        <span>ISP: </span>
+                        <span><%-ipData.isp%></span>
+                    </div>
+                </div>
+                <div>
+                    <span>Value</span>
+                    <span>USD <%-orderData.amountPaid.toFixed(2)%></span>
+                </div>
+                <div>
+                    <span>Coupon</span>
+                    <span>No Coupon</span>
+                </div>
+                <div>
+                    <span>Country</span>
+                    <span class="country-data">
+                        <%- ipData.city %>, <%- ipData.region %> (<%-ipData.timezone%>)
+                        <img class="flag-icon" src="https://cdn.sellix.io/static/flags/<%-orderData.customerCountryCode.toLowerCase()%>.svg">
+                    </span>
+                </div>
+                <div>
+                    <% const months = ["January", "February", "March", "April", "May", "June", "July",
+                    "August", "September", "October", "November", "December"]; %>
+
+                    <% const createdAt = new Date(orderData.createdAt) %>
+                    <% const currentHour = createdAt.getHours() %>
+                    <% const currentMinute = (createdAt.getMinutes()<10?'0':'') + createdAt.getMinutes() %>
+                    <% const currentMonth = months[createdAt.getMonth()]; %>
+                    <% const currentYear = createdAt.getFullYear(); %>
+                    <span>Created At</span>
+                    <span><%-createdAt.getDate()%>, <%-currentMonth%> <%-currentYear%> <%-currentHour%>:<%-currentMinute%></span>
+                </div>
+                <div>
+                    <span>Gateway</span>
+                    <span class="txt-captialize"><%-orderData.paymentMethod%></span>
+                </div>
+                <% if (orderData.paymentMethod == "stripe" && orderData.stripePaymentMethodData) { %>
+                    <div>
+                        <div>
+                            <span>Card Expiry Date: </span>
+                            <span><%- orderData.stripePaymentMethodData.card.exp_month %>/<%- orderData.stripePaymentMethodData.card.exp_year %></span>
+                        </div>
+                        <div>
+                            <span>Card Brand: </span>
+                            <span class="txt-captialize"><i class="fa-brands fa-cc-<%-orderData.stripePaymentMethodData.card.brand%>"></i> <%-orderData.stripePaymentMethodData.card.brand%></span>
+                        </div>
+                        <div>
+                            <span>Last 4 Card Digits: </span>
+                            <span><%-orderData.stripePaymentMethodData.card.last4%></span>
+                        </div>
+                    </div>
+                <% } %>
+                <div>
+                    <span>Device</span>
+                    <span><%-orderData.customerDevice%></span>
+                </div>
+                <div>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+            <% if ((orderData.deliveredGoods).length != 0){ %>
+            <div id="payment-footer">
+                <div class="deliverd-goods">
+                    <% const itemWord = ((orderData.deliveredGoods).length == 1) ? 'Key' : 'Keys' %>
+                    <h4>Delivered Goods (<%-(orderData.deliveredGoods).length%> <%- itemWord %>)</h4>
+                    <div class="deliverd-goods-list">
+                        <% (orderData.deliveredGoods).forEach(item => {%>
+                            <p><%- item %></p>
+                        <% });%>
+                    </div>
+                </div>
+            </div>
+            <% } %>
+        </div>
+    </section>
+    <!--============= Payments Section Ends Here =============-->
+    
+
+
+    <script src="/assets/js/jquery-3.3.1.min.js"></script>
+    <script src="/assets/js/modernizr-3.6.0.min.js"></script>
+    <script src="/assets/js/plugins.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
+    <script src="/assets/js/magnific-popup.min.js"></script>
+    <script src="/assets/js/jquery-ui.min.js"></script>
+    <script src="/assets/js/wow.min.js"></script>
+    <script src="/assets/js/waypoints.js"></script>
+    <script src="/assets/js/nice-select.js"></script>
+    <script src="/assets/js/owl.min.js"></script>
+    <script src="/assets/js/counterup.min.js"></script>
+    <script src="/assets/js/paroller.js"></script>
+    <script src="/assets/js/countdown.js"></script>
+    <script src="/assets/js/main.js"></script>
+    <script src="/assets/js/custom/admin_signout.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-toastr@1.1.1/toast.min.js"></script>
+</body>
+</html>

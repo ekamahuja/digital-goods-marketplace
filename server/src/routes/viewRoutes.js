@@ -15,6 +15,7 @@ import {
   adminStockPage,
   adminKeysPage,
   adminPaymentsPage,
+  adminPaymentsDetatilsPage,
   adminSupportResponsesPage,
   deleteReplacementToken,
 } from "../controllers/viewController.js";
@@ -23,7 +24,7 @@ import {
 
 const viewRoutes = Router();
 
-viewRoutes.get("/order/:orderId", orderSuccessPage);
+viewRoutes.get("/order/:orderId?", orderSuccessPage);
 
 viewRoutes.get("/", landingPage);
 
@@ -53,6 +54,8 @@ viewRoutes.get("/admin/stocks", adminViewOnly, adminStockPage);
 viewRoutes.get("/admin/keys", adminAndModeratorViewOnly, adminKeysPage);
 
 viewRoutes.get("/admin/payments", adminViewOnly, adminPaymentsPage);
+
+viewRoutes.get("/admin/payments/:orderId", adminViewOnly, adminPaymentsDetatilsPage);
 
 viewRoutes.get("/admin/support-responses", adminSupportResponsesPage);
 

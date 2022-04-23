@@ -2,7 +2,7 @@ import fetch from "node-fetch";
 
 export async function sendDiscordWebhook(title, desc, type) {
   let webhookUrl;
-
+  console.log('received')
   switch(type) {
     case "notification":
       webhookUrl = process.env.DISCORD_WEBHOOK_URL

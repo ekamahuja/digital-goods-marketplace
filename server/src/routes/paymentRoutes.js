@@ -1,14 +1,16 @@
 import express from 'express'
 const paymentRoutes = express.Router()
-import {stripeSession, processSession} from '../controllers/payments/stripeController.js'
-import {paymentsData} from '../controllers/payments/paymentController.js'
+import {stripeSession, stripeWebhook} from '../controllers/payments/stripeController.js'
+import {paymentsData, searchPaymentData, orderData} from '../controllers/payments/paymentController.js'
 import {adminApiOnly} from '../middlewares/apiRouteProtection.js'
 
 paymentRoutes.post('/payments/stripe/create', stripeSession)
-paymentRoutes.get('/payments/stripe/process', processSession)
 
+paymentRoutes.post('/payments/stripe/webhook', stripeWebhook)
 
-paymentRoutes.get('/payments/all', adminApiOnly, paymentsData)
+paymentRoutes.get('/payments/', adminApiOnly, paymentsData)
+paymentRoutes.get('/payments/search', adminApiOnly, searchPaymentData)
 
+paymentRoutes.get('/payments/:orderId', orderData)
 
 export default paymentRoutes

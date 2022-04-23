@@ -37,7 +37,7 @@
     <!--============= NavBar Section Starts Here =============-->
     <%- include('./components/userNavbar'); %>
     <!--============= NavBar Section Ends Here =============-->
-
+    <% const {productName, customerEmail, amountPaid, quantity, orderId, deliveredGoods, status, description} = data %>
      <!--============= Header Section Ends Here =============-->
      <section class="page-header bg_img" data-background="../assets/images/page-header.png">
         <div class="bottom-shape d-none d-md-block">
@@ -45,14 +45,14 @@
         </div>
         <div class="container">
             <div class="page-header-content cl-white">
-                <h2 class="title">Payment Compeleted</h2>
+                <h2 class="title">Payment <span id="payment-status"><%- status %></span></h2>
             </div>
 
         </div>
     </section>
     <!--============= Header Section Ends Here =============-->
 
-    <% const {productName, customerEmail, amountPaid, quantity, orderId, deliveredGoods, description} = data %>
+    
     <section id="order-info">
 
         <div class="order-box">
@@ -76,18 +76,21 @@
                 <div class="order-content">
                     <h5><%- description %></h5>
                     <div class="order-divider">ORDER INFO</div>
-
-                    <div class="order-items" id="order-items">
-                        <% deliveredGoods.forEach(item => {%>
-                            <p><%- item %></p>
-                        <% });%>
+                    
+                    <div id="payment-loader">
+                        <div class="loadingio-spinner-dual-ball-i4ctez6wqi"><div class="ldio-6z6a4me9689">
+                            <div></div><div></div><div></div>
+                            </div></div>
+                        <p>Your order is processing...</p>
                     </div>
+                    
 
-                    <% if (deliveredGoods.length == 1) {%>
-                        <button class="primary-btn" onclick="upgradeKey()"><i class="fa-brands fa-spotify"></i> Upgarde</button>
-                    <% } else{ %>
-                        <button class="primary-btn" onclick="copyKeys()"><i class="fa-solid fa-copy"></i> Copy</button>
-                    <% }%>
+                    <div id="deliverdgoods">
+                        <div class="order-items" id="order-items"></div>
+                            <button id="upgrade-btn" class="primary-btn" onclick="upgradeKey()"><i class="fa-brands fa-spotify"></i> Upgarde</button>
+                            <button id="copy-btn" class="primary-btn" onclick="copyKeys()"><i class="fa-solid fa-copy"></i> Copy</button>
+                    </div>
+                    
 
                 </div>
             </div>

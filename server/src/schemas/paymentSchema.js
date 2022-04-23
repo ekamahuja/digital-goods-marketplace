@@ -7,6 +7,18 @@ const paymentSchema = mongoose.Schema({
         required: true,
         unique: true
     },
+    stripePaymentIntentData: {
+        type: Object || String,
+        required: false,
+    },
+    stripePaymentMethodData: {
+        type: Object,
+        required: false
+    },
+    stripeCustomerData: {
+        type: Object,
+        required: false
+    },
     orderId: {
         type: String,
         required: true,
@@ -15,10 +27,14 @@ const paymentSchema = mongoose.Schema({
     productId: {
         type: Number,
         required: true
+    },    
+    productName: {
+        type: String,
+        required: true
     },
     deliveredGoods: {
         type: Array,
-        required: true
+        required: false
     },
     quantity: {
         type: Number,
@@ -38,9 +54,13 @@ const paymentSchema = mongoose.Schema({
     },
     customerName: {
         type: String,
-        required: true
+        required: false
     },
     customerEmail: {
+        type: String,
+        required: true
+    },
+    customerCountryCode: {
         type: String,
         required: true
     },
@@ -54,16 +74,16 @@ const paymentSchema = mongoose.Schema({
     },
     memo: {
         type: String,
-        required: false
+        required: true
     },
     transcationDetails: { 
         type: Object,
-        required: true
+        required: false
     },
     status: {
         type: String,
         required: true,
-        default: "Pending"
+        default: "pending"
     }
 }, {
     timestamps: true

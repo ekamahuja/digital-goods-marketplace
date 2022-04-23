@@ -113,6 +113,7 @@ section#order-info {
 
 
 .primary-btn {
+    display: none;
     margin-top: 1rem;
     font-weight: bold;
     background: #715ceb;
@@ -150,3 +151,88 @@ section#order-info {
         margin-bottom: 1.5rem;
     }
 }
+
+
+
+
+
+@keyframes ldio-6z6a4me9689-o {
+    0%    { opacity: 1; transform: translate(0 0) }
+   49.99% { opacity: 1; transform: translate(86.8px,0) }
+   50%    { opacity: 0; transform: translate(86.8px,0) }
+  100%    { opacity: 0; transform: translate(0,0) }
+}
+@keyframes ldio-6z6a4me9689 {
+    0% { transform: translate(0,0) }
+   50% { transform: translate(86.8px,0) }
+  100% { transform: translate(0,0) }
+}
+.ldio-6z6a4me9689 div {
+  position: absolute;
+  width: 86.8px;
+  height: 86.8px;
+  border-radius: 50%;
+  top: 65.1px;
+  left: 21.7px;
+}
+.ldio-6z6a4me9689 div:nth-child(1) {
+  background: -webkit-linear-gradient(-65deg, #c165dd 0%, #1153fc 100%);
+  animation: ldio-6z6a4me9689 0.9615384615384615s linear infinite;
+  animation-delay: -0.4807692307692307s;
+}
+.ldio-6z6a4me9689 div:nth-child(2) {
+  background: -webkit-linear-gradient(-65deg, #1153fc 0%, #c165dd 100%);
+  animation: ldio-6z6a4me9689 0.9615384615384615s linear infinite;
+  animation-delay: 0s;
+}
+.ldio-6z6a4me9689 div:nth-child(3) {
+  background: -webkit-linear-gradient(-65deg, #c165dd 0%, #1153fc 100%);
+  animation: ldio-6z6a4me9689-o 0.9615384615384615s linear infinite;
+  animation-delay: -0.4807692307692307s;
+}
+.loadingio-spinner-dual-ball-i4ctez6wqi {
+  width: 217px;
+  height: 217px;
+  display: inline-block;
+  overflow: hidden;
+  background: rgba(NaN, NaN, NaN, 0);
+}
+.ldio-6z6a4me9689 {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform: translateZ(0) scale(1);
+  backface-visibility: hidden;
+  transform-origin: 0 0; /* see note above */
+}
+.ldio-6z6a4me9689 div { box-sizing: content-box; }
+
+
+#payment-loader {
+  text-align: center;
+  height: 18rem;
+}
+
+#payment-loader p {
+  font-size: 1.5rem;
+}
+
+
+#deliverdgoods {
+  display: none;
+}
+
+#payment-status {
+  text-transform: capitalize;
+}
+
+
+
+
+
+
+
+
+
+
+

@@ -4,29 +4,6 @@ import { sendDiscordWebhook } from "../utils/discordWebhook.js";
 const sellix = Sellix(`${process.env.SELLIX_API_KEY}`);
 
 
-export async function sellixCreatePayment(req, res, next) {
-  try {
-    const sellixRequest = {
-      "product_id": "5facc00211e75",
-      "gateway": "PAYPAL",
-      "currency": "USD",
-      "quantity": 1,
-      "email": "user@tempfakemail.com",
-      "white_label": true,
-      "return_url": "http://localhost:12345",
-      "ip": "127.0.0.1",
-    }
-
-
-    const sellixResponse = await sellix.payments.create(sellixRequest)
-
-
-    res.json(sellixResponse)
-  } catch(err) {
-    next(err)
-  }
-}
-
 
 export async function sellixWebhook(req, res, next) {
   try {

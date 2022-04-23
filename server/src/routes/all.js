@@ -9,7 +9,7 @@ import viewRoutes from './viewRoutes.js'
 import sellixRoutes from './sellixRoutes.js'
 import adminRoutes from './adminRoutes.js'
 import paymentRoutes from './paymentRoutes.js'
-import productRoutes from './productRoutes.js'
+import productRoutes from './productRoutes.js'  
 
 const app = express();
 

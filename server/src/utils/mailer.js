@@ -24,7 +24,6 @@ const sendMail = async (email, subject, body) => {
               html: `${body}`,
           })
 
-          console.log("Message sent: %s", sentEmail.messageId);
           return {sucess: true}
     } catch(err) {
         return {sucess: false, message: err.message}

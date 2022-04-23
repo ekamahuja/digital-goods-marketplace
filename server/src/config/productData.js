@@ -18,8 +18,7 @@ const productData = {
         paymentType: "single",
         planType: "personal",
         keyPrefix: "UPGRADERPW",
-        keyType: "lifetime"
-        ,
+        keyType: "lifetime",
         keyQuantity: 1
     },
     2: {
@@ -54,6 +53,39 @@ const productData = {
         keyPrefix: "KEY",
         keyType: "lifetime",
         keyQuantity: 25
+    },
+    5: {
+        name: "Pro Plan",
+        amount: 214.80,
+        cryptoAmount: 210.00,
+        description: "Reseller Pack (Lifetime Warranty Keys)",
+        paymentType: "single",
+        planType: "reseller",
+        keyPrefix: "KEY",
+        keyType: "lifetime",
+        keyQuantity: 60
+    },
+    6: {
+        name: "God Plan",
+        amount: 385.50,
+        cryptoAmount: 375.00,
+        description: "Reseller Pack (Lifetime Warranty Keys)",
+        paymentType: "single",
+        planType: "reseller",
+        keyPrefix: "KEY",
+        keyType: "lifetime",
+        keyQuantity: 120
+    },
+    7: {
+        name: "Ultimate Plan",
+        amount: 715.95,
+        cryptoAmount: 695.00,
+        description: "Reseller Pack (Lifetime Warranty Keys)",
+        paymentType: "single",
+        planType: "reseller",
+        keyPrefix: "KEY",
+        keyType: "lifetime",
+        keyQuantity: 250
     }
 }
 

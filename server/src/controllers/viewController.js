@@ -1,10 +1,11 @@
 import fetch from "node-fetch";
 import { generateAuthUrl } from "../helpers/replacementHelper.js";
 import { Config } from "../schemas/configSchema.js";
-import { getStats } from "../helpers/adminHelper.js";
+import { getStats, getPaymentStats } from "../helpers/adminHelper.js";
 import { upgradeStock } from "../schemas/upgradeStockSchema.js";
 import Payment from '../schemas/paymentSchema.js'
 import productData from '../config/productData.js'
+import {getIpData} from '../helpers/paymentHelper.js'
 
 
 export async function landingPage(req, res, next) {
@@ -33,6 +34,7 @@ export const orderSuccessPage = async (req, res, next) => {
       quantity: orderData.quantity,
       orderId: orderData.orderId,
       deliveredGoods: orderData.deliveredGoods,
+      status: orderData.status,
       description
     }
 
@@ -253,17 +255,33 @@ export const adminKeysPage = async (req, res, next) => {
 
 export const adminPaymentsPage = async (req, res, next) => {
   try {
-    const { totalCountries, totalKeys, totalStock, totalPayments } = await getStats();
+    const { totalPayments, totalPaymentsRevenue, last24HourTotalPaymentsLength, last24HourTotalPaymentsRevenue } = await getPaymentStats();
     res.render("../../client/admin_payments", {
-      totalCountries,
-      totalKeys,
-      totalStock,
-      totalPayments
+      totalPayments,
+      totalPaymentsRevenue,
+      last24HourTotalPaymentsLength,
+      last24HourTotalPaymentsRevenue
     });
   } catch (err) {
     res.render("../../client/500", { err });
   }
 };
+
+export const adminPaymentsDetatilsPage = async (req, res, next) => {
+  try {
+    const {orderId} = req.params
+    if (!orderId) return res.render("../../client/client_index")
+
+    const orderData = await Payment.findOne({orderId}).select("-transcationDetails")
+    if (!orderData) throw new Error("Invalid Order ID")
+
+    const ipData = await getIpData(orderData.customerIp)
+
+    res.render("../../client/admin_payments_detatils", {orderData, ipData})
+  } catch(err) {
+    res.render("../../client/500", { err });
+  }
+}
 
 
 export const adminSupportResponsesPage = async (req, res, next) => {
@@ -279,3 +297,5 @@ export const adminSupportResponsesPage = async (req, res, next) => {
     next(err)
   }
 }
+
+

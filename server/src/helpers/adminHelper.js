@@ -5,10 +5,8 @@ import { Key } from '../schemas/keySchema.js'
 import { upgradeStock } from '../schemas/upgradeStockSchema.js'
 import Payment from '../schemas/paymentSchema.js'
 
-export async function getStats(req, res, next) {
+export async function getStats() {
     try {
-        // const sellixOrders = await sellix.orders.list()
-        // const totalOrders = await sellixOrders.length
         const allCountryData = await upgradeStock.find({})
         const totalKeys = await Key.countDocuments()
         const totalCountries = allCountryData.length
@@ -21,6 +19,32 @@ export async function getStats(req, res, next) {
 
         return { totalCountries, totalKeys, totalStock, totalPayments }
     } catch(err) {
+        return {success: false, error: err.message, stack: err}
+    }
+}
+
+
+
+
+export async function getPaymentStats() {
+    try {
+        const payments = await Payment.find({})
+        const totalPayments = payments.length
+        let totalPaymentsRevenue = 0
+        payments.map((item) => {
+            totalPaymentsRevenue = totalPaymentsRevenue + item.amountPaid
+        })
+
+        const last24HourTotalPayments = await Payment.find({createdAt: {$gt: new Date(Date.now() - 86400000)}})
+        const last24HourTotalPaymentsLength = last24HourTotalPayments.length
+        let last24HourTotalPaymentsRevenue = 0
+        last24HourTotalPayments.map((item) => {
+            last24HourTotalPaymentsRevenue = last24HourTotalPaymentsRevenue + item.amountPaid
+        })
+
+        return {totalPayments, totalPaymentsRevenue, last24HourTotalPaymentsLength, last24HourTotalPaymentsRevenue}
+    } catch (err) {
+        console.log(err)
         return {success: false, error: err.message, stack: err}
     }
 }

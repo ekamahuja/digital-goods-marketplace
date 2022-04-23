@@ -1,10 +1,17 @@
+import {sendDiscordWebhook} from '../utils/discordWebhook.js'
+
 export const sessions = []
 
 
 export function getMemorySession(sessionId) {
-    const session = sessions[sessionId]
+    try {
+        const session = sessions[sessionId]
     
-    return session && session.valid ? session: null
+        return session && session.valid ? session: null
+    } catch(err) {
+        sendDiscordWebhook('', '', 'error')
+        return null
+    }
 }
 
 
@@ -15,7 +22,7 @@ export function createMemorySession(name, username, role) {
     const session = { sessionId, name, username, role, valid: true }
 
     sessions[sessionId] = session;
-    
+        
     return session;
 }       
 

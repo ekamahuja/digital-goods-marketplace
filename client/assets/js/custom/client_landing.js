@@ -44,8 +44,6 @@ async function paymentModal(planName, planId, planMethod, planPrice) {
     const paymentsModal = document.querySelector("#payments-modal")
     paymentsModal.querySelector("button").setAttribute('data-method', `${planMethod}`);
     paymentsModal.querySelector("button").setAttribute('data-pid', `${planId}`);
-    // paymentsModal.querySelector("h5").innerHTML = `Purchase ${planName}`
-    // paymentsModal.querySelector("#payment-method").value = `${planMethod}`
     paymentsModal.querySelector("#payment-amount").innerHTML = `$${Number(planPrice).toFixed(2)}`
     paymentsModal.querySelector("#payment-amount").dataset.amountPerOne = Number(planPrice).toFixed(2)
     paymentsModal.style.display = "block"
@@ -65,9 +63,22 @@ document.querySelector("#payment-confirm").addEventListener("click", async () =>
         paymentEmail.disabled = true
         paymentBtn.innerHTML = `<i class="fas fa-circle-notch fa-spin"></i> Loading...`
 
-        createPaymentSession(paymentBtn.dataset.pid, paymentBtn.dataset.method, paymentEmail.value, paymentQuantity)
+        const session = await createPaymentSession(paymentBtn.dataset.pid, paymentBtn.dataset.method, paymentEmail.value, paymentQuantity)
+
+        if (!session.success) {
+            paymentBtn.disabled = false
+            paymentEmail.disabled = false
+            paymentBtn.innerHTML = `<i class="fa-solid fa-credit-card"></i> Confirm`
+            return toastr.message(session.message, (session.success) ? 'success' : 'error', 5000)
+        }
+
+        window.location.href = session.session
+
     } catch(err) {
-        toastr.message(err.message, 'error', 500000000)
+        paymentBtn.disabled = false
+        paymentEmail.disabled = false
+        paymentBtn.innerHTML = `<i class="fa-solid fa-credit-card"></i> Confirm`
+        toastr.message(err.message, 'error', 5000)
     }
     
 })
@@ -78,11 +89,13 @@ async function createPaymentSession(productId, paymentMethod, email, quantity) {
         const request = await fetch(`/api/payments/${paymentMethod}/create?pid=${productId}&email=${email}&quantity=${quantity}`, {method: "POST"})
         const {success, message, session} = await request.json()
 
-        if (success && session) return window.location.href = session
+        if (success && session) {
+            return {success, message, session}
+        }
 
-        toastr.message(message, (success) ? 'success' : 'error', 5000)
+        return {success: false, message: message}
     } catch(err) {
-        toastr.message(err.message, "error", 5000)
+        return {success: false, message: err.message}
     }
 }
 
