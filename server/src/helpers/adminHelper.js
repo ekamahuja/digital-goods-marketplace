@@ -28,14 +28,14 @@ export async function getStats() {
 
 export async function getPaymentStats() {
     try {
-        const payments = await Payment.find({})
+        const payments = await Payment.find({ $and: [{status: {$eq: "completed"}}] })
         const totalPayments = payments.length
         let totalPaymentsRevenue = 0
         payments.map((item) => {
             totalPaymentsRevenue = totalPaymentsRevenue + item.amountPaid
         })
 
-        const last24HourTotalPayments = await Payment.find({createdAt: {$gt: new Date(Date.now() - 86400000)}})
+        const last24HourTotalPayments = await Payment.find({createdAt: {$gt: new Date(Date.now() - 86400000) }, $and: [{status: {$eq: "completed"}}]})
         const last24HourTotalPaymentsLength = last24HourTotalPayments.length
         let last24HourTotalPaymentsRevenue = 0
         last24HourTotalPayments.map((item) => {
