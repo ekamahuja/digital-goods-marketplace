@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+<% const {productName, customerEmail, amountPaid, quantity, orderId, deliveredGoods, status, description} = data %>
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -37,7 +38,7 @@
     <!--============= NavBar Section Starts Here =============-->
     <%- include('./components/userNavbar'); %>
     <!--============= NavBar Section Ends Here =============-->
-    <% const {productName, customerEmail, amountPaid, quantity, orderId, deliveredGoods, status, description} = data %>
+
      <!--============= Header Section Ends Here =============-->
      <section class="page-header bg_img" data-background="../assets/images/page-header.png">
         <div class="bottom-shape d-none d-md-block">
