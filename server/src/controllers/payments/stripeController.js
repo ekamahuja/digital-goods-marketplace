@@ -31,7 +31,7 @@ export const stripeSession = async (req, res, next) => {
     const session = await stripe.checkout.sessions.create({
       // success_url: `${process.env.CLIENT_URL}/api/payments/stripe/process/?session={CHECKOUT_SESSION_ID}`,
       success_url: `${process.env.CLIENT_URL}/order/${orderId}`,
-      cancel_url: `${process.env.CLIENT_URL}/order/${orderId}`,
+      cancel_url: `${process.env.CLIENT_URL}/#pricing`,
       customer_email: email,
       mode: "payment",
       line_items: [
