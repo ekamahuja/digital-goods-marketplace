@@ -1,4 +1,6 @@
 isValidEmail = false
+currentPlanMethod = ''
+
 
 async function resellerPayPalPurchase() {
     const resellerPlanPaypalModal = document.querySelector("#resellerPlanPaypal-modal")
@@ -12,10 +14,10 @@ window.onclick = function(event) {
         resellerPlanPaypalModal.style.display = "none";
     }
 
-    const paymentsModal = document.querySelector("#payments-modal")
-    if (event.target == paymentsModal) {
-        paymentsModal.style.display = "none";
-    }
+    // const paymentsModal = document.querySelector("#payments-modal")
+    // if (event.target == paymentsModal) {
+    //     paymentsModal.style.display = "none";
+    // }
   }
 
 
@@ -46,6 +48,21 @@ async function paymentModal(planName, planId, planMethod, planPrice) {
     paymentsModal.querySelector("button").setAttribute('data-pid', `${planId}`);
     paymentsModal.querySelector("#payment-amount").innerHTML = `$${Number(planPrice).toFixed(2)}`
     paymentsModal.querySelector("#payment-amount").dataset.amountPerOne = Number(planPrice).toFixed(2)
+    
+
+    if (document.querySelector(`#powered-by-${planMethod}-footer`)) {
+        currentPlanMethod = planMethod
+        document.querySelector(`#powered-by-${planMethod}-footer`).style.display = "block"
+    }
+
+    if (document.querySelector(`#payment-${planMethod}-header-media`)) {
+        currentPlanMethod = planMethod
+        document.querySelector(`#payment-${planMethod}-header-media`).style.display = "block"
+    }
+
+    document.querySelector("#payment-confirm").classList.add(`payment-${planMethod}-background`)
+    document.querySelector("#payment-close").classList.add(`payment-${planMethod}-background`)
+
     paymentsModal.style.display = "block"
 }
 
@@ -75,6 +92,8 @@ document.querySelector("#payment-confirm").addEventListener("click", async () =>
         window.location.href = session.session
 
     } catch(err) {
+        const paymentBtn = document.querySelector("#payment-confirm")
+        const paymentEmail = document.querySelector("#payment-email")
         paymentBtn.disabled = false
         paymentEmail.disabled = false
         paymentBtn.innerHTML = `<i class="fa-solid fa-credit-card"></i> Confirm`
@@ -132,12 +151,34 @@ document.querySelector("#payment-email").addEventListener('input', async functio
 
 
 document.querySelector("#payment-close").addEventListener("click", () => {
+    document.querySelector("#payment-email").value = ""
+    document.querySelector('#payment-email').style.border = '1px solid #ced4da'
+    isValidEmail = false
+
+    document.querySelector("#payment-quantity").value = 1
+
+    if (document.querySelector(`#powered-by-${currentPlanMethod}-footer`)) {
+        document.querySelector(`#powered-by-${currentPlanMethod}-footer`).style.display = "none"
+    }
+
+    if (document.querySelector(`#payment-${currentPlanMethod}-header-media`)) {
+        document.querySelector(`#payment-${currentPlanMethod}-header-media`).style.display = "none"
+    }
+
+    document.querySelector("#payments-modal").querySelector("h5").style.display = 'none'
+    document.querySelector("#termsandconditions").style.display = 'none'
+
+    document.querySelector("#payment-confirm").classList.remove(`payment-${currentPlanMethod}-background`)
+    document.querySelector("#payment-close").classList.remove(`payment-${currentPlanMethod}-background`)
+
     document.querySelector("#payments-modal").style.display = 'none'
 })
 
 
 document.querySelector("#payment-terms").querySelector("a").addEventListener("click", () => {
-    document.querySelector("#payment-img").style.display = 'none'
+    if (document.querySelector(`#payment-${currentPlanMethod}-header-media`)) {
+        document.querySelector(`#payment-${currentPlanMethod}-header-media`).style.display = "none"
+    }
 
     document.querySelector("#payments-modal").querySelector("h5").style.display = 'block'
     document.querySelector("#termsandconditions").style.display = 'block'

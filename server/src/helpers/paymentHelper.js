@@ -10,6 +10,13 @@ export const calculateFees = (paymentMethod, amount) => {
         fee = (amount * 0.029) + 0.30
         return fee
     }
+
+    if (paymentMethod == "coinbase") {
+        let fee = 0;
+        fee = (amount * 0.01)
+        return fee
+    }
+    
     return 0.00
 }
 

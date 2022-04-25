@@ -453,6 +453,11 @@ section#payments tbody tr {
   color: #1fa83f;
 }
 
+.badge-failed {
+  background: #ff000024;
+  color: #fc0606;
+}
+
 
 .txt-captialize {
   text-transform: capitalize;

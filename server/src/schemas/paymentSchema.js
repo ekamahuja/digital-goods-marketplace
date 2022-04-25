@@ -19,6 +19,10 @@ const paymentSchema = mongoose.Schema({
         type: Object,
         required: false
     },
+    coinbaseCode: {
+        type: String,
+        required: false
+    },
     orderId: {
         type: String,
         required: true,
