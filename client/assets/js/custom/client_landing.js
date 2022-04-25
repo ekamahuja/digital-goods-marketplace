@@ -33,7 +33,9 @@ for (let i = 0; i < paymentBtns.length; i++) {
             const fetchProductData = await productInfo(paymentBtns[i].dataset.pid)
             if (!fetchProductData.success) throw new Error(fetchProductData.error)
 
-            paymentModal(fetchProductData.name , fetchProductData.id,  paymentBtns[i].dataset.method, fetchProductData.amount)
+            let newAmount = ((paymentBtns[i].dataset.method == "coinbase")) ? fetchProductData.cryptoAmount : fetchProductData.amount
+
+            paymentModal(fetchProductData.name , fetchProductData.id,  paymentBtns[i].dataset.method, newAmount)
 
             paymentBtns[i].disabled = false
             paymentBtns[i].innerHTML = `${preInnerHTML}`

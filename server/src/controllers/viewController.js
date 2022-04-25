@@ -32,6 +32,7 @@ export const orderSuccessPage = async (req, res, next) => {
       customerEmail: orderData.customerEmail,
       amountPaid: orderData.amountPaid,
       quantity: orderData.quantity,
+      paymentMethod: orderData.paymentMethod,
       orderId: orderData.orderId,
       deliveredGoods: orderData.deliveredGoods,
       status: orderData.status,

@@ -13,7 +13,6 @@ import deserializeUser from './middlewares/deserializeUser.js'
 import errorHandler from './middlewares/errorHandler.js'
 import './cron/cronjob.js'
 
-
 // Variables
 const numberOfCores = cpus().length
 console.log(numberOfCores)
@@ -30,8 +29,6 @@ app.use(cookieParser())
 app.use(express.json({limit: '50mb'}))
 app.use(express.urlencoded({extended: false}))
 app.use(deserializeUser)
-
-
 app.use(cors({
     credentials: true,
     origin: '*'

@@ -448,12 +448,12 @@ section#payments tbody tr {
     color: #fcab06;
 }
 
-.badge-complete, .badge-completed, .badge-subscription, .badge-active, .badge-approved, .badge-isp, .badge-success {
+.badge-complete, .badge-completed, .badge-awaiting-confirmation, .badge-subscription, .badge-active, .badge-approved, .badge-isp, .badge-success {
   background: #1FA83F14;
   color: #1fa83f;
 }
 
-.badge-failed {
+.badge-failed, .badge-expired {
   background: #ff000024;
   color: #fc0606;
 }

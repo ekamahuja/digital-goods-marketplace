@@ -5,6 +5,8 @@ import {coinbaseSession, coinbaseWebhook    } from '../controllers/payments/coin
 import {paymentsData, searchPaymentData, orderData} from '../controllers/payments/paymentController.js'
 import {adminApiOnly} from '../middlewares/apiRouteProtection.js'
 
+
+
 paymentRoutes.post('/payments/stripe/create', stripeSession)
 paymentRoutes.post('/payments/coinbase/create', coinbaseSession)
 

@@ -1,10 +1,13 @@
 import coinbase from 'coinbase-commerce-node'
 const Client = coinbase.Client
+const Webhook = coinbase.Webhook
 Client.init(process.env.COINBASE_API_KEY)
 import Payment from "../../schemas/paymentSchema.js";
 import productData from "../../config/productData.js";
 import {calculateFees, generateOrderId, getIpData } from "../../helpers/paymentHelper.js";
 import { generateKeys } from "../../helpers/keyHelper.js";
+import { sendOrderConfirmationMail, sendCryptoPaymentReceivedMail } from "../../helpers/mailHelper.js";
+import { sendDiscordWebhook } from "../../utils/discordWebhook.js";
 
 
 export const coinbaseSession = async (req, res, next) => {
@@ -63,7 +66,6 @@ export const coinbaseSession = async (req, res, next) => {
             transcationDetails: session,
             status: "created"
         })
-
         if (!paymentDocument) throw new Error("Could not save order!")
 
         return res.status(201).json({
@@ -83,49 +85,53 @@ export const coinbaseSession = async (req, res, next) => {
 export const coinbaseWebhook = async (req, res, next) => {
     try {
         const {event} = req.body
-        console.log(event.type)
-        const status = (event.type).split(".")[1]
-        const paymentDocument = await Payment.findOne({id: event.data.id})
+        const status = (event.type).split(":")[1]
+        const paymentDocument = await Payment.findOne({sessionId: event.data.id})
         if (!paymentDocument) throw new Error("Could not find payment document")
         const pData = productData[paymentDocument.productId]
         paymentDocument.status = status
+        paymentDocument.transcationDetails = req.body
 
-        switch (event.type) {
-            case 'charge:created':
-
+        switch (status) {
+            case 'created':
+                paymentDocument.status = "pending"
                 break;
-            case 'charge:pending':
+            case 'pending':
+                paymentDocument.status = "awaiting-confirmation"
 
+                sendCryptoPaymentReceivedMail(paymentDocument.customerEmail, paymentDocument.orderId)
                 break;
-            case 'charge:delayed':
+            case 'delayed':
 
                 break;   
-            case 'charge:pending':
+            case 'confirmed':
+                if ((paymentDocument.deliveredGoods).length == 0) {
+                    const keys = await generateKeys(pData.keyPrefix, pData.keyType,  pData.keyQuantity * paymentDocument.quantity)
+                    paymentDocument.deliveredGoods = keys
+                }
 
-                break;
-            case 'charge:confirmed':
-                const keys = await generateKeys(pData.keyPrefix, pData.keyType,  pData.keyQuantity * paymentDocument.quantity)
-                paymentDocument.deliveredGoods = keys
                 paymentDocument.status = "completed"
 
-                sendDiscordWebhook(`:moneybag: Stripe sale for ${pData.name} ($${paymentDocument.amountPaid})`, `Order ID: ${paymentDocument.orderId}\n Product: x${paymentDocument.quantity} ${pData.name}\nFee: $${paymentDocument.fee}\n  Order Total: $${paymentDocument.amountPaid}\n Payment Status: ${paymentDocument.status}\n Customer Email: ${paymentDocument.customerEmail}\n Customer IP: ${paymentDocument.customerIp}\n Customer Device: ${paymentDocument.customerDevice}`, "payment");
+                sendDiscordWebhook(`:moneybag: Coinbase sale for ${pData.name} ($${paymentDocument.amountPaid})`, `Order ID: ${paymentDocument.orderId}\n Product: x${paymentDocument.quantity} ${pData.name}\nFee: $${paymentDocument.fee}\n  Order Total: $${paymentDocument.amountPaid}\n Payment Status: ${paymentDocument.status}\n Customer Email: ${paymentDocument.customerEmail}\n Customer IP: ${paymentDocument.customerIp}\n Customer Device: ${paymentDocument.customerDevice}`, "payment");
                 sendOrderConfirmationMail(paymentDocument.customerEmail, paymentDocument.orderId);
                 break;
-            case 'charge:failed':
-
+            case 'failed':
+                paymentDocument.status = "expired"
                 break;
-            case 'charge:resolved':
+            case 'resolved':
 
                 break;
             default:
-
+                sendDiscordWebhook("Unhandled Coinbase webhook event", `Unhandled event type ${event.type}`, 'error')
                 break;
         }
-        await paymentDocument.save()
+
+        const updatedPaymentDocument = await paymentDocument.save()
+        if (!updatedPaymentDocument) throw new Error("Could not update payment document")
 
         res.send()
     } catch(err) {
-        console.log(err)
+        sendDiscordWebhook(":x: Error Occured!", `Info: An error occured when the Coinbase webhook was triggered\n Error Message: ${err.message}\n Error Stack: ${err.stack}`, "error");
         next(err)
     }
 }

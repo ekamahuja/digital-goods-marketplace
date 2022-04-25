@@ -103,13 +103,18 @@ export const stripeWebhook = async (req, res, next) => {
         const paymentIntent = await stripe.paymentIntents.retrieve(object.payment_intent);
         const paymentMethod = await stripe.paymentMethods.retrieve(object.payment_method);
         const customer = await stripe.customers.retrieve(object.customer);
+
         paymentDocument.stripePaymentIntentData = paymentIntent
         paymentDocument.stripePaymentMethodData = paymentMethod
         paymentDocument.stripeCustomerData = customer
         paymentDocument.transcationDetails = object
-        const keys = await generateKeys(pData.keyPrefix, pData.keyType,  pData.keyQuantity * paymentDocument.quantity)
+
+        if ((paymentDocument.deliveredGoods).length == 0) {
+          const keys = await generateKeys(pData.keyPrefix, pData.keyType,  pData.keyQuantity * paymentDocument.quantity)
+          paymentDocument.deliveredGoods = keys
+        }
+
         paymentDocument.status = "completed"
-        paymentDocument.deliveredGoods = keys
         paymentDocument.customerName = object.billing_details.name
 
         sendDiscordWebhook(`:moneybag: Stripe sale for ${pData.name} ($${paymentDocument.amountPaid})`, `Order ID: ${paymentDocument.orderId}\n Product: x${paymentDocument.quantity} ${pData.name}\nFee: $${paymentDocument.fee}\n  Order Total: $${paymentDocument.amountPaid}\n Payment Status: ${paymentDocument.status}\n Customer Name: ${paymentDocument.customerName}\n Customer Email: ${paymentDocument.customerEmail}\n Customer IP: ${paymentDocument.customerIp}\n Customer Device: ${paymentDocument.customerDevice}`, "payment");
@@ -146,7 +151,6 @@ export const stripeWebhook = async (req, res, next) => {
     res.send()
 
   } catch(err) {
-    console.log(err)
     res.status(400)
     sendDiscordWebhook(":x: Error Occured!", `Info: An error occured when the Stripe webhook was triggered\n Error Message: ${err.message}\n Error Stack: ${err.stack}`, "error");
     next(err)

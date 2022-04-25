@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<% const {productName, customerEmail, amountPaid, quantity, orderId, deliveredGoods, status, description} = data %>
+<% const {productName, customerEmail, amountPaid, paymentMethod, quantity, orderId, deliveredGoods, status, description} = data %>
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -66,7 +66,9 @@
                     <div class="info-group">
                         <p><i class="fa-solid fa-wallet"></i> Amount: <span>$<%- amountPaid-%> USD</span></p>
                     </div>
-
+                    <div class="info-group">
+                        <p><i class="fa-solid fa-bag-shopping"></i> Payment Method: <span class="txt-captialize"><%- paymentMethod -%></span></p>
+                    </div>
                     <div class="info-group">
                         <p><i class="fa-solid fa-receipt"></i> Order ID: <span><%- orderId %></span></p>
                     </div>

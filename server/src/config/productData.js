@@ -2,7 +2,7 @@ const productData = {
     0: {
         name: "One-time Upgrade",
         amount: 2.50,
-        cryptoAmount: 0.10,
+        cryptoAmount: 2.20,
         description: "No warranty key",
         paymentType: "single",
         planType: "personal",
