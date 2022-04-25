@@ -141,13 +141,6 @@ a#howSectionPurchaseButton.darkmode:hover {
   line-height: 1;
 }
 
-@media only screen and (max-width: 600px) {
-  .modal-content {
-    width: 80%;
-    margin-top: 8rem;
-  }
-}
-
 #resellerPlanPaypal-content h5 {
   padding-top: 1.2rem;
   padding-bottom: 1.6rem;
@@ -247,71 +240,6 @@ img.payment-img {
   margin-bottom: -0.5rem;
 }
 
-@media only screen and (max-width: 768px) {
-  img.payment-img {
-    width: 18rem;
-  }
-
-  #payments-modal h5 {
-    max-width: 16rem;
-  }
-}
-
-@media only screen and (max-width: 425px) {
-  img.payment-img {
-    width: 15rem;
-  }
-}
-
-@media only screen and (max-width: 375px) {
-  img.payment-img {
-    width: 13rem;
-    margin-bottom: -0.5rem;
-  }
-
-  .payment-split {
-    margin-left: -0.5rem;
-  }
-
-  #termsandconditions {
-    max-height: 10rem !important;
-  }
-
-  #termsandconditions ol li {
-    font-size: 0.8rem;
-    line-height: 1.2;
-    padding-bottom: 0.3rem;
-  }
-
-  #payments-modal h5 {
-    font-size: 1rem;
-  }
-
-  .amount p {
-    padding: 1.5rem 0rem 0.5rem;
-  }
-}
-
-@media only screen and (max-width: 320px) {
-  img.payment-img {
-    width: 11rem;
-    margin-left: -3rem;
-  }
-
-  #payments-modal h5 {
-    font-size: 1rem;
-    max-width: 2rem;
-    line-height: 1.3;
-  }
-
-  .custom-input {
-    width: 100px !important;
-  }
-
-  .amount p {
-    font-size: 1.5rem !important;
-  }
-}
 
 .payment-close {
   display: inline-flex;
@@ -462,7 +390,6 @@ input[type="number"]::-webkit-outer-spin-button {
   border: none;
   margin: 0 auto;
   max-width: 96%;
-  padding: 1rem;
   display: none;
 }
 
@@ -472,4 +399,95 @@ input[type="number"]::-webkit-outer-spin-button {
 
 .payment-coinbase-background {
   background: -webkit-linear-gradient(0deg, #6b90ff 0%, #292dff 100%) !important;
+}
+
+
+@media only screen and (max-width: 425px) {
+  #termsandconditions {
+    max-height: 10rem;
+  }
+  
+}
+
+
+
+@media only screen and (max-width: 600px) {
+  .modal-content {
+    width: 90%;
+    margin-top: 8rem;
+  }
+}
+
+
+@media only screen and (max-width: 768px) {
+  img.payment-img {
+    width: 18rem;
+  }
+
+  #payments-modal h5 {
+    max-width: 16rem;
+  }
+
+  
+}
+
+@media only screen and (max-width: 425px) {
+  img.payment-img {
+    width: 15rem;
+  }
+
+  .terms-label {
+    font-size: 0.7rem;
+  }
+
+}
+
+@media only screen and (max-width: 375px) {
+  img.payment-img {
+    width: 13rem;
+    margin-bottom: -0.5rem;
+  }
+
+  .payment-split {
+    margin-left: -0.5rem;
+  }
+
+  #termsandconditions {
+    max-height: 10rem !important;
+  }
+
+  #termsandconditions ol li {
+    font-size: 0.8rem;
+    line-height: 1.2;
+    padding-bottom: 0.3rem;
+  }
+
+  #payments-modal h5 {
+    font-size: 1rem;
+  }
+
+  .amount p {
+    padding: 1.5rem 0rem 0.5rem;
+  }
+}
+
+@media only screen and (max-width: 320px) {
+  img.payment-img {
+    width: 11rem;
+    margin-left: -3rem;
+  }
+
+  #payments-modal h5 {
+    font-size: 1rem;
+    max-width: 2rem;
+    line-height: 1.3;
+  }
+
+  .custom-input {
+    width: 100px !important;
+  }
+
+  .amount p {
+    font-size: 1.5rem !important;
+  }
 }
