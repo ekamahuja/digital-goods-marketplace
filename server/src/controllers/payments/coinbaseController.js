@@ -85,13 +85,15 @@ export const coinbaseSession = async (req, res, next) => {
 export const coinbaseWebhook = async (req, res, next) => {
     try {
         const {event} = req.body
-        const status = (event.type).split(":")[1]
+        let status = (event.type).split(":")[1]
         const paymentDocument = await Payment.findOne({sessionId: event.data.id})
         if (!paymentDocument) throw new Error("Could not find payment document")
         const pData = productData[paymentDocument.productId]
         paymentDocument.status = status
         paymentDocument.transcationDetails = req.body
 
+
+        status = (status != "resolved") ? status : "confirmed"
         switch (status) {
             case 'created':
                 paymentDocument.status = "pending"
@@ -119,7 +121,7 @@ export const coinbaseWebhook = async (req, res, next) => {
                 paymentDocument.status = "expired"
                 break;
             case 'resolved':
-
+                
                 break;
             default:
                 sendDiscordWebhook("Unhandled Coinbase webhook event", `Unhandled event type ${event.type}`, 'error')
