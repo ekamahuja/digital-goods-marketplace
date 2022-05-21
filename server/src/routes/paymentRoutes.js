@@ -3,7 +3,7 @@ const paymentRoutes = express.Router()
 import {stripeSession, stripeWebhook} from '../controllers/payments/stripeController.js'
 import {coinbaseSession, coinbaseWebhook    } from '../controllers/payments/coinbaseController.js'
 import {paymentsData, searchPaymentData, orderData} from '../controllers/payments/paymentController.js'
-import {adminApiOnly} from '../middlewares/apiRouteProtection.js'
+import {adminApiOnly, adminAndModeratorApiOnly} from '../middlewares/apiRouteProtection.js'
 
 
 

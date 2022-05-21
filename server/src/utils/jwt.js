@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken'
 
-export const signJwt = (payload, tokenExpiry) => {
-    const token = jwt.sign(payload, process.env.JWT_SECRET, {expiresIn: tokenExpiry})
+export const signJwt = (payload) => {
+    const token = jwt.sign(payload, process.env.JWT_SECRET)
     return token;
 }
 
@@ -10,14 +10,8 @@ export const signJwt = (payload, tokenExpiry) => {
 export const verifyJwt = (token) => {
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET)
-        return {
-            payload: decoded,
-            expired: false
-        }
+        return decoded
     } catch (err) {
-        return {
-            payload: null,
-            expired: true
-        }
+        return false;
     }
 }

@@ -1,9 +1,9 @@
 document.querySelector("#admin-login-btn").addEventListener("click", async function() {
-    const username = document.querySelector("#admin-username").value
+    const account = document.querySelector("#admin-username").value
     const password =  document.querySelector("#admin-password").value
 
     const param = {
-        username,
+        account,
         password
     }
 
@@ -15,12 +15,12 @@ document.querySelector("#admin-login-btn").addEventListener("click", async funct
         body: JSON.stringify(param)
     }
 
-    const request = await fetch("/api/auth/session", options)
+    const request = await fetch("/api/auth/login", options)
     const response = await request.json()
     toastr.message(response.message, (response.success) ? 'success' : 'error', 5000)
     
     if (response.success) {
-        window.location.href = '/admin/dashboard'
+        window.location.href = response.redirect
     } else {
         document.querySelector('#admin-password').value = ""
     }

@@ -67,10 +67,13 @@
         <div class="payment-detatil container">
             <div id="payment-header">
                 <div id="payment-header-left" class="payments-table-cell">
-                    <img class="flag-icon payment-icon" src="https://cdn.sellix.io/static/gateways/<%-orderData.paymentMethod%>.svg">
+
+                    <% (orderData.paymentMethod == "coinbase" && orderData.transcationDetails.event.data.payments[0].network) ? logoName = orderData.transcationDetails.event.data.payments[0].network : logoName = orderData.paymentMethod %>
+                    <img class="flag-icon payment-icon" src="/assets/images/payments/methods/<%-logoName%>.svg">
                     <div>
-                        <span class="d-flex txt-captialize little-top-margin" href="mailto:<%-orderData.customerEmail%>"><%- orderData.customerName %> - <%-orderData.customerEmail%></span>
-                        <span class="d-flex"><%-orderData.orderId%></span>
+                        <% orderData.customerName ? customerTitle = orderData.customerName + " - " + orderData.customerEmail : customerTitle = orderData.customerEmail %>
+                        <span class="d-flex txt-captialize little-top-margin" href="mailto:<%-orderData.customerEmail%>"><%- customerTitle %></span>
+                        <span class="d-flex"><a href="/order/<%-orderData.orderId%>" target="_tab"><%-orderData.orderId%></a></span>
                     </div>
                 </div>
                 <div id="payment-header-right" class="d-flex">
@@ -146,6 +149,28 @@
                             <span>Last 4 Card Digits: </span>
                             <span><%-orderData.stripePaymentMethodData.card.last4%></span>
                         </div>
+                    </div>
+                <% } %>
+
+                <% if (orderData.paymentMethod == "coinbase" && orderData.coinbaseCode) { %>
+                    <div>
+                        <div>
+                            <span>Coinbase Code: </span>
+                            <span><%- orderData.coinbaseCode%></span>
+                        </div>
+                        
+                            <% if (orderData) { %>
+                                <div>
+                                    <span>Payment Via: </span>
+                                    <span style="text-transform: uppercase;"><%- logoName %></span>
+                                </div>
+                            <% } %>
+                            <% if (orderData.paymentMethod == "coinbase" && orderData.transcationDetails.event) { %>
+                                <div>
+                                    <span>Status: </span>
+                                    <span class="txt-captialize"><%- orderData.transcationDetails.event.data.timeline[orderData.transcationDetails.event.data.timeline.length - 1].status %></span>
+                                </div>
+                            <% } %>
                     </div>
                 <% } %>
                 <div>

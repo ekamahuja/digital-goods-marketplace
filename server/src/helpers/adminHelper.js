@@ -30,9 +30,19 @@ export async function getPaymentStats() {
     try {
         const payments = await Payment.find({ $and: [{status: {$eq: "completed"}}] })
         const totalPayments = payments.length
+        
         let totalPaymentsRevenue = 0
+        let stripeFees = 0
+        let coinbaseFees = 0
+
         payments.map((item) => {
             totalPaymentsRevenue = totalPaymentsRevenue + item.amountPaid
+
+            if (item.paymentMethod == "stripe") {
+                stripeFees = stripeFees + item.fee
+            } else if (item.paymentMethod == "coinbase") {
+                coinbaseFees =  coinbaseFees + item.fee
+            }
         })
 
         const last24HourTotalPayments = await Payment.find({createdAt: {$gt: new Date(Date.now() - 86400000) }, $and: [{status: {$eq: "completed"}}]})
@@ -42,7 +52,7 @@ export async function getPaymentStats() {
             last24HourTotalPaymentsRevenue = last24HourTotalPaymentsRevenue + item.amountPaid
         })
 
-        return {totalPayments, totalPaymentsRevenue, last24HourTotalPaymentsLength, last24HourTotalPaymentsRevenue}
+        return {totalPayments, totalPaymentsRevenue, last24HourTotalPaymentsLength, last24HourTotalPaymentsRevenue, stripeFees, coinbaseFees}
     } catch (err) {
         console.log(err)
         return {success: false, error: err.message, stack: err}

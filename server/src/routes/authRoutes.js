@@ -1,17 +1,20 @@
 import express from 'express'
 const userAuth = express.Router();
 import { requireUser } from '../middlewares/apiRouteProtection.js'
-import {createSession, getSession, deleteSession} from '../controllers/authController.js'
+import { registerAccount, logInAccount, fetchAccountData, logOutAccount } from '../controllers/authController.js'
 
+
+// register
+userAuth.post('/register', registerAccount)
 
 //login
-userAuth.post('/session', createSession)
+userAuth.post('/login', logInAccount)
 
 // fetch current session
-userAuth.get('/session', requireUser, getSession)
+userAuth.get('/session', requireUser, fetchAccountData)
 
 // logout
-userAuth.delete('/session', requireUser, deleteSession)
+userAuth.delete('/session', requireUser, logOutAccount)
 
 
 

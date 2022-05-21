@@ -173,19 +173,30 @@ export const playlistTransferPage = async (req, res, next) => {
 }
 
 
-export const adminLoginPage = async (req, res, next) => {
+export const loginPage = async (req, res, next) => {
   try {
     if (req.user && req.user.role == "admin") {
       res.redirect("/admin/dashboard");
     } else if (req.user && req.user.role == "moderator") {
       res.redirect("/admin/keys");
     } else {
-      res.render("../../client/admin_login");
+      res.render("../../client/login");
     }
   } catch (err) {
     res.render("../../client/500", { err });
   }
 };
+
+
+export const registerPage = async (req, res, next) => {
+  try {
+
+    res.render("../../client/register")
+
+  } catch(err) {
+    res.render("../../client/500", { err })
+  }
+}
 
 
 
@@ -256,12 +267,14 @@ export const adminKeysPage = async (req, res, next) => {
 
 export const adminPaymentsPage = async (req, res, next) => {
   try {
-    const { totalPayments, totalPaymentsRevenue, last24HourTotalPaymentsLength, last24HourTotalPaymentsRevenue } = await getPaymentStats();
+    const { totalPayments, totalPaymentsRevenue, last24HourTotalPaymentsLength, last24HourTotalPaymentsRevenue, stripeFees, coinbaseFees } = await getPaymentStats();
     res.render("../../client/admin_payments", {
       totalPayments,
       totalPaymentsRevenue,
       last24HourTotalPaymentsLength,
-      last24HourTotalPaymentsRevenue
+      last24HourTotalPaymentsRevenue,
+      stripeFees,
+      coinbaseFees
     });
   } catch (err) {
     res.render("../../client/500", { err });
@@ -273,7 +286,7 @@ export const adminPaymentsDetatilsPage = async (req, res, next) => {
     const {orderId} = req.params
     if (!orderId) return res.render("../../client/client_index")
 
-    const orderData = await Payment.findOne({orderId}).select("-transcationDetails")
+    const orderData = await Payment.findOne({orderId})
     if (!orderData) throw new Error("Invalid Order ID")
 
     const ipData = await getIpData(orderData.customerIp)

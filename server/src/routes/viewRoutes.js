@@ -10,7 +10,8 @@ import {
   playlistTransferPage,
   discordRedirect,
   contactRedirect,
-  adminLoginPage,
+  loginPage,
+  registerPage,
   adminDashboardPage,
   adminStockPage,
   adminKeysPage,
@@ -24,7 +25,7 @@ import {
 
 const viewRoutes = Router();
 
-viewRoutes.get("/order/:orderId?", orderSuccessPage);
+viewRoutes.get("/order/:orderId", orderSuccessPage);
 
 viewRoutes.get("/", landingPage);
 
@@ -45,7 +46,7 @@ viewRoutes.get("/contact", contactRedirect)
 
 viewRoutes.get("/discord", discordRedirect);
 
-viewRoutes.get("/admin/", adminLoginPage);
+viewRoutes.get("/admin/", loginPage);
 
 viewRoutes.get("/admin/dashboard", adminViewOnly, adminDashboardPage);
 
@@ -58,6 +59,12 @@ viewRoutes.get("/admin/payments", adminViewOnly, adminPaymentsPage);
 viewRoutes.get("/admin/payments/:orderId", adminViewOnly, adminPaymentsDetatilsPage);
 
 viewRoutes.get("/admin/support-responses", adminSupportResponsesPage);
+
+viewRoutes.get('/affilate/', loginPage)
+
+viewRoutes.get('/affilate/register', registerPage)
+
+viewRoutes.get('/moderator/dashboard', adminViewOnly, adminDashboardPage)
 
 
 

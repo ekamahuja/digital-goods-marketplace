@@ -10,6 +10,13 @@ import { sendOrderConfirmationMail, sendCryptoPaymentReceivedMail } from "../../
 import { sendDiscordWebhook } from "../../utils/discordWebhook.js";
 
 
+/**
+ * It creates a payment session with Coinbase Commerce and saves the payment details to a database
+ * @param req - The request object
+ * @param res - The response object
+ * @param next - The next middleware function in the stack.
+ * @returns The session object is being returned.
+ */
 export const coinbaseSession = async (req, res, next) => {
     try {
         const {pid, email, quantity} = req.query

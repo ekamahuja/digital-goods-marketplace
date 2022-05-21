@@ -11,7 +11,7 @@ keyRoutes.post('/keys', adminApiOnly, generateKeys)
 keyRoutes.get('/key', getKeyInfo)
 keyRoutes.get('/unlockkey', adminAndModeratorApiOnly, unlockKey)
 keyRoutes.get('/updateemail', adminAndModeratorApiOnly, changeKeyEmail)
-keyRoutes.post('/updatekeyStatus', adminAndModeratorApiOnly, updateKeyStatus)
+keyRoutes.post('/updatekeyStatus', adminApiOnly, updateKeyStatus)
 
 
 

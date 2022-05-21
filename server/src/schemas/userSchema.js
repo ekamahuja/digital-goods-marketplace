@@ -4,13 +4,34 @@ import bcrypt from "bcryptjs"
 
 const userSchema = mongoose.Schema(
   {
-      name: {
+      id: {
+          type: Number,
+          required: true,
+          default: "0"
+      },
+      firstName: {
           type: String,
           required: true,
+          trim: true
       }, 
-      username: {
+      lastName: {
+        type: String,
+        required: true,
+        trim: true
+      }, 
+      userName: {
           type: String,
           required: true,
+          unique: true,
+          lowercase: true,
+          trim: true
+      },
+      email: {
+        type: String,
+        required: false,
+        unique: true,
+        lowercase: true,
+        trim: true
       },
       password: {
           type: String,
@@ -18,14 +39,25 @@ const userSchema = mongoose.Schema(
       },
       role: {
           type: String,
-          enum: ['admin', 'moderator', 'reseller'],
+          enum: ['admin', 'moderator', 'reseller', 'affilate'],
           required: true,
+          default: 'affilate'
       }
   },
   {
     timestamps: true,
   }
 );
+
+userSchema.pre('save', async function(next) {
+    if (!this.id) {
+        const amountOfUsers = await this.constructor.countDocuments({})
+        this.id = amountOfUsers + 1
+    }
+
+    return next()
+})
+
 
 userSchema.pre('save', async function(next) {
     if (!this.isModified('password')) {
@@ -39,7 +71,7 @@ userSchema.pre('save', async function(next) {
 
 userSchema.methods.matchPassword = async function(enteredPassword) {
     return await bcrypt.compare(enteredPassword, this.password);
-}
+}                                                                                                               
 
 
 export const User = mongoose.model('User', userSchema)

@@ -85,7 +85,7 @@ export const getIpData = async (ip, useragent = null) => {
         const savedIpData = await ipInfo.create(data)
         return savedIpData
     } catch(err) {
-        sendDiscordWebhook(':x: Error Occured!', `Info: An error occured while fetching IP Info.\n Error Message: ${err.message}\n Error Stack: ${err.stack}`,  'error')
+        sendDiscordWebhook(':x: Error Occured!', `Info: An error occured while fetching IP Info.\n Error Message: ${err.message}\n Error Stack: ${err.stack}\n User Info: ${ip, useragent}`,  'error')
         return {success: false, message: err.message}
     }
 }

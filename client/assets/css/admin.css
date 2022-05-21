@@ -630,3 +630,12 @@ section#payments tbody tr {
 .deliverd-goods-list p {
   margin-bottom: 0.5rem;
 }
+
+.stripe-stats {
+  background: #6772e5 !important;
+}
+
+.crypto-stats {
+  background: -webkit-linear-gradient(0deg, #f7931a 0%, #f7931a 100%) !important;
+}
+
