@@ -178,7 +178,7 @@ export const loginPage = async (req, res, next) => {
     if (req.user && req.user.role == "admin") {
       res.redirect("/admin/dashboard");
     } else if (req.user && req.user.role == "moderator") {
-      res.redirect("/admin/keys");
+      res.redirect("/moderator/dashboard");
     } else {
       res.render("../../client/login");
     }
@@ -202,6 +202,7 @@ export const registerPage = async (req, res, next) => {
 
 export const adminDashboardPage = async (req, res, next) => {
   try {
+    if (req.user.role == "moderator") return res.redirect("/moderator/keys")
     const { totalCountries, totalKeys, totalStock, totalPayments } = await getStats();
     const {
       maxReplacements,
@@ -254,11 +255,13 @@ export const adminStockPage = async (req, res, next) => {
 export const adminKeysPage = async (req, res, next) => {
   try {
     const { totalCountries, totalKeys, totalStock, totalPayments } = await getStats();
+    const user = req.user
     res.render("../../client/admin_keys", {
       totalCountries,
       totalKeys,
       totalStock,
-      totalPayments
+      totalPayments,
+      user
     });
   } catch (err) {
     res.render("../../client/500", { err });

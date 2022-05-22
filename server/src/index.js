@@ -21,6 +21,7 @@ const app = express()
 // EJS setup
 app.set('view engine', 'ejs')
 app.use('/admin/assets', express.static('../client/assets'));
+app.use('/moderator/assets', express.static('../client/assets'));
 app.use('/assets', express.static('../client/assets'));
 // app.use('/', express.static('../client'));
 

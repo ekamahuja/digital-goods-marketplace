@@ -1,7 +1,7 @@
 import { User } from '../schemas/userSchema.js'
-import { generateSession, getMemorySession, deleteMemorySession} from '../helpers/authHelper.js'
+import { generateSession, deleteMemorySession} from '../helpers/authHelper.js'
 import validator from 'validator'
-
+import { verifyJwt } from '../utils/jwt.js'
 
 
 /**
@@ -24,10 +24,9 @@ import validator from 'validator'
 
             user = await User.create({firstName, lastName, userName, email, password}) 
 
-            const {sessionId, token} = generateSession(user)
-            const {role} = getMemorySession(sessionId)
+            const { token } = generateSession(user)
 
-            const redirect = `${process.env.CLIENT_URL}/${role}/dashboard`
+            const redirect = `${process.env.CLIENT_URL}/${user.role}/dashboard`
 
             res.cookie('accessToken', token, { maxAge: 4.32e+8, httpOnly: true })    
 
@@ -59,9 +58,8 @@ export const logInAccount = async (req, res, next) => {
         const user = await User.findOne({ $or: [ {userName: account}, {email: account} ] })
 
         if (user && await user.matchPassword(password)) {
-            const { sessionId, token } = generateSession(user)
-            const {role} = getMemorySession(sessionId)
-            const redirect = `${process.env.CLIENT_URL}/${role}/dashboard`
+            const { token } = generateSession(user)
+            const redirect = `${process.env.CLIENT_URL}/${user.role}/dashboard`
 
             res.cookie('accessToken', token, { maxAge: 4.32e+8, httpOnly: true })
 
@@ -110,9 +108,8 @@ export const fetchAccountData = (req, res, next) => {
 export async function logOutAccount(req, res, next) {
     try {
         res.cookie("accessToken", null, { maxAge: 0, httpOnly: true })
-        const session = await deleteMemorySession(req.user.sessionId)
     
-        return res.json({success: true, message: "Sucessfully logged out", session})
+        return res.json({success: true, message: "Sucessfully logged out"})
     } catch(err) {
         next(err)
     }

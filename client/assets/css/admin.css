@@ -639,3 +639,6 @@ section#payments tbody tr {
   background: -webkit-linear-gradient(0deg, #f7931a 0%, #f7931a 100%) !important;
 }
 
+.margin-bottom {
+  margin-bottom: 5rem;
+}

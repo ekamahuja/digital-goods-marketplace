@@ -60,11 +60,13 @@ viewRoutes.get("/admin/payments/:orderId", adminViewOnly, adminPaymentsDetatilsP
 
 viewRoutes.get("/admin/support-responses", adminSupportResponsesPage);
 
-// viewRoutes.get('/affilate/', loginPage)
-
 viewRoutes.get('/admin/register', registerPage)
 
-viewRoutes.get('/moderator/dashboard', adminViewOnly, adminDashboardPage)
+viewRoutes.get('/moderator', loginPage)
+
+viewRoutes.get('/moderator/dashboard', adminAndModeratorViewOnly, adminDashboardPage)
+
+viewRoutes.get('/moderator/keys', adminAndModeratorViewOnly, adminKeysPage)
 
 
 

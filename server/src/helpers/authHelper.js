@@ -1,5 +1,4 @@
-import { signJwt } from '../utils/jwt.js'
-const sessions = []
+import { signJwt, verifyJwt } from '../utils/jwt.js'
 
 
 
@@ -10,10 +9,8 @@ const sessions = []
  * @returns An object with two properties: sessionId and token.
  */
 export const generateSession = (user) => {
-    const sessionId = sessions.length + 1
 
     const session = {
-        sessionId,
         userId: user.id,
         firstName: user.firstName,
         lastname: user.lastName,
@@ -23,9 +20,8 @@ export const generateSession = (user) => {
         valid: true
     }
 
-    sessions.push(session)
-    const token = signJwt(sessionId)
-    return { sessionId, token };
+    const token = signJwt(session)
+    return { session, token };
 }
 
 
@@ -34,7 +30,7 @@ export const generateSession = (user) => {
  * @param sessionId - The session ID of the session you want to get.
  * @returns The session object.
  */
-export function getMemorySession(sessionId) {
+export function getSession(sessionId) {
     try {
         let session = sessions[sessionId - 1]
         
