@@ -204,6 +204,7 @@ export const adminDashboardPage = async (req, res, next) => {
   try {
     if (req.user.role == "moderator") return res.redirect("/moderator/keys")
     const { totalCountries, totalKeys, totalStock, totalPayments } = await getStats();
+    const user = req.user
     const {
       maxReplacements,
       authCookie,
@@ -226,6 +227,7 @@ export const adminDashboardPage = async (req, res, next) => {
       replacementCooldown,
       spotifyLogin,
       contactLink,
+      user
     });
   } catch (err) {
     res.render("../../client/500", { err });
@@ -237,13 +239,15 @@ export const adminDashboardPage = async (req, res, next) => {
 export const adminStockPage = async (req, res, next) => {
   try {
     const { totalCountries, totalKeys, totalStock, totalPayments } = await getStats();
+    const user = req.user
     const stock = await upgradeStock.find({});
     res.render("../../client/admin_stocks", {
       totalCountries,
       totalKeys,
       totalStock,
       stock,
-      totalPayments
+      totalPayments,
+      user
     });
   } catch (err) {
     res.render("../../client/500", { err });
@@ -271,13 +275,15 @@ export const adminKeysPage = async (req, res, next) => {
 export const adminPaymentsPage = async (req, res, next) => {
   try {
     const { totalPayments, totalPaymentsRevenue, last24HourTotalPaymentsLength, last24HourTotalPaymentsRevenue, stripeFees, coinbaseFees } = await getPaymentStats();
+    const user = req.user
     res.render("../../client/admin_payments", {
       totalPayments,
       totalPaymentsRevenue,
       last24HourTotalPaymentsLength,
       last24HourTotalPaymentsRevenue,
       stripeFees,
-      coinbaseFees
+      coinbaseFees,
+      user
     });
   } catch (err) {
     res.render("../../client/500", { err });
@@ -287,6 +293,7 @@ export const adminPaymentsPage = async (req, res, next) => {
 export const adminPaymentsDetatilsPage = async (req, res, next) => {
   try {
     const {orderId} = req.params
+    const user = req.user
     if (!orderId) return res.render("../../client/client_index")
 
     const orderData = await Payment.findOne({orderId})
@@ -294,7 +301,7 @@ export const adminPaymentsDetatilsPage = async (req, res, next) => {
 
     const ipData = await getIpData(orderData.customerIp)
 
-    res.render("../../client/admin_payments_detatils", {orderData, ipData})
+    res.render("../../client/admin_payments_detatils", {orderData, ipData, user})
   } catch(err) {
     res.render("../../client/500", { err });
   }
@@ -304,11 +311,13 @@ export const adminPaymentsDetatilsPage = async (req, res, next) => {
 export const adminSupportResponsesPage = async (req, res, next) => {
   try {
     const { totalCountries, totalKeys, totalStock, totalPayments } = await getStats();
+    const user = req.user
     res.render("../../client/admin_support_responses", {
       totalCountries,
       totalKeys,
       totalStock,
-      totalPayments
+      totalPayments,
+      user
     });
   } catch(err) {
     next(err)
