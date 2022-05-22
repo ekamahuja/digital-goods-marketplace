@@ -274,7 +274,7 @@ export const adminKeysPage = async (req, res, next) => {
 
 export const adminPaymentsPage = async (req, res, next) => {
   try {
-    const { totalPayments, totalPaymentsRevenue, last24HourTotalPaymentsLength, last24HourTotalPaymentsRevenue, stripeFees, coinbaseFees } = await getPaymentStats();
+    const { totalPayments, totalPaymentsRevenue, last24HourTotalPaymentsLength, last24HourTotalPaymentsRevenue, stripeFees, coinbaseFees, stripeRevenue, coinbaseRevenue} = await getPaymentStats();
     const user = req.user
     res.render("../../client/admin_payments", {
       totalPayments,
@@ -283,6 +283,8 @@ export const adminPaymentsPage = async (req, res, next) => {
       last24HourTotalPaymentsRevenue,
       stripeFees,
       coinbaseFees,
+      stripeRevenue,
+      coinbaseRevenue,
       user
     });
   } catch (err) {

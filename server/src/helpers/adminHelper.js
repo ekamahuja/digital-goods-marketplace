@@ -34,13 +34,17 @@ export async function getPaymentStats() {
         let totalPaymentsRevenue = 0
         let stripeFees = 0
         let coinbaseFees = 0
+        let stripeRevenue = 0
+        let coinbaseRevenue = 0
 
         payments.map((item) => {
             totalPaymentsRevenue = totalPaymentsRevenue + item.amountPaid
 
             if (item.paymentMethod == "stripe") {
+                stripeRevenue = stripeFees + item.amountPaid
                 stripeFees = stripeFees + item.fee
             } else if (item.paymentMethod == "coinbase") {
+                coinbaseRevenue = coinbaseRevenue + item.amountPaid
                 coinbaseFees =  coinbaseFees + item.fee
             }
         })
@@ -52,7 +56,7 @@ export async function getPaymentStats() {
             last24HourTotalPaymentsRevenue = last24HourTotalPaymentsRevenue + item.amountPaid
         })
 
-        return {totalPayments, totalPaymentsRevenue, last24HourTotalPaymentsLength, last24HourTotalPaymentsRevenue, stripeFees, coinbaseFees}
+        return {totalPayments, totalPaymentsRevenue, last24HourTotalPaymentsLength, last24HourTotalPaymentsRevenue, stripeFees, coinbaseFees, stripeRevenue, coinbaseRevenue}
     } catch (err) {
         console.log(err)
         return {success: false, error: err.message, stack: err}
