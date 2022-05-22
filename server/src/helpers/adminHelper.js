@@ -41,7 +41,7 @@ export async function getPaymentStats() {
             totalPaymentsRevenue = totalPaymentsRevenue + item.amountPaid
 
             if (item.paymentMethod == "stripe") {
-                stripeRevenue = stripeFees + item.amountPaid
+                stripeRevenue = stripeRevenue + item.amountPaid
                 stripeFees = stripeFees + item.fee
             } else if (item.paymentMethod == "coinbase") {
                 coinbaseRevenue = coinbaseRevenue + item.amountPaid
