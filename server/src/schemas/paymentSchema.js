@@ -88,6 +88,15 @@ const paymentSchema = mongoose.Schema({
         type: String,
         required: true,
         default: "pending"
+    },
+    affilateCode: {
+        type: String,
+        required: false
+    },
+    payoutCalculated: {
+        type: Boolean,
+        required: true,
+        default: false
     }
 }, {
     timestamps: true

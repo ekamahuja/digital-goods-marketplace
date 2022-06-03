@@ -6,6 +6,7 @@ import { upgradeStock } from "../schemas/upgradeStockSchema.js";
 import Payment from '../schemas/paymentSchema.js'
 import productData from '../config/productData.js'
 import {getIpData} from '../helpers/paymentHelper.js'
+import { fetchAffilateData, referedUserLanded, calculateAffilateStats, calculateDisputes } from '../helpers/affilateHelper.js'
 
 
 export async function landingPage(req, res, next) {
@@ -175,10 +176,8 @@ export const playlistTransferPage = async (req, res, next) => {
 
 export const loginPage = async (req, res, next) => {
   try {
-    if (req.user && req.user.role == "admin") {
-      res.redirect("/admin/dashboard");
-    } else if (req.user && req.user.role == "moderator") {
-      res.redirect("/moderator/dashboard");
+    if (req.user && req.user.role) {
+      res.redirect(`/${req.user.role}/dashboard`)
     } else {
       res.render("../../client/login");
     }
@@ -202,9 +201,10 @@ export const registerPage = async (req, res, next) => {
 
 export const adminDashboardPage = async (req, res, next) => {
   try {
-    if (req.user.role == "moderator") return res.redirect("/moderator/keys")
-    const { totalCountries, totalKeys, totalStock, totalPayments } = await getStats();
     const user = req.user
+    if (user.role === "moderator") return res.redirect('/moderator/keys')
+    const { totalCountries, totalKeys, totalStock, totalPayments } = await getStats();
+    const pageName = "Dashboard"
     const {
       maxReplacements,
       authCookie,
@@ -213,9 +213,11 @@ export const adminDashboardPage = async (req, res, next) => {
       replacementCooldown,
       spotifyLogin,
       contactLink,
+      affilateMinimumPayout
     } = await Config.findOne({});
 
     res.render("../../client/admin_dashboard", {
+      pageName,
       totalCountries,
       totalKeys,
       totalStock,
@@ -227,6 +229,7 @@ export const adminDashboardPage = async (req, res, next) => {
       replacementCooldown,
       spotifyLogin,
       contactLink,
+      affilateMinimumPayout,      
       user
     });
   } catch (err) {
@@ -240,8 +243,10 @@ export const adminStockPage = async (req, res, next) => {
   try {
     const { totalCountries, totalKeys, totalStock, totalPayments } = await getStats();
     const user = req.user
+    const pageName = "Stocks"
     const stock = await upgradeStock.find({});
     res.render("../../client/admin_stocks", {
+      pageName,
       totalCountries,
       totalKeys,
       totalStock,
@@ -259,8 +264,10 @@ export const adminStockPage = async (req, res, next) => {
 export const adminKeysPage = async (req, res, next) => {
   try {
     const { totalCountries, totalKeys, totalStock, totalPayments } = await getStats();
+    const pageName = "Keys"
     const user = req.user
     res.render("../../client/admin_keys", {
+      pageName,
       totalCountries,
       totalKeys,
       totalStock,
@@ -276,7 +283,9 @@ export const adminPaymentsPage = async (req, res, next) => {
   try {
     const { totalPayments, totalPaymentsRevenue, last24HourTotalPaymentsLength, last24HourTotalPaymentsRevenue, stripeFees, coinbaseFees, stripeRevenue, coinbaseRevenue} = await getPaymentStats();
     const user = req.user
+    const pageName = "Payments"
     res.render("../../client/admin_payments", {
+      pageName,
       totalPayments,
       totalPaymentsRevenue,
       last24HourTotalPaymentsLength,
@@ -314,7 +323,9 @@ export const adminSupportResponsesPage = async (req, res, next) => {
   try {
     const { totalCountries, totalKeys, totalStock, totalPayments } = await getStats();
     const user = req.user
+    const pageName = "Support Responses"
     res.render("../../client/admin_support_responses", {
+      pageName,
       totalCountries,
       totalKeys,
       totalStock,
@@ -322,8 +333,88 @@ export const adminSupportResponsesPage = async (req, res, next) => {
       user
     });
   } catch(err) {
-    next(err)
+    res.render("../../client/500", { err });
   }
 }
 
 
+
+export const affilateLandingPage = async (req, res, next) => {
+  try {
+    const user = req.user
+    let oldUser = req.cookies.affilateCode
+    const { affilateCode } = req.params
+
+    if (oldUser !== affilateCode) oldUser = false
+
+    referedUserLanded(affilateCode, true, oldUser ? false : true)
+
+    if (oldUser !== affilateCode) {
+      res.cookie('affilateCode', affilateCode, { maxAge: 4.32e+8, httpOnly: false})
+    }
+    
+
+    res.render("../../client/client_index")
+
+  } catch(err) {
+    res.render("../../client/500", { err })
+  }
+}
+
+
+
+export const affilateDashboard = async (req, res , next) => {
+  try {
+      const user = req.user
+      const realRole = user.role
+      user.role = "affilate"
+      const affilateData = await fetchAffilateData(user.userId)
+      const affilateStats = await calculateAffilateStats(user.userId)
+
+      const clientUrl = process.env.CLIENT_URL
+      const { affilateMinimumPayout } = await Config.findOne({})
+      let pageName;
+      
+      if (affilateData.affilateSetup) {
+        pageName = "Dashboard"
+        res.render("../../client/affilate_dashboard", {
+          user,
+          affilateStats,
+          pageName,
+          affilateMinimumPayout,
+          clientUrl,
+          realRole
+        })
+      } else {
+        pageName = "Setup"
+        res.render("../../client/affilate_setup", { 
+          user, 
+          affilateData,
+          pageName,
+          clientUrl,
+          realRole
+        })
+      }
+      
+  } catch(err) {
+    res.render("../../client/500", { err });
+  }
+}
+
+
+export const affilatePayout = async (req, res, next) => {
+  try {
+    const user = req.user
+    const pageName = "Payout"
+    const { affilateCode } = await fetchAffilateData(user.userId)
+    const {amount, newDisputedOrders} = await calculateDisputes(affilateCode)
+
+    console.log(amount, newDisputedOrders)                                                                             
+    res.render("../../client/affilate_payout", { 
+      user,
+      pageName
+    })
+  } catch(err) {
+    res.render("../../client/500", { err });
+  }
+}

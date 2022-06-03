@@ -1,7 +1,6 @@
 import fetch from 'node-fetch'
 import randomKey from 'random-key'
 import ipInfo from '../schemas/ipInfoSchema.js'
-import { sendDiscordWebhook } from '../utils/discordWebhook.js'
 
 
 export const calculateFees = (paymentMethod, amount) => {
@@ -85,7 +84,6 @@ export const getIpData = async (ip, useragent = null) => {
         const savedIpData = await ipInfo.create(data)
         return savedIpData
     } catch(err) {
-        sendDiscordWebhook(':x: Error Occured!', `Info: An error occured while fetching IP Info.\n Error Message: ${err.message}\n Error Stack: ${err.stack}\n User Info: ${ip, useragent}`,  'error')
         return {success: false, message: err.message}
     }
 }

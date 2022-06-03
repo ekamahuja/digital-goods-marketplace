@@ -1,26 +1,30 @@
+<% const { role } = user %>
 <header class="header-section inner-header">
     <div class="container">
         <div class="header-wrapper">
             <div class="logo">
-                <a href="/admin/dashboard">
+                <a href="/<%- role %>/dashboard">
                     <p class="logo-txt-upgrade-page">UPGRADER.PW</p>
                 </a>
             </div>
             <ul class="menu">
                 <li>
-                    <a href="/admin/dashboard">Dashboard</a>
+                    <a href="/affilate/dashboard">Affilate</a>
                 </li>
                 <li>
-                    <a href="/admin/keys">Keys</a>
+                    <a href="/<%- role %>/dashboard">Dashboard</a>
                 </li>
                 <li>
-                    <a href="/admin/stocks">Stocks</a>
+                    <a href="/<%- role %>/keys">Keys</a>
                 </li>
                 <li>
-                    <a href="/admin/payments">Payments</a>
+                    <a href="/<%- role %>/stocks">Stocks</a>
                 </li>
                 <li>
-                    <a href="/admin/support-responses" target="_tab">Support Responses</a>
+                    <a href="/<%- role %>/payments">Payments</a>
+                </li>
+                <li>
+                    <a href="/<%- role %>/admin/support-responses">Support Responses</a>
                 </li>
                 <li>
                     <a href="#" id="logout">Logout</a>

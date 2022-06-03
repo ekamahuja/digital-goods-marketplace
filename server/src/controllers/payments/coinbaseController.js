@@ -4,11 +4,10 @@ const Webhook = coinbase.Webhook
 Client.init(process.env.COINBASE_API_KEY)
 import Payment from "../../schemas/paymentSchema.js";
 import productData from "../../config/productData.js";
-import {calculateFees, generateOrderId, getIpData } from "../../helpers/paymentHelper.js";
+import { calculateFees, generateOrderId, getIpData } from "../../helpers/paymentHelper.js";
 import { generateKeys } from "../../helpers/keyHelper.js";
 import { sendOrderConfirmationMail, sendCryptoPaymentReceivedMail } from "../../helpers/mailHelper.js";
-import { sendDiscordWebhook } from "../../utils/discordWebhook.js";
-
+import { calculatePrices } from "../../helpers/affilateHelper.js"
 
 /**
  * It creates a payment session with Coinbase Commerce and saves the payment details to a database
@@ -19,12 +18,15 @@ import { sendDiscordWebhook } from "../../utils/discordWebhook.js";
  */
 export const coinbaseSession = async (req, res, next) => {
     try {
-        const {pid, email, quantity} = req.query
+        const { affilateCode } = req.cookies;
+        const { pid, email, quantity } = req.query
         
         if (!pid || !email || !quantity) throw new Error("Missing product ID, email or quantity")
 
-        if (!productData[pid]) throw new Error("Invalid product ID");
-        let { name, cryptoAmount, description } = productData[pid];
+        const pricingData = await calculatePrices(affilateCode)
+
+        if (!pricingData[pid]) throw new Error("Invalid product ID");
+        let { name, cryptoAmount, description } = pricingData[pid];
 
         const ip = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
         const userAgent = req.headers["user-agent"];
@@ -121,7 +123,6 @@ export const coinbaseWebhook = async (req, res, next) => {
 
                 paymentDocument.status = "completed"
 
-                sendDiscordWebhook(`:moneybag: Coinbase sale for ${pData.name} ($${paymentDocument.amountPaid})`, `Order ID: ${paymentDocument.orderId}\n Product: x${paymentDocument.quantity} ${pData.name}\nFee: $${paymentDocument.fee}\n  Order Total: $${paymentDocument.amountPaid}\n Payment Status: ${paymentDocument.status}\n Customer Email: ${paymentDocument.customerEmail}\n Customer IP: ${paymentDocument.customerIp}\n Customer Device: ${paymentDocument.customerDevice}`, "payment");
                 sendOrderConfirmationMail(paymentDocument.customerEmail, paymentDocument.orderId);
                 break;
             case 'failed':
@@ -131,7 +132,6 @@ export const coinbaseWebhook = async (req, res, next) => {
                 
                 break;
             default:
-                sendDiscordWebhook("Unhandled Coinbase webhook event", `Unhandled event type ${event.type}`, 'error')
                 break;
         }
 
@@ -140,7 +140,6 @@ export const coinbaseWebhook = async (req, res, next) => {
 
         res.send()
     } catch(err) {
-        sendDiscordWebhook(":x: Error Occured!", `Info: An error occured when the Coinbase webhook was triggered\n Error Message: ${err.message}\n Error Stack: ${err.stack}`, "error");
         next(err)
     }
 }

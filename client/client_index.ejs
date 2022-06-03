@@ -25,23 +25,12 @@
     <link rel="stylesheet" href="./assets/css/magnific-popup.css">
     <link rel="stylesheet" href="./assets/css/flaticon.css">
     <link rel="stylesheet" href="./assets/css/main.css?1222331">
-    <link rel="stylesheet" type="text/css" href="./assets/css/landing-custom.css?v=88787">
+    <link rel="stylesheet" type="text/css" href="./assets/css/landing-custom.css">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/js-toastr@1.1.1/toast.css">
 </head>
 <body>
-    <!--============= ScrollToTop & Loading Section Starts Here =============-->
-    <div class="preloader">
-        <div class="preloader-inner">
-            <div class="preloader-icon">
-                <span></span>
-                <span></span>
-            </div>
-        </div>
-    </div>
-    <a href="#0" class="scrollToTop"><i class="fas fa-angle-up"></i></a>
-    <div class="overlay"></div>
-    <!--============= ScrollToTop & Loading Section Ends Here =============-->
+    <%- include("./components/basic/preloader") %>
 
 
     <!--============= NavBar Section Starts Here =============-->
@@ -358,7 +347,7 @@
                     <li class="active">Personal</li>
                     <li>Resell</li>
                 </ul>
-                <div class="tab-area mb-sm-4">
+                <div class="tab-area mb-sm-4" id="pricing-element">
                     <div class="tab-item active">
                         <div class="pricing-area-16">
 
@@ -374,7 +363,7 @@
                                     <li class="disabled">Whitelabled</li>
                                     <li class="disabled">Reseller Panel</li>
                                 </ul>
-                                <h2 class="title"><sup>$</sup>2.20</h2>
+                                <h2 data-pid="0" class="title pricing-title">Loading...</h2>
                                 <a class="button-3 active" data-method="stripe" data-pid="0">Card <i class="fa-brands fa-cc-stripe"></i></a>
                                 <!-- <br>
                                 <a class="button-3 disabled-btn" disabled>Unavaliable</i></a> -->
@@ -395,7 +384,7 @@
                                     <li class="disabled">Whitelabled</li>
                                     <li class="disabled">Reseller Panel</li>
                                 </ul>
-                                <h2 class="title"><sup>$</sup>5.99</h2>
+                                <h2 data-pid="1" class="title pricing-title">Loading...</h2>
                                 <a class="button-3 active" data-method="stripe" data-pid="1">Card <i class="fa-brands fa-cc-stripe"></i></a>
                                 <!-- <br>
                                 <a class="button-3 active" data-sellix-product="5facc00211e75">PayPal <i class="fab fa-paypal"></i></a> -->
@@ -415,7 +404,7 @@
                                     <li class="disabled">Whitelabled</li>
                                     <li class="disabled">Reseller Panel</li>
                                 </ul>
-                                <h2 class="title"><sup>$</sup>28.75</h2>
+                                <h2 data-pid="2" class="title pricing-title">Loading...</h2>
                                 <a class="button-3 active" data-method="stripe" data-pid="2">Card <i class="fa-brands fa-cc-stripe"></i></a>
                                 <!-- <br>
                                 <a class="button-3 active" data-sellix-product="5facc79d449d3">PayPal <i class="fab fa-paypal"></i></a> -->
@@ -435,7 +424,7 @@
                                     <li class="disabled">Whitelabled</li>
                                     <li class="disabled">Reseller Panel</li>
                                 </ul>
-                                <h2 class="title"><sup>$</sup>54.95</h2>
+                                <h2 data-pid="3" class="title pricing-title">Loading...</h2>
                                 <a class="button-3 active" data-method="stripe" data-pid="3">Card <i class="fa-brands fa-cc-stripe"></i></a>
                                 <!-- <br>
                                 <a class="button-3 active" data-sellix-product="5facc93383f93">PayPal <i class="fab fa-paypal"></i></a> -->
@@ -460,7 +449,7 @@
                                     <li>Whitelabled</li>
                                     <li class="disabled">Reseller Panel</li>
                                 </ul>
-                                <h2 class="title"><sup>$</sup>108.95</h2>
+                                <h2 data-pid="4" class="title pricing-title">Loading...</h2>
                                 <a class="button-3 active" data-method="stripe" data-pid="4">Card <i class="fa-brands fa-cc-stripe"></i></a>
                                 <br>
                                 <a class="button-3 active" onclick="resellerPayPalPurchase();">PayPal <i class="fab fa-paypal"></i></a>
@@ -480,7 +469,7 @@
                                     <li>Whitelabled</li>
                                     <li>Basic Panel</li>
                                 </ul>
-                                <h2 class="title"><sup>$</sup>210.00</h2>
+                                <h2 data-pid="5" class="title pricing-title">Loading...</h2>
                                 <a class="button-3 active" data-method="stripe" data-pid="5">Card <i class="fa-brands fa-cc-stripe"></i></a>
                                 <br>
                                 <a class="button-3 active" onclick="resellerPayPalPurchase();">PayPal <i class="fab fa-paypal"></i></a>
@@ -501,7 +490,7 @@
                                     <li>Whitelabled</li>
                                     <li>Advance Panel</li>
                                 </ul>
-                                <h2 class="title"><sup>$</sup>375.00</h2>
+                                <h2 data-pid="6" class="title pricing-title">Loading...</h2>
                                 <a class="button-3 active" data-method="stripe" data-pid="6">Card <i class="fa-brands fa-cc-stripe"></i></a>
                                 <br>
                                 <a class="button-3 active" onclick="resellerPayPalPurchase();">PayPal <i class="fab fa-paypal"></i></a>
@@ -521,7 +510,7 @@
                                     <li>Whitelabled</li>
                                     <li>Custom Panel</li>
                                 </ul>
-                                <h2 class="title"><sup>$</sup>695.50</h2>
+                                <h2 data-pid="7" class="title pricing-title">Loading...</h2>
                                 <a class="button-3 active" data-method="stripe" data-pid="7">Card <i class="fa-brands fa-cc-stripe"></i></a>
                                 <br>
                                 <a class="button-3 active" onclick="resellerPayPalPurchase();">PayPal <i class="fab fa-paypal"></i></a>
@@ -608,55 +597,7 @@
 
 
     <!--============= Footer Section Starts Here =============-->
-    <footer id="faq" class="footer-section bg_img" data-background="./assets/images/footer/footer-bg.jpg">
-        <div class="container">
-            <div class="footer-top padding-top padding-bottom">
-                <div class="logo">
-                    <a href="#0">
-                        <p class="logo-txt">UPGRADER</p>
-                    </a>
-                </div>
-                <ul class="social-icons">
-                    <li>
-                        <a href="/discord" class="active"><i class="fab fa-discord"></i></a>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fas fa-headset"></i></a>
-                    </li>
-                    <li>
-                        <a href="#faq"><i class="fas fa-question"></i></a>
-                    </li>
-                </ul>
-            </div>
-            <div class="footer-bottom">
-                <ul class="footer-link">
-                    <li>
-                        <a href="#">Home</a>
-                    </li>
-                    <li>
-                        <a href="/upgrade">Upgrade</a>
-                    </li>
-                    <li>
-                        <a href="/replacement">Replacement</a>
-                    </li>
-                    <li>
-                        <a href="#pricing">Pricing</a>
-                    </li>
-                    <li>
-                        <a href="#faqs">FAQs</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="copyright">
-                <p>
-                    Copyright © 2022. All Rights Reserved By <a href="/">Upgrader.PW</a>
-                </p>
-                <p style="padding-top: 5px;">
-                    NOTE: We Have No Affilation With Spotify.
-                </p>
-            </div>
-        </div>
-    </footer>
+    <%- include("./components/footers/userFooter") %>
     <!--============= Footer Section Ends Here =============-->
 
     <!--============= Modals Section Starts Here =============-->
@@ -679,7 +620,6 @@
             <div class="payment-close" id="payment-close"><i class="fa-solid fa-x"></i></div>
             <h5>Personal Package TOS</h5>
             <image src="/assets/images/feature/payemnt_processing.png" id="payment-stripe-header-media" class="payment-img"></image>
-            <!-- <video autoplay loop muted playsinline id="payment-coinbase-header-media" class="payment-img"> <source type="video/mp4" src="https://cdn.dribbble.com/users/107759/screenshots/16081371/media/6e5966121c0665b832de8784f6d97300.mp4"></video> -->
             <img id="payment-coinbase-header-media" class="payment-img" src="/assets/images/feature/crypto_poup.gif">
             
             <div id="termsandconditions">
@@ -738,24 +678,8 @@
 
 
 
-
-
-    <!-- Scripts -->
-    <script src="./assets/js/jquery-3.3.1.min.js"></script>
-    <script src="./assets/js/modernizr-3.6.0.min.js"></script>
-    <script src="./assets/js/plugins.js"></script>
-    <script src="./assets/js/bootstrap.min.js"></script>
-    <script src="./assets/js/magnific-popup.min.js"></script>
-    <script src="./assets/js/jquery-ui.min.js"></script>
-    <script src="./assets/js/wow.min.js"></script>
-    <script src="./assets/js/waypoints.js"></script>
-    <script src="./assets/js/nice-select.js"></script>
-    <script src="./assets/js/owl.min.js"></script>
-    <script src="./assets/js/counterup.min.js"></script>
-    <script src="./assets/js/paroller.js"></script>
-    <script src="./assets/js/main.js"></script>
-    <script src="./assets/js/custom/client_sellix.js"></script>
+    <% const user = false; %>
+    <%- include("./components/basic/scripts", { user }) %>
     <script src="./assets/js/custom/client_landing.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/js-toastr@1.1.1/toast.min.js"></script>
 </body>
 </html>

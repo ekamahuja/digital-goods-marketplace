@@ -32,9 +32,6 @@ export const searchPaymentData = async (req, res, next) => {
         if (!paymentData.length) {
             paymentData = await Payment.find({customerEmail: {$regex: new RegExp('^'+query+'.*','i')}}).exec()
         }
-        if (!paymentData.length) {  
-            paymentData = await Payment.find({coinbaseCode: {$regex: new RegExp('^'+query+'.*','i')}}).exec()
-        }
 
         return res.status(200).json({success: true, message: "Successfully fetched", payments: paymentData})
 
@@ -62,3 +59,7 @@ export const orderData = async (req, res, next) => {
         next(err)
     }
 }
+
+
+
+ 

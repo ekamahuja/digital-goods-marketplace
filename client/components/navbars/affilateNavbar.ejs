@@ -1,0 +1,40 @@
+<!--============= NavBar Section Starts Here =============-->
+<header class="header-section inner-header">
+  <div class="container">
+    <div class="header-wrapper">
+      <div class="logo">
+        <a href="/affilate/dashboard">
+          <p class="logo-txt-upgrade-page">UPGRADER.PW</p>
+        </a>
+      </div>
+      <ul class="menu">
+        <% if (realRole && realRole !== "affilate") { %>
+          <li>
+            <a href="/<%- realRole %>/dashboard"><%- realRole %></a>
+          </li>
+        <% } %>
+        <li>
+          <a href="/affilate/dashboard">Dashboard</a>
+        </li>
+        <li>
+          <a href="/" target="_tab">Upgrader.PW</a>
+        </li>
+        <!-- <li>
+                    <a href="/affilate/payout">Payouts</a>
+        </li> -->
+        <li>
+          <a href="/discord" target="_tab">Discord</a>
+        </li>
+        <li>
+          <a href="#" id="logout">Logout</a>
+        </li>
+      </ul>
+      <div class="header-bar d-lg-none">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </div>
+</header>
+<!--============= NavBar Section Ends Here =============-->

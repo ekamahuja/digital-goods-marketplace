@@ -17,7 +17,7 @@ export async function getReplacement(req, res, next) {
 
     const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress
 
-    const countryCode = await ipToCountryCode(ip)
+    const countryCode = countryC && countryC.length === 2 ? countryC : await ipToCountryCode(ip)
     if (!countryCode) throw new Error(`Please provide a valid country`)
 
     const user = await spotifyUser(spotifyToken)
@@ -33,10 +33,10 @@ export async function getReplacement(req, res, next) {
     const keyData = await Key.findOne({value: upgradeData.key})
     if (!keyData) throw new Error("Could not fetch key detatils")
     if (keyData.blacklisted) throw new Error('Your account is linked with a blacklisted key. Please contact staff for further detatils.')
-    if (keyData.type == "onetime") throw new Error("One time use keys do not come with warranty")
+    if (keyData.type == "onetime") throw new Error("One time use keys do not come with warranty or replacements")
     if (keyData.replacementsClaimed >= config.maxReplacements) throw new Error("The key has been locked. Please contact staff for further details.") 
 
-    if (countryCode !== user.country) throw new Error(`Please set your Spotify account's country from ${user.country} to ${countryCode}`)
+    if (countryCode !== user.country) throw new Error(`Please set your Spotify account's country from ${user.country} to ${countryCode} (If you have already changed it, please log out and log back in)`)
 
     const upgradeInfo = await getStock(countryCode)
     if (upgradeInfo.error) throw new Error(upgradeInfo.error)

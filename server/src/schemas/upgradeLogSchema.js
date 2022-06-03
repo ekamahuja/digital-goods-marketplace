@@ -4,7 +4,9 @@ import mongoose from 'mongoose'
 const upgradeLogSchema = mongoose.Schema({
     email: {
         type: String,
-        required: "Please provide the email address to the upgrade log"
+        required: "Please provide the email address to the upgrade log",
+        trim: true,
+        lowercase: true
     },
     key: {
         type: String,

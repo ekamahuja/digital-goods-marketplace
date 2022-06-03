@@ -1,3 +1,10 @@
+const requireUser = (req, res, next) => {
+    if (!req.user) return res.redirect('/')
+
+    return next();
+}
+
+
 async function adminViewOnly(req, res, next) {
     if (!req.user || req.user.role !== "admin") {
         res.redirect("/admin");
@@ -23,4 +30,4 @@ async function adminAndModeratorViewOnly(req, res, next) {
 
 
 
-export {adminViewOnly, adminAndModeratorViewOnly }
+export {adminViewOnly, adminAndModeratorViewOnly, requireUser }

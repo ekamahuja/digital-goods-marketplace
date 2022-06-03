@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title><%- (user.role).charAt(0).toUpperCase() + (user.role).slice(1)%> <%- pageName %></title>
+        <link rel="stylesheet" href="./assets/css/bootstrap.min.css">
+        <link rel="stylesheet" href="./assets/css/all.min.css">
+        <link rel="stylesheet" href="./assets/css/animate.css">
+        <link rel="stylesheet" href="./assets/css/nice-select.css">
+        <link rel="stylesheet" href="./assets/css/owl.min.css">
+        <link rel="stylesheet" href="./assets/css/jquery-ui.min.css">
+        <link rel="stylesheet" href="./assets/css/magnific-popup.css">
+        <link rel="stylesheet" href="./assets/css/flaticon.css">
+        <link rel="stylesheet" href="./assets/css/main.css">
+        <link rel="stylesheet" href="./assets/css/affilate.css">
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/js-toastr@1.1.1/toast.css">
+        <link rel="icon" type="image/png" href="/assets/images/logo.png">
+    </head>   
+</head>
+<body>
+    <%- include("./components/basic/preloader") %>
+    <%- include('./components/navbars/affilateNavbar') %>
+    <%- include("./components/basic/pageHeader") %> 
+    
+
+    
+    <!--============= Page Content Section Starts Here =============-->
+    <div class="col-sm-12 custom-container">
+        <div class="options">
+            <button id="request-payout">Request Payout</button>
+        </div>
+        <div class="well">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Referral link</th>
+                            <th>Commission rate</th>
+                            <th>Minimum payout</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td id="affilate-link"><%- clientUrl %>/ref/<%- affilateStats.affilateData.affilateCode %></td>
+                            <td><%- affilateStats.affilateData.commissionRate %>%</td>
+                            <td>$<%- affilateMinimumPayout %> USD</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="well">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Total Visits</th>
+                            <th>Unique Visits</th>
+                            <th>Paid Orders</th>
+                            <th>Total Orders</th>
+                            <th>Conversion rate</th>
+                            <th>Avaliable earnings</th>
+                            <th>Payout earnings</th>
+                        </tr>
+                    </thead>
+                        <tr>
+                            <td><%- affilateStats.affilateData.visits %></td>
+                            <td><%- affilateStats.affilateData.uniqueVisits %></td>
+                            <td><%- affilateStats.paidOrders %></td>
+                            <td><%- affilateStats.totalOrders  %></td>
+                            <td><%- affilateStats.conversionRate + "%" || "Could not calculate" %></td>
+                            <td id="avaliable-earnings"><%- (affilateStats.avaliableEarnings < 0) ? "-$" + affilateStats.avaliableEarnings * -1 : "$" + affilateStats.avaliableEarnings %></td>
+                            <td id="payout-earnings"><%- "$" + affilateStats.payoutEarnings || "Could not fetch" %>  </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+    <section id="payouts">
+        <table class="table table-hover table-condensed">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                    <th>More Information</th>
+                    <th>Last updated</th>
+                </tr>
+            </thead>
+            <tbody id="payouts-table-body">
+            </tbody>
+        </table>
+    </section>
+
+    <div class="spacing"></div>
+    <!--============= Page Content Section Ends Here =============-->
+
+    <%- include("./components/basic/scripts") %> 
+    <script src="./assets/js/custom/affilate_dashboard.js"></script>
+</body>
+</html>

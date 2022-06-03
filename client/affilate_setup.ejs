@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+      <meta charset="UTF-8" />
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title><%- (user.role).charAt(0).toUpperCase() + (user.role).slice(1)%> <%- pageName %></title>
+      <link rel="stylesheet" href="./assets/css/bootstrap.min.css" />
+      <link rel="stylesheet" href="./assets/css/all.min.css" />
+      <link rel="stylesheet" href="./assets/css/animate.css" />
+      <link rel="stylesheet" href="./assets/css/nice-select.css" />
+      <link rel="stylesheet" href="./assets/css/owl.min.css" />
+      <link rel="stylesheet" href="./assets/css/jquery-ui.min.css" />
+      <link rel="stylesheet" href="./assets/css/magnific-popup.css" />
+      <link rel="stylesheet" href="./assets/css/flaticon.css" />
+      <link rel="stylesheet" href="./assets/css/main.css" />
+      <link rel="stylesheet" href="./assets/css/affilate.css" />
+      <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"/>
+      <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/js-toastr@1.1.1/toast.css"/>
+      <link rel="icon" type="image/png" href="/assets/images/logo.png" />
+    </head>
+  <body>
+    <%- include("./components/basic/preloader.ejs") %> 
+    <%- include("./components/navbars/affilateNavbar") %> 
+    <%- include("./components/basic/pageHeader") %>
+
+    <!--============= Page Content Section Starts Here =============-->
+    <div class="affilate-setup-container">
+      <h3>Setup your affilate account</h3>
+      <div class="explain-affilate-setup">
+        <p>
+          We reccomend that you checkout the <a href="#faq">FAQs</a>, before
+          proceeding!
+        </p>
+      </div>
+      <div class="affilate-setup-inputs">
+        <input id="rate-input" type="text" placeholder="Commission Rate (%)" />
+      </div>
+      <div class="affilate-setup-inputs">
+        <input
+          id="paypalAddress-input"
+          type="text"
+          placeholder="PayPal Email"
+        />
+      </div>
+      <button id="affilate-setup-confirm">Confirm</button>
+    </div>
+    <!--============= Page Content Section Ends Here =============-->
+
+    <%- include("./components/affilateFaq") %>
+
+    <div class="spacing"></div>
+    <%- include("./components/basic/scripts") %>
+    <script src="./assets/js/custom/affilate_setup.js"></script>
+  </body>
+</html>

@@ -3,7 +3,7 @@ const countryFetchOptions = document.querySelector("#countries-select");
 
 window.addEventListener("load", async () => {
   try {
-    const request = await fetch("/api/data/stock");
+    const request = await fetch("/api/data/stock?adminPanel=true");
     response = await request.json();
 
     if (response.success) {

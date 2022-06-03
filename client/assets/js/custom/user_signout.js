@@ -7,7 +7,7 @@ document.querySelector("#logout").addEventListener("click", async() => {
 
         if (response.success) {
             window.setTimeout(() =>{
-                window.location.href = '/admin'
+                window.location.href = '/login'
             }, 1000)
         }
 

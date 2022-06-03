@@ -1,5 +1,28 @@
 isValidEmail = false
 currentPlanMethod = ''
+let pricingData;
+
+window.addEventListener('load', async () => {
+    try {
+        const request = await fetch("/api/affilate/pricing")
+        pricingData = (await request.json()).pricingData
+
+        setPricing();
+    } catch(err) {
+        toastr.message(`${err}\n${err.stack}`, 'error', 5000)
+    }
+    
+})
+
+const setPricing = () => {
+    const pricingSection = document.querySelector("#pricing-element").querySelectorAll("h2")
+
+    for (let i = 0; i < pricingSection.length; i++) {
+       pricingSection[i].innerHTML = `<sup>$</sup>${pricingData[i].cryptoAmount}`
+    }
+
+}
+
 
 
 async function resellerPayPalPurchase() {
@@ -31,7 +54,7 @@ for (let i = 0; i < paymentBtns.length; i++) {
             paymentBtns[i].innerHTML = `<i class="fas fa-circle-notch fa-spin"></i> Loading...`
 
             const fetchProductData = await productInfo(paymentBtns[i].dataset.pid)
-            if (!fetchProductData.success) throw new Error(fetchProductData.error)
+            if (!fetchProductData) throw new Error("Please wait a few secoonds before trying again.")
 
             let newAmount = ((paymentBtns[i].dataset.method == "coinbase")) ? fetchProductData.cryptoAmount : fetchProductData.amount
 
@@ -125,10 +148,11 @@ async function createPaymentSession(productId, paymentMethod, email, quantity) {
 
 const productInfo = async (pid) => {
     try {
-        const request = await fetch(`/api/products/${pid}`)
-        const response = await request.json()
+        return pricingData[pid]
+        // const request = await fetch(`/api/products/${pid}`)
+        // const response = await request.json()
 
-        return response
+        // return response
     } catch (err) {
         return {success: false, error: err.message}
     }

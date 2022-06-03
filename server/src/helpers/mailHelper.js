@@ -6,10 +6,10 @@ export const sendOrderConfirmationMail = async (email, orderId) => {
         const title = `Order Compeleted (${orderId}) - Thank you for your order`
         const body = `Thank you for placing your Order! You can find a link to your order below. </br></br><a href="https://upgrader.pw/order/${orderId}">View Order</a>`
         
-        const sentMail = await sendMail(email, title, body)
+        const sentMail = await sendMail(email, title, body) 
         if (!sentMail.sucess) throw new Error(sentMail.message)
     } catch(err) {
-        sendDiscordWebhook(':x: Error Occured!', `Info: An error occured while sending order confirmation mail.\n Error Message: ${err.message}\n Error Stack: ${err.stack}`,  'error')
+        console.log(err)
     }
 }
 
@@ -24,6 +24,5 @@ export const sendCryptoPaymentReceivedMail = async (email, orderId) => {
         if (!sentMail.sucess) throw new Error(sentMail.message)
     } catch(err) {
         console.log(err)
-        sendDiscordWebhook(':x: Error Occured!', `Info: An error occured while sending Cryptocurrency payment received mail.\n Error Message: ${err.message}\n Error Stack: ${err.stack}`,  'error')
     }
-}
+}               

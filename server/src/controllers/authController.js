@@ -1,7 +1,6 @@
 import { User } from '../schemas/userSchema.js'
-import { generateSession, deleteMemorySession} from '../helpers/authHelper.js'
+import { generateSession } from '../helpers/authHelper.js'
 import validator from 'validator'
-import { verifyJwt } from '../utils/jwt.js'
 
 
 /**

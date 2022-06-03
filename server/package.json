@@ -37,6 +37,7 @@
     "puppeteer-screen-recorder": "^2.0.2",
     "random-key": "^0.3.2",
     "sellix": "^1.1.1",
+    "shortid": "^2.2.16",
     "spotify-web-api-node": "^5.0.2",
     "stripe": "^8.217.0",
     "validator": "^13.7.0"

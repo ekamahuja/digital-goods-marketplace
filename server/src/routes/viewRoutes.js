@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { adminViewOnly, adminAndModeratorViewOnly } from "../middlewares/viewRouteProtection.js"
+import { adminViewOnly, adminAndModeratorViewOnly, requireUser } from "../middlewares/viewRouteProtection.js"
 import {
   landingPage,
   orderSuccessPage,
@@ -19,6 +19,9 @@ import {
   adminPaymentsDetatilsPage,
   adminSupportResponsesPage,
   deleteReplacementToken,
+  affilateDashboard,
+  affilateLandingPage,
+  affilatePayout
 } from "../controllers/viewController.js";
 
 
@@ -60,13 +63,22 @@ viewRoutes.get("/admin/payments/:orderId", adminViewOnly, adminPaymentsDetatilsP
 
 viewRoutes.get("/admin/support-responses", adminSupportResponsesPage);
 
-viewRoutes.get('/admin/register', registerPage)
-
 viewRoutes.get('/moderator', loginPage)
 
 viewRoutes.get('/moderator/dashboard', adminAndModeratorViewOnly, adminDashboardPage)
 
 viewRoutes.get('/moderator/keys', adminAndModeratorViewOnly, adminKeysPage)
+
+viewRoutes.get('/login', loginPage)
+viewRoutes.get('/register', registerPage)
+
+viewRoutes.get('/affilate', loginPage)
+
+viewRoutes.get('/affilate/dashboard', requireUser, affilateDashboard)
+
+viewRoutes.get('/ref/:affilateCode', affilateLandingPage)
+
+// viewRoutes.get('/affilate/payout', requireUser, affilatePayout)
 
 
 

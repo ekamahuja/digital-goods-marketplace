@@ -54,7 +54,7 @@ export async function addStock(req, res, next) {
 
         let data = stock.filter(data => data.inviteLink !== undefined && data.inviteAddress !== undefined)
 
-        const countryExists = await upgradeStock.exists({countryCode})
+        const countryExists = await upgradeStock.exists({ countryCode })
         if (!countryExists) throw new Error('Invalid countryCode')
 
         const updatedCountryStock = await upgradeStock.updateOne({countryCode}, {$push: { stock: data }})
@@ -70,6 +70,8 @@ export async function addStock(req, res, next) {
 
 export async function getStock(req, res, next) {
     try {
+        const { adminPanel } = req.query
+        const user = req.user
         const countries = await upgradeStock.find({}).select("-_id").select("-createdAt").select("-updatedAt").select("-__v").select("-stock._id")
         if (!countries) throw new Error("No countries found")
 
@@ -79,7 +81,11 @@ export async function getStock(req, res, next) {
             stock: country.stock.length
         }))
 
-        return res.status(200).json({ success: true, message: "Stock successfully fetched", totalCountries: countries.length, data: (req.user && req.user.role == "admin") ? countries : stock})
+        return res.status(200).json({ 
+            success: true, 
+            message: "Stock successfully fetched", 
+            totalCountries: countries.length, data: (user && user.role == "admin" && adminPanel) ? countries : stock 
+        })
       
     } catch (err) {
         next(err)

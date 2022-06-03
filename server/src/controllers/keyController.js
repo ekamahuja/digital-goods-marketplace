@@ -1,5 +1,4 @@
 import randomKey from 'random-key'
-import validator from 'validator';
 import { Key } from '../schemas/keySchema.js'
 import { upgradeLog } from '../schemas/upgradeLogSchema.js'
 import { countryCodeToCountry } from '../helpers/upgradeHelper.js'
@@ -157,7 +156,6 @@ export async function changeKeyEmail(req, res, next) {
     try {
         const {key, email} = req.query
         if (!key || !email) throw new Error("Missing key or email")
-        if (!validator.isEmail(email)) throw new Error(`Invalid email address`)
 
         const keyInfo = await Key.findOne({value: key}).select("-__v").select("-createdAt").select("-updatedAt")
         if (!keyInfo) throw new Error("Key not found")

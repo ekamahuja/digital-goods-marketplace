@@ -4,10 +4,12 @@ import { getStock, ipToCountryCode } from '../helpers/upgradeHelper.js'
 import { upgradeLog } from '../schemas/upgradeLogSchema.js'
 
 
-export async function upgradeUser(req, res, next) {
+export const upgradeUser = async (req, res, next) => {
     try {
         let { email, key, countryC } = req.body
-        email = email.toLowerCase()
+        email = email.toLowerCase().trim()
+        key = key.trim()
+
         if (!email || !key) throw new Error("Missing params")
         if (!validator.isEmail(email)) throw new Error(`Invalid email address`)
 
@@ -21,7 +23,7 @@ export async function upgradeUser(req, res, next) {
 
         const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress
 
-        const countryCode = await ipToCountryCode(ip)
+        const countryCode = countryC && countryC.length === 2 ? countryC : await ipToCountryCode(ip)
         if (!countryCode) throw new Error(`Please provide a valid country`)
         
         const upgradeInfo = await getStock(countryCode)
