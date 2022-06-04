@@ -4,7 +4,6 @@ import productData from "../../config/productData.js";
 import Payment from "../../schemas/paymentSchema.js";
 import { calculateFees, generateOrderId } from "../../helpers/paymentHelper.js";
 import { generateKeys, blacklistKeys } from "../../helpers/keyHelper.js";
-import { sendDiscordWebhook } from "../../utils/discordWebhook.js";
 import { sendOrderConfirmationMail } from "../../helpers/mailHelper.js";
 import { getIpData } from "../../helpers/paymentHelper.js";
 import { calculatePrices } from "../../helpers/affilateHelper.js"
@@ -123,7 +122,7 @@ export const stripeWebhook = async (req, res, next) => {
         sendOrderConfirmationMail(paymentDocument.customerEmail, paymentDocument.orderId);
         break;
       case 'charge.expired':
-
+        paymentDocument.status = "expired"
 
         break;
       case 'charge.failed':
@@ -131,16 +130,17 @@ export const stripeWebhook = async (req, res, next) => {
 
         break;
       case 'charge.refunded':
-
+        paymentDocument.status = "refunded"
+        await blacklistKeys(paymentDocument.deliveredGoods)
 
         break;
       case 'charge.dispute.closed':
-        paymentDocument.status = "disput-closed"
+        paymentDocument.status = "dispute-closed"
 
         break;
       case 'charge.dispute.created':
         paymentDocument.status = "dispute-opened"
-        blacklistKeys(paymentDocument.deliveredGoods, true)
+        await blacklistKeys(paymentDocument.deliveredGoods)
 
         break;
       default:

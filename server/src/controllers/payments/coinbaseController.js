@@ -73,9 +73,9 @@ export const coinbaseSession = async (req, res, next) => {
             customerIp: ipInformation.ip,
             memo: `Payment for ${name} - ${description}`,
             transcationDetails: session,
-            status: "created"
+            status: "pending",
+            affilateCode
         })
-        if (!paymentDocument) throw new Error("Could not save order!")
 
         return res.status(201).json({
             success: true,
