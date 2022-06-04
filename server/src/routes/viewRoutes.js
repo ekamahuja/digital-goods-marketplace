@@ -21,7 +21,7 @@ import {
   deleteReplacementToken,
   affilateDashboard,
   affilateLandingPage,
-  affilatePayout
+  adminPayoutsPage
 } from "../controllers/viewController.js";
 
 
@@ -57,6 +57,8 @@ viewRoutes.get("/admin/stocks", adminViewOnly, adminStockPage);
 
 viewRoutes.get("/admin/keys", adminAndModeratorViewOnly, adminKeysPage);
 
+viewRoutes.get("/admin/payouts", adminViewOnly, adminPayoutsPage);
+
 viewRoutes.get("/admin/payments", adminViewOnly, adminPaymentsPage);
 
 viewRoutes.get("/admin/payments/:orderId", adminViewOnly, adminPaymentsDetatilsPage);
@@ -78,7 +80,6 @@ viewRoutes.get('/affilate/dashboard', requireUser, affilateDashboard)
 
 viewRoutes.get('/ref/:affilateCode', affilateLandingPage)
 
-// viewRoutes.get('/affilate/payout', requireUser, affilatePayout)
 
 
 

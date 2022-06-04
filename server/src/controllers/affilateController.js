@@ -4,7 +4,7 @@ import affilatePayout from '../schemas/affilatePayoutSchema.js'
 import Payment from '../schemas/paymentSchema.js'
 import { calculatePrices, calculateAvaliablePayout, fetchAffilateData, updatePayoutCaclulated } from "../helpers/affilateHelper.js"
 import validator from 'validator'
-
+import {User} from "../schemas/userSchema.js"
 
 export const affilateSetup = async (req, res, next) => {
   try {
@@ -89,7 +89,7 @@ export const createPayout = async (req, res, next) => {
     if (!updateOrders) throw new Error("Something went wrong! Try again and If the issue presists, please contact staff.")
 
     /* Creating a new payout request. */
-    const payoutData = await affilatePayout.create({ affilateCode, amount, paidOrders, disputedOrders })
+    const payoutData = await affilatePayout.create({ affilateCode, amount: amount.toFixed(2), paidOrders, disputedOrders })
 
 
     /* Sending a response to the client. */
@@ -132,12 +132,14 @@ export const fetchPayouts = async (req, res, next) => {
 
 export const updatePayoutStatus = async (req, res, next) => {
   try {
-    const { status, id } = req.query 
-    if (!(status && id)) throw new Error("Must provide status and payout ID")
+    const { status, id, comment } = req.query 
+    if (!(status && id && comment)) throw new Error("Must provide status, payout Id and a comment")
 
     const payout = await affilatePayout.findOne({ id })
     if (!payout) throw new Error("Could not find Payout")
     if (payout.status !== "pending") throw new Error(`The status of the this payout has already been set to ${payout.status} and cannot be changed.`)
+
+    payout.adminComment = comment
 
     switch(status) {
       case "paid":
@@ -145,21 +147,8 @@ export const updatePayoutStatus = async (req, res, next) => {
         break;
       case "denied":
         payout.status = status
-        
-        for (const orderId of payout.paidOrders) {
-          const order = await Payment.findOne({ orderId })
-          if (!order) continue;
-          order.payoutCalculated = false;
-          await order.save()
-        }
-
-
-        for (const orderId of payout.disputedOrders) {
-          const disputedOrder = await Payment.findOne({ orderId })
-          if (!disputedOrder) continue;
-          disputedOrder.payoutCalculated = false;
-          await disputedOrder.save()
-        }
+        await updatePayoutCaclulated(payout.paidOrders, false)
+        await updatePayoutCaclulated(payout.disputedOrders, false)
         break;
     default:
       throw new Error("Invalid status provided")
@@ -168,6 +157,40 @@ export const updatePayoutStatus = async (req, res, next) => {
     await payout.save()
 
     res.json({success: true, message: "Successfully updated status", payout })
+  } catch(err) {
+    next(err)
+  }
+}
+
+
+
+
+export const fetchAllPayouts = async (req, res, next) => {
+  try {
+    const payouts = await affilatePayout.find({})
+    
+    res.status(200).json({ success: true, message: "Successfully fetched all payouts", payouts })
+  } catch(err) {
+    next(err)
+  }
+}
+
+
+export const fetchUserData = async (req, res, next) => {
+  try {
+    const { affilateCode } = req.query
+    if (!affilateCode) throw new Error("No affilate code provided")
+
+    const affilateData = await Affilate.findOne({ affilateCode })
+    if (!affilateData) throw new Error("Affilate data not found!")
+
+    const userData = await User.findOne({ id: affilateData.userId })
+    if (!userData) throw new Error("User data not found!")
+
+    const currentBalance = (await calculateAvaliablePayout(affilateCode)).amount
+
+    res.status(200).json({ success: true, message: "Successfully fetched all data", affilateData, userData, currentBalance})
+
   } catch(err) {
     next(err)
   }

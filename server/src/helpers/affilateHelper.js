@@ -187,7 +187,7 @@ export const calculateAvaliablePayout = async (affilateCode, updateStatus = fals
 
     /* Subtracting the disputedAmount of the dispute(s) from the amount variable. */
     amount -= disputeData.disputedAmount
- 
+    // amount = amount.toFixed(2)
 
     /* Returning an object with the following properties:
     amount: The amount of money the affilate has earned.
@@ -232,7 +232,7 @@ export const calculateDisputes = async (affilateCode) => {
     the amountPaid - amount to the amount variable. It is then pushing the orderId to the
     newDisputedOrders array. */
     for (const { amountPaid, orderId, productId, fee } of disputedOrders) {
-        if (!payouts.length) break;
+        // if (!payouts.length) break;
         const orderAlreadyAccountedFor = calculatedDisputedOrders.find(order => order === orderId)
         if (orderAlreadyAccountedFor) continue;
         if (!productData[productId]) continue;
@@ -260,7 +260,7 @@ export const calculateDisputes = async (affilateCode) => {
 export const updatePayoutCaclulated = async (orders, value) => {
     /* Checking if the orders variable is an array and if the value variable is a boolean. */
     if (!Array(orders)) throw new Error("orders variables must be an array")
-    if (!Boolean(value)) throw new Error("value must be a boolean")
+    if (typeof value !== "boolean") throw new Error("value must be a boolean")
 
     /* Looping through the orders and updating the payoutCalculated field. */
     for (const orderId of orders) {

@@ -428,7 +428,7 @@ section#payments tbody tr {
   flex-direction: column;
 }
 
-.payment-badge {
+.payment-badge, .badge {
   width: fit-content;
   padding-left: 0.5rem;
   padding-right: 0.5rem;
@@ -448,12 +448,12 @@ section#payments tbody tr {
     color: #fcab06;
 }
 
-.badge-complete, .badge-completed, .badge-awaiting-confirmation, .badge-subscription, .badge-active, .badge-approved, .badge-isp, .badge-success {
+.badge-complete, .badge-paid, .badge-completed, .badge-awaiting-confirmation, .badge-subscription, .badge-active, .badge-approved, .badge-isp, .badge-success {
   background: #1FA83F14;
   color: #1fa83f;
 }
 
-.badge-failed, .badge-expired {
+.badge-failed, .badge-expired, .badge-denied {
   background: #ff000024;
   color: #fc0606;
 }
@@ -641,4 +641,18 @@ section#payments tbody tr {
 
 .margin-bottom {
   margin-bottom: 5rem;
+}
+
+
+
+button.payout-update {
+  background: #2101b1;
+  color: #fff;
+  font-weight: 600;
+  border-radius: 0.5rem;
+  transition: all .3s;
+}
+
+button.payout-update:hover {
+  background: #17007c;
 }

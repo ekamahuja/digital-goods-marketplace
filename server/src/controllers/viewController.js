@@ -350,7 +350,7 @@ export const affilateLandingPage = async (req, res, next) => {
     referedUserLanded(affilateCode, true, oldUser ? false : true)
 
     if (oldUser !== affilateCode) {
-      res.cookie('affilateCode', affilateCode, { maxAge: 4.32e+8, httpOnly: false})
+      res.cookie('affilateCode', affilateCode, { maxAge: 1.21e+9, httpOnly: true})
     }
     
 
@@ -402,15 +402,12 @@ export const affilateDashboard = async (req, res , next) => {
 }
 
 
-export const affilatePayout = async (req, res, next) => {
+export const adminPayoutsPage = async (req, res, next) => {
   try {
     const user = req.user
-    const pageName = "Payout"
-    const { affilateCode } = await fetchAffilateData(user.userId)
-    const {amount, newDisputedOrders} = await calculateDisputes(affilateCode)
-
-    console.log(amount, newDisputedOrders)                                                                             
-    res.render("../../client/affilate_payout", { 
+    const pageName = "Payouts"
+    
+    res.render("../../client/admin_payouts", {
       user,
       pageName
     })
