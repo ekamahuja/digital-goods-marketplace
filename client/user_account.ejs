@@ -57,7 +57,7 @@
         }
 
     </style>
-    <% const { firstName, lastName, userName, email, role } = user %>
+    <% const { firstName, lastname, lastName, userName, email, role } = user %>
     <% const { commissionRate, paypal } = affilate %>
 
     <%- include("./components/basic/preloader") %>
@@ -74,7 +74,7 @@
         <div class="box">   
             <div class="account-input">
                 <label for="name">Name</label>
-                <input name="name" id="name" value="<%- firstName + " " + lastName %>" disabled>
+                <input name="name" id="name" value="<%- firstName %> <%- lastname || lastName %>" disabled>
             </div>
             <div class="account-input">
                 <label for="usernanme">Username</label>

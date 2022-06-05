@@ -434,7 +434,7 @@ export const mangeAccount = async (req, res, next) => {
     const user = req.user
     const realRole = user.role
     user.role = requestRole
-    const pageName = "Mange Account"
+    const pageName = "Manage Account"
     const affilate = await fetchAffilateData(user.userId)
 
     res.render("../../client/user_account", { user, affilate, pageName, realRole })
