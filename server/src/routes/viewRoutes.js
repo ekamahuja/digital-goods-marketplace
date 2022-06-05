@@ -66,6 +66,7 @@ viewRoutes.get("/admin/payments", adminViewOnly, adminPaymentsPage);
 viewRoutes.get("/admin/payments/:orderId", adminViewOnly, adminPaymentsDetatilsPage);
 
 viewRoutes.get("/admin/support-responses", adminSupportResponsesPage);
+viewRoutes.get("/moderator/support-responses", adminSupportResponsesPage);
 
 viewRoutes.get('/moderator', loginPage)
 
