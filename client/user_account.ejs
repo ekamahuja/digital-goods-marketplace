@@ -57,11 +57,17 @@
         }
 
     </style>
-    <%- include("./components/basic/preloader") %>
-    <%- include('./components/navbars/accountNavbar') %>
-    <%- include("./components/basic/pageHeader") %> 
     <% const { firstName, lastName, userName, email, role } = user %>
     <% const { commissionRate, paypal } = affilate %>
+
+    <%- include("./components/basic/preloader") %>
+    <% if (role === "affilate") {  %>
+        <%- include('./components/navbars/accountNavbar') %>
+    <% } else { %>
+        <%- include('./components/navbars/adminNavbar') %>
+    <% } %>
+    <%- include("./components/basic/pageHeader") %> 
+    
     
     <!--============= Page Content Section Starts Here =============-->
     <section id="mange-account">

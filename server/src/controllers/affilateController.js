@@ -1,7 +1,6 @@
 import Affilate from "../schemas/affilateSchema.js";
 import { Config } from '../schemas/configSchema.js'
 import affilatePayout from '../schemas/affilatePayoutSchema.js'
-import Payment from '../schemas/paymentSchema.js'
 import { calculatePrices, calculateAvaliablePayout, fetchAffilateData, updatePayoutCaclulated } from "../helpers/affilateHelper.js"
 import validator from 'validator'
 import {User} from "../schemas/userSchema.js"

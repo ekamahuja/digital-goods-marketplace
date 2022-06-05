@@ -4,15 +4,29 @@ const confirmBtn = document.querySelector("#affilate-setup-confirm");
 
 confirmBtn.addEventListener("click", async () => {
   try {
-    const request = await fetch(
-      `/api/affilate/setup?commission=${rateInput.value}&paymentMethodType="paypal"&payment=${paypalEmail.value}`
-    );
-    const { success, message, affilate } = await request.json();
+    const params = {
+      commission: rateInput.valueAsNumber,
+      payment: paypalEmail.value,
+      isSetup: true
+    }
+
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(params)
+    }
+
+    console.log(params)
+
+    const request = await fetch(`/api/affilate/update`, options);
+    const { success, message } = await request.json();
 
     toastr.message(message, success ? "success" : "error", 5000);
 
     if (success) {
-      location.reload();
+      window.location.href = "/affilate/dashboard"
     } else {
       // rateInput.value = ""
       // paypalEmail.value = ""

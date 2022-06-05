@@ -361,7 +361,25 @@ export const affilateLandingPage = async (req, res, next) => {
   }
 }
 
+export const affilateSetup = async (req, res, next) => {
+  try {
+    const user = req.user
+    const realRole = user.role
+    user.role = "Affilate"
+    const pageName = "Setup"
+    const affilateData = await fetchAffilateData(user.userId)
+    if (affilateData.affilateSetup) return res.redirect("/affilate/dashboard")
+    res.render("../../client/affilate_setup", { 
+      user, 
+      affilateData,
+      pageName,
+      realRole
+    })
 
+  } catch(err) {
+    next(err)
+  }
+}
 
 export const affilateDashboard = async (req, res , next) => {
   try {
@@ -386,14 +404,7 @@ export const affilateDashboard = async (req, res , next) => {
           realRole
         })
       } else {
-        pageName = "Setup"
-        res.render("../../client/affilate_setup", { 
-          user, 
-          affilateData,
-          pageName,
-          clientUrl,
-          realRole
-        })
+        res.redirect("/affilate/setup")
       }
       
   } catch(err) {
