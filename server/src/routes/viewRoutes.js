@@ -21,7 +21,8 @@ import {
   deleteReplacementToken,
   affilateDashboard,
   affilateLandingPage,
-  adminPayoutsPage
+  adminPayoutsPage,
+  mangeAccount
 } from "../controllers/viewController.js";
 
 
@@ -77,6 +78,8 @@ viewRoutes.get('/register', registerPage)
 viewRoutes.get('/affilate', loginPage)
 
 viewRoutes.get('/affilate/dashboard', requireUser, affilateDashboard)
+
+viewRoutes.get('/:requestRole/account', requireUser, mangeAccount)
 
 viewRoutes.get('/ref/:affilateCode', affilateLandingPage)
 

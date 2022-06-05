@@ -74,6 +74,31 @@ export const logInAccount = async (req, res, next) => {
 
 
 
+export const updatePassword = async (req, res, next) => {
+    try {
+        const { userId } = req.user
+        const { currentPassword, newPassword, confirmPassword } = req.body
+        if (!(currentPassword || newPassword || confirmPassword)) throw new Error("Please enter all fields!")
+
+        const user = await User.findOne({ id: userId })
+        if (!user) throw new Error("User does not exisit!")
+
+        if (user && await user.matchPassword(currentPassword)) {
+            if (newPassword !== confirmPassword) throw new Error("New passwords do not match!")
+            if (newPassword.length < 8) throw new Error("New password must be at least 8 characters long!")
+
+            user.password = newPassword;
+            const updatedUser = await user.save()
+
+            return res.status(200).json({ success: true, message: "Successfully updated password!", user: updatedUser })
+        }
+
+        throw new Error("Entered Incorrect password!")
+    } catch(err) {
+        next(err)
+    }
+}
+
 
 
 /**

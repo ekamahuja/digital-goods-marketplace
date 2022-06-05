@@ -8,10 +8,13 @@ import {User} from "../schemas/userSchema.js"
 
 export const affilateSetup = async (req, res, next) => {
   try {
-    let { commission, payment } = req.query;
+    let { commission, payment, isSetup } = req.body;
+    isSetup = isSetup || false
+
     if (!commission || !payment) throw new Error ("Please enter all fields");
     if (!validator.isEmail(payment)) throw new Error("Must provide a valid paypal email");
     if (!Number(commission)) throw new Error("Please enter a valid number for the commission rate %");
+
     if (commission < 0) throw new Error("Minimum commission must be greater than 0%")
     if (commission < 1) commission = 1
     if (commission > 200) throw new Error("You must contact staff to set a commission rate higher than 200%");
@@ -21,7 +24,9 @@ export const affilateSetup = async (req, res, next) => {
       { commissionRate: Number(commission).toFixed(2), paypal: payment, affilateSetup: true }
     );
 
-    return res.json({ success: true, message: "Successfully compeleted setup!", affilate });
+    const message = isSetup ? "Successfully compeleted setup!" : "Successfully updated!"
+
+    return res.json({ success: true, message, affilate });
 
   } catch (err) {
     next(err);

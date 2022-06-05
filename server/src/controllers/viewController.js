@@ -415,3 +415,19 @@ export const adminPayoutsPage = async (req, res, next) => {
     res.render("../../client/500", { err });
   }
 }
+
+
+export const mangeAccount = async (req, res, next) => {
+  try {
+    const { requestRole } = req.params
+    const user = req.user
+    const realRole = user.role
+    user.role = requestRole
+    const pageName = "Mange Account"
+    const affilate = await fetchAffilateData(user.userId)
+
+    res.render("../../client/user_account", { user, affilate, pageName, realRole })
+  } catch(err) {
+    res.render("../../client/500", { err })
+  }
+}

@@ -13,7 +13,7 @@ import {
 
 
 affilateRoutes.get("/affilate/pricing", affilatePricing);
-affilateRoutes.get("/affilate/setup", requireUser, affilateSetup);
+affilateRoutes.post("/affilate/update", requireUser, affilateSetup);
 
 affilateRoutes.post("/affilate/payout/create", requireUser, createPayout);
 affilateRoutes.get(`/affilate/payout`, requireUser, fetchPayouts);

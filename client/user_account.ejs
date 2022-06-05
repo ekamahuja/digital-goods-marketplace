@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title><%- (user.role).charAt(0).toUpperCase() + (user.role).slice(1)%> <%- pageName %></title>
+        <link rel="stylesheet" href="./assets/css/bootstrap.min.css">
+        <link rel="stylesheet" href="./assets/css/all.min.css">
+        <link rel="stylesheet" href="./assets/css/animate.css">
+        <link rel="stylesheet" href="./assets/css/nice-select.css">
+        <link rel="stylesheet" href="./assets/css/owl.min.css">
+        <link rel="stylesheet" href="./assets/css/jquery-ui.min.css">
+        <link rel="stylesheet" href="./assets/css/magnific-popup.css">
+        <link rel="stylesheet" href="./assets/css/flaticon.css">
+        <link rel="stylesheet" href="./assets/css/main.css">
+        <link rel="stylesheet" href="./assets/css/affilate.css">
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/js-toastr@1.1.1/toast.css">
+        <link rel="icon" type="image/png" href="/assets/images/logo.png">
+    </head>   
+</head>
+<body>
+    <style>
+        section#mange-account {
+            width: auto;
+            max-width: 80%;
+            margin: 8rem auto 15rem;
+        }
+
+        section#mange-account .box {
+            background-color: #fff;
+            margin-bottom: 3rem;
+            padding: 1.5rem 2rem;
+            border-radius: 0.3rem;
+        }
+
+        section#mange-account .account-input {
+            padding-bottom: 1rem;
+        }
+
+        .account-input input {
+            text-transform: capitalize;
+            height: 50px;
+            padding-left: 1rem;
+        }
+
+        .account-input button {
+            border: none;
+            background: #3b319e;
+            color: #fff;
+            font-weight: 700;
+            height: 60px;
+            width: 30%;
+            border-radius: 0.4rem;
+        }
+
+    </style>
+    <%- include("./components/basic/preloader") %>
+    <%- include('./components/navbars/accountNavbar') %>
+    <%- include("./components/basic/pageHeader") %> 
+    <% const { firstName, lastName, userName, email, role } = user %>
+    <% const { commissionRate, paypal } = affilate %>
+    
+    <!--============= Page Content Section Starts Here =============-->
+    <section id="mange-account">
+        <div class="box">   
+            <div class="account-input">
+                <label for="name">Name</label>
+                <input name="name" id="name" value="<%- firstName + " " + lastName %>" disabled>
+            </div>
+            <div class="account-input">
+                <label for="usernanme">Username</label>
+                <input name="username" id="username" value="<%- userName %>" disabled>
+            </div>
+            <div class="account-input">
+                <label for="email">Email</label>
+                <input name="email" id="email" value="<%- email %>" disabled>
+            </div>
+        </div>
+
+        <div class="box">
+            <form id="password-form" autocomplete="on" onsubmit="return false" >
+                <input hidden name="userName" id="userName" type="text" value="<%- userName %>" autocomplete="username email">
+                <div class="account-input">
+                    <label for="currentPassword">Current password</label>
+                    <input name="currentPassword" id="currentPassword" type="password" autocomplete="current-password">
+                </div>
+                <div class="account-input">
+                    <label for="newPassword">New password</label>
+                    <input name="newPassword" id="newPassword" type="password" autocomplete="new-password">
+                </div>
+                <div class="account-input">
+                    <label for="confirmPassword">Confirm new password</label>
+                    <input name="confirmPassword" id="confirmPassword" type="password" autocomplete="new-password">
+                </div>
+                <div class="account-input">
+                    <button type="submit" id="updatePassword"><i class="fa-solid fa-key"></i> Change password</button>
+                </div>
+            </form>  
+        </div>
+
+        <div class="box">
+            <div class="account-input">
+                <label for="commissionRate">Commission rate (%)</label>
+                <input name="commissionRate" id="commissionRate" type="number" value="<%- commissionRate %>">
+            </div>
+            <div class="account-input">
+                <label for="paypalEmail">PayPal email</label>
+                <input name="paypalEmail" id="paypalEmail" type="email" value="<%- paypal %>">
+            </div>
+            <div class="account-input">
+                <button id="updateAffilate"><i class="fa-solid fa-gears"></i> Update Affilate</button>
+            </div>
+        </div>
+    </section>
+    <!--============= Page Content Section Ends Here =============-->
+
+    <%- include("./components/basic/scripts") %> 
+    <script type="text/javascript" src="/assets/js/custom/user_account.js"></script>
+</body>
+</html>
