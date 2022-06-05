@@ -60,11 +60,13 @@
                         <div class="form-group">
                             <label for="admin-password">Password</label>
                             <input type="password" placeholder="Enter Your Password" id="admin-password">
+                            <span class="sign-in-recovery" id="sign-in-recovery">Forgot your password? <a href="#">recover password</a></span>
                         </div>
                         <div class="form-group text-center">
                             <button type="button" id="admin-login-btn" class="mt-2 mb-2">Sign In</button>
                         </div>
                     </form>
+                    <span class="d-block mt-15">Don't have an account? <a href="/register">Sign Up Here</a></span>
                 </div>
             </div>
         </div>
@@ -73,5 +75,11 @@
     <% const user = false %>
     <%- include("./components/basic/scripts", { user }) %>
     <script src="./assets/js/custom/user_login.js"></script>
+    <script>
+      const forgotPassword = document.querySelector("#sign-in-recovery")
+      forgotPassword.addEventListener("click", () => {
+        toastr.message("We are still working on this feature! If you need a password reset, please contact staff for now!", 'info', 5000)
+      })
+    </script>
 </body>
 </html>

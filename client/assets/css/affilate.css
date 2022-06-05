@@ -6,6 +6,10 @@
     margin-top: 8rem;
 }
 
+#admin-login-btn {
+    width: 100%;
+}
+
 .affilate-setup-container {
     max-width: 80%;
     height: auto;
