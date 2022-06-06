@@ -442,3 +442,5 @@ export const mangeAccount = async (req, res, next) => {
     res.render("../../client/500", { err })
   }
 }
+
+

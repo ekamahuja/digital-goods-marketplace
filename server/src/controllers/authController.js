@@ -98,6 +98,8 @@ export const updatePassword = async (req, res, next) => {
         next(err)
     }
 }
+        
+
 
 
 

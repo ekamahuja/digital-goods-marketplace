@@ -9,7 +9,6 @@ export async function generateKeys(prefix, type, amount) {
 
         for (let i = 1; i <= amount; i++) {
             let key = `${prefix}-${randomKey.generateBase30(5)}-${randomKey.generateBase30(5)}-${randomKey.generateBase30(5)}`
-            console.log(key)
             keyArray.push({ value: key.toUpperCase(), type })
         }
         
@@ -48,4 +47,7 @@ export async function blacklistKeys(keys) {
         return {success: false, error: err}
     }
 }
+
+
+
 

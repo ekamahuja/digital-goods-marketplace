@@ -153,9 +153,6 @@ section#order-info {
 }
 
 
-
-
-
 @keyframes ldio-6z6a4me9689-o {
     0%    { opacity: 1; transform: translate(0 0) }
    49.99% { opacity: 1; transform: translate(86.8px,0) }
@@ -167,6 +164,8 @@ section#order-info {
    50% { transform: translate(86.8px,0) }
   100% { transform: translate(0,0) }
 }
+
+
 .ldio-6z6a4me9689 div {
   position: absolute;
   width: 86.8px;
