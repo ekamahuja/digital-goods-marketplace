@@ -2,20 +2,6 @@ import sendMail from '../utils/mailer.js'
 import productData from '../config/productData.js'
 import { captalize, convertTimestamp } from '../utils/basicUtils.js';
 
-const months = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
 
 export const sendOrderConfirmationMail = async (paymentDocument) => {
     try {
@@ -51,8 +37,11 @@ export const sendOrderConfirmationMail = async (paymentDocument) => {
 
         const sentMail = await sendMail(context, 'orderConfirmation') 
         if (!sentMail.sucess) throw new Error(sentMail.message)
+
+        return true;
     } catch(err) {
         console.log(err)
+        return false;
     }
 }
 
