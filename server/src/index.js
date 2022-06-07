@@ -12,6 +12,7 @@ import routes from './routes/all.js'
 import deserializeUser from './middlewares/deserializeUser.js'
 import errorHandler from './middlewares/errorHandler.js'
 import './cron/cronjob.js'
+import './utils/mailer.js'
 
 // Variables
 const numberOfCores = cpus().length

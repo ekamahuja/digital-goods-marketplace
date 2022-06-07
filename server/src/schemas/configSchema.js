@@ -15,6 +15,7 @@ const configSchema = mongoose.Schema({
     replacementCooldown: Number,
     spotifyLogin: String,
     contactLink: String,
+    feedbackLink: String,
     affilateMinimumPayout: Number
 }, {
     collection: 'config',

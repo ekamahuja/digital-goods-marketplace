@@ -1,12 +1,55 @@
 import sendMail from '../utils/mailer.js'
-import {sendDiscordWebhook} from '../utils/discordWebhook.js'
+import productData from '../config/productData.js'
+import { captalize, convertTimestamp } from '../utils/basicUtils.js';
 
-export const sendOrderConfirmationMail = async (email, orderId) => {
+const months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+
+export const sendOrderConfirmationMail = async (paymentDocument) => {
     try {
-        const title = `Order Compeleted (${orderId}) - Thank you for your order`
-        const body = `Thank you for placing your Order! You can find a link to your order below. </br></br><a href="https://upgrader.pw/order/${orderId}">View Order</a>`
+        const { orderId, customerName, amountPaid, productId, quantity, updatedAt, customerEmail, paymentMethod, stripePaymentMethodData, transcationDetails } = paymentDocument
+        const { SITE_NAME, CLIENT_URL, SMTP_USER } = process.env
+        if (!productData[productId]) return
+        const { name } = productData[productId]
+
+        let thankyouMessage;
+        let paymentSource
+        const siteName = SITE_NAME
+        const planName = `x${quantity} ${name}`;
+        const subject = "Upgrader Purchase Confirmation"
+        const time = convertTimestamp(updatedAt)
+        customerName ? thankyouMessage = `Thank you, ${captalize(customerName)}!` : thankyouMessage = "Thank you!"
+
+        if (paymentMethod === "stripe") paymentSource = `${stripePaymentMethodData.card.brand.toUpperCase()} ${stripePaymentMethodData.card.last4}`
+        if (paymentMethod === "coinbase") paymentSource = `${transcationDetails.event.data.payments[0].network.toUpperCase()}`
         
-        const sentMail = await sendMail(email, title, body) 
+        const context = {
+            thankyouMessage,
+            amountPaid: amountPaid.toFixed(2),
+            planName,
+            clientUrl: CLIENT_URL,
+            sentBy: SMTP_USER,
+            orderId,
+            time: convertTimestamp(updatedAt),
+            customerEmail,
+            subject,
+            paymentSource,
+            siteName
+        }
+
+        const sentMail = await sendMail(context, 'orderConfirmation') 
         if (!sentMail.sucess) throw new Error(sentMail.message)
     } catch(err) {
         console.log(err)
@@ -15,14 +58,3 @@ export const sendOrderConfirmationMail = async (email, orderId) => {
 
 
 
-export const sendCryptoPaymentReceivedMail = async (email, orderId) => {
-    try {
-        const title = `Payment received! (Order ID: ${orderId})`
-        const body = `We have received your cryptocurrency payment. Your order status is "Awaiting payment confirmation" until your payment is confirmed on the blockchain. This process can take anywhere from 5 miniutes to 1 hour. Your key(s) will be issues once your payment is confirmed. </br></br><a href="https://upgrader.pw/order/${orderId}">View Order</a>`
-    
-        const sentMail = await sendMail(email, title, body)
-        if (!sentMail.sucess) throw new Error(sentMail.message)
-    } catch(err) {
-        console.log(err)
-    }
-}               

@@ -119,7 +119,7 @@ export const stripeWebhook = async (req, res, next) => {
         paymentDocument.status = "completed"
         paymentDocument.customerName = object.billing_details.name
 
-        sendOrderConfirmationMail(paymentDocument.customerEmail, paymentDocument.orderId);
+        sendOrderConfirmationMail(paymentDocument);
         break;
       case 'charge.expired':
         paymentDocument.status = "expired"

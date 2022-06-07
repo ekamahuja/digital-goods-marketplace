@@ -157,6 +157,15 @@ export const discordRedirect = async (req, res, next) => {
   }
 };
 
+export const feedbackLinkRedirect = async (req, res, next) => {
+  try {
+    const { feedbackLink } = await Config.findOne({});
+    res.redirect(feedbackLink);
+  } catch (err) {
+    res.render("../../client/500", { err });
+  }
+};
+
 
 
 export const contactRedirect = async (req, res, next) => {
@@ -189,9 +198,10 @@ export const loginPage = async (req, res, next) => {
 
 export const registerPage = async (req, res, next) => {
   try {
+    const user = req.user
+    if (user) return res.redirect(`/${user.role}/dashboard`)
 
     res.render("../../client/register")
-
   } catch(err) {
     res.render("../../client/500", { err })
   }
@@ -213,7 +223,8 @@ export const adminDashboardPage = async (req, res, next) => {
       replacementCooldown,
       spotifyLogin,
       contactLink,
-      affilateMinimumPayout
+      affilateMinimumPayout,
+      feedbackLink
     } = await Config.findOne({});
 
     res.render("../../client/admin_dashboard", {
@@ -230,7 +241,8 @@ export const adminDashboardPage = async (req, res, next) => {
       spotifyLogin,
       contactLink,
       affilateMinimumPayout,      
-      user
+      user,
+      feedbackLink
     });
   } catch (err) {
     res.render("../../client/500", { err });

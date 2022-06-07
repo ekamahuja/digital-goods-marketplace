@@ -6,7 +6,7 @@ import Payment from "../../schemas/paymentSchema.js";
 import productData from "../../config/productData.js";
 import { calculateFees, generateOrderId, getIpData } from "../../helpers/paymentHelper.js";
 import { generateKeys } from "../../helpers/keyHelper.js";
-import { sendOrderConfirmationMail, sendCryptoPaymentReceivedMail } from "../../helpers/mailHelper.js";
+import { sendOrderConfirmationMail } from "../../helpers/mailHelper.js";
 import { calculatePrices } from "../../helpers/affilateHelper.js"
 
 /**
@@ -109,8 +109,6 @@ export const coinbaseWebhook = async (req, res, next) => {
                 break;
             case 'pending':
                 paymentDocument.status = "awaiting-confirmation"
-
-                sendCryptoPaymentReceivedMail(paymentDocument.customerEmail, paymentDocument.orderId)
                 break;
             case 'delayed':
 

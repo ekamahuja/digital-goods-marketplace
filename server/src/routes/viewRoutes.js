@@ -23,7 +23,8 @@ import {
   affilateDashboard,
   affilateLandingPage,
   adminPayoutsPage,
-  mangeAccount
+  mangeAccount,
+  feedbackLinkRedirect
 } from "../controllers/viewController.js";
 
 
@@ -50,6 +51,8 @@ viewRoutes.get("/api/spotify/oauth", replacementCallBack);
 viewRoutes.get("/contact", contactRedirect)
 
 viewRoutes.get("/discord", discordRedirect);
+
+viewRoutes.get("/feedback", feedbackLinkRedirect)
 
 viewRoutes.get("/admin/", loginPage);
 
