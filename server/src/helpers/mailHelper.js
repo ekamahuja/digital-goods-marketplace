@@ -35,12 +35,11 @@ export const sendOrderConfirmationMail = async (paymentDocument) => {
             siteName
         }
 
-        const sentMail = await sendMail(context, 'orderConfirmation') 
-        if (!sentMail.sucess) throw new Error(sentMail.message)
+        const { success, message, sentEmail} = await sendMail(context, 'orderConfirmation') 
+        if (!success) throw new Error(message)
 
-        return true;
+        return sentEmail;
     } catch(err) {
-        console.log(err)
         return false;
     }
 }

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard</title>
+    <title><%- (user.role).charAt(0).toUpperCase() + (user.role).slice(1) %> <%- pageName %></title>
     <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="/assets/css/all.min.css">
     <link rel="stylesheet" href="/assets/css/animate.css">
@@ -20,22 +20,8 @@
     <link rel="icon" type="image/png" href="/assets/images/logo.png">
 </head>
 <body>
-    <!--============= ScrollToTop Section Starts Here =============-->
-    <div class="preloader">
-        <div class="preloader-inner">
-            <div class="preloader-icon">
-                <span></span>
-                <span></span>
-            </div>
-        </div>
-    </div>
-    <a href="#0" class="scrollToTop"><i class="fas fa-angle-up"></i></a>
-    <div class="overlay"></div>
-    <!--============= ScrollToTop Section Ends Here =============-->
-
-    <!--============= NavBar Section Starts Here =============-->
-    <%- include('./components/navbars/adminNavbar'); %>
-    <!--============= NavBar Section Ends Here =============-->
+    <%- include("./components/basic/preloader") %>
+    <%- include("./components/navbars/adminNavbar") %>
 
      <!--============= Header Section Ends Here =============-->
      <section class="page-header bg_img" data-background="/assets/images/page-header.png">
@@ -44,13 +30,13 @@
         </div>
         <div class="container">
             <div class="page-header-content cl-white">
-                <h2 class="title">Admin Payments</h2>
+                <h2 class="title"><%- (user.role).charAt(0).toUpperCase() + (user.role).slice(1) %> Payments</h2>
                 <ul class="breadcrumb">
                     <li>
-                        <a href="/admin">Admin</a>
+                        <a href="/<%- user.role %>"><%- user.role %></a>
                     </li>
                     <li>
-                       <a href="/admin/payment">Payment</a>
+                       <a href="/<%- user.role %>/payment">Payment</a>
                     </li>
                     <li>
                         <%- orderData.orderId %>
@@ -65,137 +51,144 @@
     <!--============= Payments Section Ends Here =============-->
     <section id="payments">
         <div class="payment-detatil container">
-            <div id="payment-header">
-                <div id="payment-header-left" class="payments-table-cell">
-
-                    <% (orderData.paymentMethod == "coinbase" && orderData.transcationDetails.event.data.payments[0].network) ? logoName = orderData.transcationDetails.event.data.payments[0].network : logoName = orderData.paymentMethod %>
-                    <img class="flag-icon payment-icon" src="/assets/images/payments/methods/<%-logoName%>.svg">
-                    <div>
-                        <% orderData.customerName ? customerTitle = orderData.customerName + " - " + orderData.customerEmail : customerTitle = orderData.customerEmail %>
-                        <span class="d-flex txt-captialize little-top-margin" href="mailto:<%-orderData.customerEmail%>"><%- customerTitle %></span>
-                        <span class="d-flex"><a href="/order/<%-orderData.orderId%>" target="_tab"><%-orderData.orderId%></a></span>
-                    </div>
-                </div>
-                <div id="payment-header-right" class="d-flex">
-                    <span class="payment-badge badge-<%-orderData.status.toLowerCase()%> ml-2"><%-orderData.status%></span>
-                    <span class="payment-badge badge-pending ml-2">$<%-(orderData.amountPaid - orderData.fee).toFixed(2)%> of $<%-(orderData.amountPaid).toFixed(2)%> due to <%-orderData.paymentMethod%> fees</span>
-                </div>
+            <div class="payment-detatil-options">
+                <button data-orderId="<%- orderData.orderId %>" id="payment-resend-mail"><i class="fa-solid fa-receipt"></i> Resend Recipt</button>
             </div>
-            <div id="payment-body">
-                <div>
-                    <span>Product</span>
-                    <span><%-orderData.productName%></span>
-                </div>
-                <div>
-                    <span>Quantity</span>
-                    <span><%-orderData.quantity%></span>
-                </div>
-                <div>
-                    <div>
-                        <span>IP Address: </span>
-                        <span><%-orderData.customerIp%></span>
+            <div class="payment-entire">
+                <div id="payment-header">
+                    <div id="payment-header-left" class="payments-table-cell">
+    
+                        <% (orderData.paymentMethod == "coinbase" && orderData.transcationDetails.event.data.payments[0].network) ? logoName = orderData.transcationDetails.event.data.payments[0].network : logoName = orderData.paymentMethod %>
+                        <img class="flag-icon payment-icon" src="/assets/images/payments/methods/<%-logoName%>.svg">
+                        <div>
+                            <% orderData.customerName ? customerTitle = orderData.customerName + " - " + orderData.customerEmail : customerTitle = orderData.customerEmail %>
+                            <span class="d-flex txt-captialize little-top-margin" href="mailto:<%-orderData.customerEmail%>"><%- customerTitle %></span>
+                            <span class="d-flex"><a href="/order/<%-orderData.orderId%>" target="_tab"><%-orderData.orderId%></a></span>
+                        </div>
                     </div>
-                    <div>
-                        <span>Fraud Score: </span>
-                        <span><%-ipData.fraudScore%>/100</span>
-                    </div>
-                    <div>
-                        <span>ISP: </span>
-                        <span><%-ipData.isp%></span>
+                    <div id="payment-header-right" class="d-flex">
+                        <span class="payment-badge badge-<%-orderData.status.toLowerCase()%> ml-2"><%-orderData.status%></span>
+                        <span class="payment-badge badge-pending ml-2">$<%-(orderData.amountPaid - orderData.fee).toFixed(2)%> of $<%-(orderData.amountPaid).toFixed(2)%> due to <%-orderData.paymentMethod%> fees</span>
                     </div>
                 </div>
-                <div>
-                    <span>Value</span>
-                    <span>USD <%-orderData.amountPaid.toFixed(2)%></span>
-                </div>
-                <div>
-                    <span>Coupon</span>
-                    <span>No Coupon</span>
-                </div>
-                <div>
-                    <span>Country</span>
-                    <span class="country-data">
-                        <%- ipData.city %>, <%- ipData.region %> (<%-ipData.timezone%>)
-                        <img class="flag-icon" src="https://cdn.sellix.io/static/flags/<%-orderData.customerCountryCode.toLowerCase()%>.svg">
-                    </span>
-                </div>
-                <div>
-                    <% const months = ["January", "February", "March", "April", "May", "June", "July",
-                    "August", "September", "October", "November", "December"]; %>
 
-                    <% const createdAt = new Date(orderData.createdAt) %>
-                    <% const currentHour = createdAt.getHours() %>
-                    <% const currentMinute = (createdAt.getMinutes()<10?'0':'') + createdAt.getMinutes() %>
-                    <% const currentMonth = months[createdAt.getMonth()]; %>
-                    <% const currentYear = createdAt.getFullYear(); %>
-                    <span>Created At</span>
-                    <span><%-createdAt.getDate()%>, <%-currentMonth%> <%-currentYear%> <%-currentHour%>:<%-currentMinute%></span>
-                </div>
-                <div>
-                    <span>Gateway</span>
-                    <span class="txt-captialize"><%-orderData.paymentMethod%></span>
-                </div>
-                <% if (orderData.paymentMethod == "stripe" && orderData.stripePaymentMethodData) { %>
+                <div id="payment-body">
+                    <div>
+                        <span>Product</span>
+                        <span><%-orderData.productName%></span>
+                    </div>
+                    <div>
+                        <span>Quantity</span>
+                        <span><%-orderData.quantity%></span>
+                    </div>
                     <div>
                         <div>
-                            <span>Card Expiry Date: </span>
-                            <span><%- orderData.stripePaymentMethodData.card.exp_month %>/<%- orderData.stripePaymentMethodData.card.exp_year %></span>
+                            <span>IP Address: </span>
+                            <span><%-orderData.customerIp%></span>
                         </div>
                         <div>
-                            <span>Card Brand: </span>
-                            <span class="txt-captialize"><i class="fa-brands fa-cc-<%-orderData.stripePaymentMethodData.card.brand%>"></i> <%-orderData.stripePaymentMethodData.card.brand%></span>
+                            <span>Fraud Score: </span>
+                            <span><%-ipData.fraudScore%>/100</span>
                         </div>
                         <div>
-                            <span>Last 4 Card Digits: </span>
-                            <span><%-orderData.stripePaymentMethodData.card.last4%></span>
+                            <span>ISP: </span>
+                            <span><%-ipData.isp%></span>
                         </div>
                     </div>
-                <% } %>
+                    <div>
+                        <span>Value</span>
+                        <span>USD <%-orderData.amountPaid.toFixed(2)%></span>
+                    </div>
+                    <div>
+                        <span>Coupon</span>
+                        <span>No Coupon</span>
+                    </div>
+                    <div>
+                        <span>Country</span>
+                        <span class="country-data">
+                            <%- ipData.city %>, <%- ipData.region %> (<%-ipData.timezone%>)
+                            <img class="flag-icon" src="https://cdn.sellix.io/static/flags/<%-orderData.customerCountryCode.toLowerCase()%>.svg">
+                        </span>
+                    </div>
+                    <div>
+                        <% const months = ["January", "February", "March", "April", "May", "June", "July",
+                        "August", "September", "October", "November", "December"]; %>
+    
+                        <% const createdAt = new Date(orderData.createdAt) %>
+                        <% const currentHour = createdAt.getHours() %>
+                        <% const currentMinute = (createdAt.getMinutes()<10?'0':'') + createdAt.getMinutes() %>
+                        <% const currentMonth = months[createdAt.getMonth()]; %>
+                        <% const currentYear = createdAt.getFullYear(); %>
+                        <span>Created At</span>
+                        <span><%-createdAt.getDate()%>, <%-currentMonth%> <%-currentYear%> <%-currentHour%>:<%-currentMinute%></span>
+                    </div>
+                    <div>
+                        <span>Gateway</span>
+                        <span class="txt-captialize"><%-orderData.paymentMethod%></span>
+                    </div>
+                    <% if (orderData.paymentMethod == "stripe" && orderData.stripePaymentMethodData) { %>
+                        <div>
+                            <div>
+                                <span>Card Expiry Date: </span>
+                                <span><%- orderData.stripePaymentMethodData.card.exp_month %>/<%- orderData.stripePaymentMethodData.card.exp_year %></span>
+                            </div>
+                            <div>
+                                <span>Card Brand: </span>
+                                <span class="txt-captialize"><i class="fa-brands fa-cc-<%-orderData.stripePaymentMethodData.card.brand%>"></i> <%-orderData.stripePaymentMethodData.card.brand%></span>
+                            </div>
+                            <div>
+                                <span>Last 4 Card Digits: </span>
+                                <span><%-orderData.stripePaymentMethodData.card.last4%></span>
+                            </div>
+                        </div>
+                    <% } %>
+    
+                    <% if (orderData.paymentMethod == "coinbase" && orderData.coinbaseCode) { %>
+                        <div>
+                            <div>
+                                <span>Coinbase Code: </span>
+                                <span><%- orderData.coinbaseCode%></span>
+                            </div>
+                            
+                                <% if (orderData) { %>
+                                    <div>
+                                        <span>Payment Via: </span>
+                                        <span style="text-transform: uppercase;"><%- logoName %></span>
+                                    </div>
+                                <% } %>
+                                <% if (orderData.paymentMethod == "coinbase" && orderData.transcationDetails.event) { %>
+                                    <div>
+                                        <span>Status: </span>
+                                        <span class="txt-captialize"><%- orderData.transcationDetails.event.data.timeline[orderData.transcationDetails.event.data.timeline.length - 1].status %></span>
+                                    </div>
+                                <% } %>
+                        </div>
+                    <% } %>
+                    <div>
+                        <span>Device</span>
+                        <span><%-orderData.customerDevice%></span>
+                    </div>
+                    <div>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
 
-                <% if (orderData.paymentMethod == "coinbase" && orderData.coinbaseCode) { %>
-                    <div>
-                        <div>
-                            <span>Coinbase Code: </span>
-                            <span><%- orderData.coinbaseCode%></span>
+                <% if ((orderData.deliveredGoods).length != 0){ %>
+                    <div id="payment-footer">
+                        <div class="deliverd-goods">
+                            <% const itemWord = ((orderData.deliveredGoods).length == 1) ? 'Key' : 'Keys' %>
+                            <h4>Delivered Goods (<%-(orderData.deliveredGoods).length%> <%- itemWord %>)</h4>
+                            <div class="deliverd-goods-list">
+                                <% (orderData.deliveredGoods).forEach(item => {%>
+                                    <p><%- item %></p>
+                                <% });%>
+                            </div>
                         </div>
-                        
-                            <% if (orderData) { %>
-                                <div>
-                                    <span>Payment Via: </span>
-                                    <span style="text-transform: uppercase;"><%- logoName %></span>
-                                </div>
-                            <% } %>
-                            <% if (orderData.paymentMethod == "coinbase" && orderData.transcationDetails.event) { %>
-                                <div>
-                                    <span>Status: </span>
-                                    <span class="txt-captialize"><%- orderData.transcationDetails.event.data.timeline[orderData.transcationDetails.event.data.timeline.length - 1].status %></span>
-                                </div>
-                            <% } %>
                     </div>
-                <% } %>
-                <div>
-                    <span>Device</span>
-                    <span><%-orderData.customerDevice%></span>
-                </div>
-                <div>
-                    <span></span>
-                    <span></span>
-                </div>
+                    <% } %>
+
             </div>
-            <% if ((orderData.deliveredGoods).length != 0){ %>
-            <div id="payment-footer">
-                <div class="deliverd-goods">
-                    <% const itemWord = ((orderData.deliveredGoods).length == 1) ? 'Key' : 'Keys' %>
-                    <h4>Delivered Goods (<%-(orderData.deliveredGoods).length%> <%- itemWord %>)</h4>
-                    <div class="deliverd-goods-list">
-                        <% (orderData.deliveredGoods).forEach(item => {%>
-                            <p><%- item %></p>
-                        <% });%>
-                    </div>
-                </div>
-            </div>
-            <% } %>
-        </div>
     </section>
     <!--============= Payments Section Ends Here =============-->
     
@@ -217,5 +210,42 @@
     <script src="/assets/js/main.js"></script>
     <script src="/assets/js/custom/admin_signout.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/js-toastr@1.1.1/toast.min.js"></script>
+    <script>
+        const resendConfirmationMailBtn = document.querySelector("#payment-resend-mail")
+        resendConfirmationMailBtn.addEventListener("click", async () => {
+            try {
+                resendConfirmationMailBtn.disabled = true;
+                resendConfirmationMailBtn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Sending...'
+                
+                const { success, message } = await sendConfirmationMail(resendConfirmationMailBtn.dataset.orderid)
+
+                toastr.message(message, success ? 'success' : 'error', 5000)
+                
+                resendConfirmationMailBtn.disabled = false;
+                resendConfirmationMailBtn.innerHTML = '<i class="fa-solid fa-receipt"></i> Resend Recipt'
+            } catch(err) {
+                toastr.message(err.message, 'error', 5000)
+                resendConfirmationMailBtn.disabled = false;
+                resendConfirmationMailBtn.innerHTML = '<i class="fa-solid fa-receipt"></i> Resend Recipt'
+            }
+
+
+
+        })
+        const sendConfirmationMail = async (orderId) => {
+            const options = {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: null
+            }
+
+            const request = await fetch(`/api/payments/email/${orderId}`, options);
+            const response = await request.json()
+
+            return response;
+        }
+    </script>
 </body>
 </html>

@@ -595,10 +595,33 @@ section#payments tbody tr {
 }
 
 .payment-detatil {
+  margin-top: 5rem;
+}
+
+.payment-entire {
   background: #fff;
-  margin-top: 3rem;
   border-radius: 0.5rem;
 }
+
+.payment-detatil-options {
+  display: flex;
+  justify-content: right;
+  margin-bottom: 1rem;
+}
+
+button#payment-resend-mail {
+  border: none;
+  transition: all 0.3s ease;
+  width: 30%;
+  border-radius: 0.3rem;
+  color: #fff;
+  background: #4a5aff;
+}
+
+button#payment-resend-mail:hover {
+  background: #3b319e;
+}
+
 
 .country-data {
   display: flex;

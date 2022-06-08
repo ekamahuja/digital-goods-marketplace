@@ -315,16 +315,17 @@ export const adminPaymentsPage = async (req, res, next) => {
 
 export const adminPaymentsDetatilsPage = async (req, res, next) => {
   try {
-    const {orderId} = req.params
+    const { orderId } = req.params
     const user = req.user
+    const pageName = "Payment Details"
     if (!orderId) return res.render("../../client/client_index")
 
-    const orderData = await Payment.findOne({orderId})
+    const orderData = await Payment.findOne({ orderId })
     if (!orderData) throw new Error("Invalid Order ID")
 
     const ipData = await getIpData(orderData.customerIp)
 
-    res.render("../../client/admin_payments_detatils", {orderData, ipData, user})
+    res.render("../../client/admin_payments_detatils", {orderData, ipData, user, pageName})
   } catch(err) {
     res.render("../../client/500", { err });
   }

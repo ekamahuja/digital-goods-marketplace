@@ -39,10 +39,9 @@ const sendMail = async (context, template) => {
               context
           })
 
-          return {sucess: true}
+          return {success: true, sentEmail}
     } catch(err) {
-        console.log(err)
-        return {sucess: false, message: err.message}
+        return {success: false, message: err.message}
     }
 
 }
