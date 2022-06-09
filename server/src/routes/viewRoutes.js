@@ -24,6 +24,7 @@ import {
   affilateLandingPage,
   adminPayoutsPage,
   mangeAccount,
+  affilateTipsPage,
   feedbackLinkRedirect
 } from "../controllers/viewController.js";
 
@@ -84,6 +85,7 @@ viewRoutes.get('/affilate', loginPage)
 
 viewRoutes.get('/affilate/setup', requireUser, affilateSetup)
 viewRoutes.get('/affilate/dashboard', requireUser, affilateDashboard)
+viewRoutes.get('/affilate/tips', requireUser, affilateTipsPage)
 
 viewRoutes.get('/:requestRole/account', requireUser, mangeAccount)
 

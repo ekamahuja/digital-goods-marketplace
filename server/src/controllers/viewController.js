@@ -426,6 +426,26 @@ export const affilateDashboard = async (req, res , next) => {
 }
 
 
+export const affilateTipsPage = async (req, res, next) => {
+  try {
+    const user = req.user
+    const realRole = user.role
+    user.role = "Affilate"
+    const pageName = "Tips"
+
+    res.render("../../client/affilate_tips", {
+      user,
+      pageName,
+      realRole
+    })
+
+  } catch(err) {
+    res.render("../../client/500", { err });
+  }
+}
+
+
+
 export const adminPayoutsPage = async (req, res, next) => {
   try {
     const user = req.user

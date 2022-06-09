@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title><%- (user.role).charAt(0).toUpperCase() + (user.role).slice(1)%> <%- pageName %></title>
+        <link rel="stylesheet" href="./assets/css/bootstrap.min.css">
+        <link rel="stylesheet" href="./assets/css/all.min.css">
+        <link rel="stylesheet" href="./assets/css/animate.css">
+        <link rel="stylesheet" href="./assets/css/nice-select.css">
+        <link rel="stylesheet" href="./assets/css/owl.min.css">
+        <link rel="stylesheet" href="./assets/css/jquery-ui.min.css">
+        <link rel="stylesheet" href="./assets/css/magnific-popup.css">
+        <link rel="stylesheet" href="./assets/css/flaticon.css">
+        <link rel="stylesheet" href="./assets/css/main.css">
+        <link rel="stylesheet" href="./assets/css/affilate.css">
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/js-toastr@1.1.1/toast.css">
+        <link rel="icon" type="image/png" href="/assets/images/logo.png">
+    </head>   
+</head>
+<body>
+    <%- include("./components/basic/preloader") %>
+    <%- include('./components/navbars/accountNavbar') %>
+    <%- include("./components/basic/pageHeader") %> 
+    
+    <style>
+        .affilate-tips {
+            margin: 5rem 0rem;
+        }
+
+        .more-information {
+            margin: 2rem auto;
+            padding: 2rem;
+            background: #fff;
+            width: 80%;
+            border-radius: 0.3rem;
+        }
+
+        .more-information >  h3 {
+            margin-bottom: 1rem;
+        }
+
+    </style>
+    
+    <!--============= Page Content Section Starts Here =============-->
+    <section class="affilate-tips">
+
+        <div class="more-information">
+            <h3>More Information</h3>
+            <p>This page is designed to provide tips to promote your link as well as some premade assets to help you!</p>
+        </div>
+
+        <div class="more-information affilate-assets-box">
+            <h3>Assets</h3>
+            <p>Grab a list of premade assets below.  We will be adding many more assets over the next couple of weeks!</p>
+            <ul>
+                <li><a href="./assets/public_assets/video2.mp4" target="_tab">Youtube Video 1 (Russian Joe)</a></li>
+            </ul>
+            <ul>
+                <li><a href="//www.youtube.com/watch?v=hFKLjJBz2-s" target="_tab">Youtube Video 2 (Upgrade Tutorial)</a></li>
+            </ul>
+            <ul>
+                <li><a href="./assets/public_assets/thread.png" target="_tab">Thread</a></li>
+            </ul>
+            <ul>
+                <li><a href="https://i.imgur.com/tz2AzOw.jpeg" target="_tab">Email Banner</a></li>
+            </ul>
+        </div>
+ 
+    </section>
+
+
+
+    <div class="spacing"></div>
+    <!--============= Page Content Section Ends Here =============-->
+
+    <%- include("./components/basic/scripts") %> 
+</body>
+</html>
