@@ -90,6 +90,7 @@ viewRoutes.get('/affilate/tips', requireUser, affilateTipsPage)
 viewRoutes.get('/:requestRole/account', requireUser, mangeAccount)
 
 viewRoutes.get('/ref/:affilateCode', affilateLandingPage)
+viewRoutes.get('/r/:affilateCode', affilateLandingPage)
 
 
 
