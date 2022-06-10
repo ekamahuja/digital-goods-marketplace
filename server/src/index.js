@@ -25,6 +25,7 @@ app.use('/admin/assets', express.static('../client/assets'));
 app.use('/moderator/assets', express.static('../client/assets'));
 app.use('/affilate/assets', express.static('../client/assets'));
 app.use('/ref/assets', express.static('../client/assets'));
+app.use('/r/assets', express.static('../client/assets'));
 app.use('/assets', express.static('../client/assets'));
 // app.use('/', express.static('../client'));
 
