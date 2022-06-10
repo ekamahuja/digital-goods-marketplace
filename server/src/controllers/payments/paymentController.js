@@ -24,13 +24,22 @@ export const paymentsData = async (req, res, next) => {
 
 export const searchPaymentData = async (req, res, next) => {
     try {
-        let  {query} = req.query
+        let  { query } = req.query
+        const { role } = req.user 
         if (!query) throw new Error("no query provided")
         query = query.trim()
+        let paymentData
 
-        let paymentData = await Payment.find({orderId: {$regex: new RegExp('^'+query+'.*','i')}}).exec()
-        if (!paymentData.length) {
-            paymentData = await Payment.find({customerEmail: {$regex: new RegExp('^'+query+'.*','i')}}).exec()
+        if (role === "admin") {
+            paymentData = await Payment.find({orderId: {$regex: new RegExp('^'+query+'.*','i')}}).exec()
+
+            if (!paymentData.length) {
+                paymentData = await Payment.find({customerEmail: {$regex: new RegExp('^'+query+'.*','i')}}).exec()
+            }
+        } else if (role === "moderator") {
+            paymentData = await Payment.findOne({ orderId: query})
+            paymentData = paymentData || await Payment.findOne({ customerEmail: query })
+            paymentData = [paymentData]
         }
 
         return res.status(200).json({success: true, message: "Successfully fetched", payments: paymentData})

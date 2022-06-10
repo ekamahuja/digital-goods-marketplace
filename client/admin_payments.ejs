@@ -23,7 +23,11 @@
     <%- include("./components/basic/preloader") %>
     <%- include("./components/navbars/adminNavbar") %>
     <%- include("./components/basic/pageHeader") %>
-    <%- include('./components/stats/adminPaymentStats'); %>
+    <% if (user.role === "admin") { %>
+        <%- include('./components/stats/adminPaymentStats'); %>
+    <% } else { %>
+        <div style="margin-bottom: 10rem;"></div>
+    <% } %>
 
     
 
