@@ -95,6 +95,9 @@ export const checkIfNewOrderAndSaveCookie = async (req, res, next) => {
         const { orderId } = req.params;
         if (!orderId) throw new Error("No order provided");
 
+        const { recentOrder } = req.cookies;
+        if (recentOrder) return res.json({ success: true, newOrder: false })
+        
         const order = await Payment.findOne({ orderId });
         if (!order) throw new Error("Order not found");
 
