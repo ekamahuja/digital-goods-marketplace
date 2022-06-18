@@ -104,7 +104,7 @@ export const checkIfNewOrderAndSaveCookie = async (req, res, next) => {
         
         if (order.status === "completed") {
             if (timeSince < 8.64e+7) {
-                res.cookie("recentOrder", orderId, { httpOnly: true, maxAge: timeSince });
+                res.cookie("recentOrder", orderId, { httpOnly: true, maxAge: 8.64e+7 });
                 return res.json({ success: true, newOrder: true })
             }
         }
