@@ -48,3 +48,12 @@ export function adminAndModeratorApiOnly(req, res, next) {
     return next()
 }
 
+export const checkIfRecentPaidOrder = (req, res, next) => {
+    const { recentOrder } = req.cookies;
+    
+    if (recentOrder) {
+        return res.status(403).json({ success: false, message: "You may only purchase once every 24 hours." })
+    }
+
+    return next();
+}

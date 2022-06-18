@@ -1,4 +1,5 @@
 let deliverdGoodsAmount = 0
+let orderId;
 
 async function upgradeKey() {
     const orderItems = document.querySelector("#order-items").querySelector("p").innerHTML
@@ -36,7 +37,7 @@ async function processPaymentData() {
 
     document.querySelector("#payment-status").innerHTML = data.orderData.status
 
-    if (data.orderData.deliveredGoods != 0) {
+    if (data.orderData.deliveredGoods !== 0) {
         for (let key of data.orderData.deliveredGoods) {
             const p = document.createElement("p")
             p.innerHTML = key
@@ -53,11 +54,13 @@ async function processPaymentData() {
         document.querySelector("#deliverdgoods").style.display = "block"
 
         deliverdGoodsAmount = (data.orderData.deliveredGoods).length
+
+        checkIfNewOrderAndSaveCookie()
     }
 
-    if (data.orderData.deliveredGoods == 0) {
+    if (data.orderData.deliveredGoods === 0) {
         setTimeout(function() {
-            if (deliverdGoodsAmount == 0) {
+            if (deliverdGoodsAmount === 0) {
                 processPaymentData()
             }
           }, 3000);
@@ -69,7 +72,7 @@ async function processPaymentData() {
 const paymentData = async () => {
     try {
         const url = window.location.href
-        const orderId = url.split("/")
+        orderId = url.split("/")
         const request = await fetch(`/api/payments/${orderId[orderId.length - 1]}`)
         const response = await request.json()
 
@@ -80,4 +83,9 @@ const paymentData = async () => {
     } catch(err) {
         toastr.message(err.message, 'error', 5000)
     }
+}
+
+
+const checkIfNewOrderAndSaveCookie = async () => {
+    const request = await fetch(`/api/payments/order-cookie/${orderId[orderId.length - 1]}`)
 }

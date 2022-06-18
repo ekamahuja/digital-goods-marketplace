@@ -20,7 +20,7 @@ export async function landingPage(req, res, next) {
 
 export const orderSuccessPage = async (req, res, next) => {
   try {
-    const {orderId} = req.params
+    const { orderId } = req.params
     if (!orderId) return res.render("../../client/client_index")
 
     const orderData = await Payment.findOne({orderId})

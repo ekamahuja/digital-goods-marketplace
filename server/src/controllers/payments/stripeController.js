@@ -27,7 +27,7 @@ export const stripeSession = async (req, res, next) => {
     if (ipInformation.success && ipInformation.success == false) throw new Error(ipInformation.message);
 
     if (ipInformation.fraudScore >= 85) throw new Error("You are not allowed to make a purchase using this payment method.");
-    if (ipInformation.fraudScore >= 75 && quantity > 1) throw new Error("You are not allowed to purchase more than 1 quantity using this payment method");
+    if (ipInformation.fraudScore >= 75 && (quantity * amount) > 10) throw new Error("You are not allowed to purchase over $10.");
 
     const orderId = generateOrderId()
 

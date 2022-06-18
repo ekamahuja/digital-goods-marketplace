@@ -78,7 +78,7 @@ export const resendMail = async (req, res, next) => {
         const payment = await Payment.findOne({orderId});
         if (!payment) throw new Error("Payment not found");
         
-        if (payment.status !== "completed") throw new Error("Order must be paid to be able to send mail")
+        if (payment.status !== "completed" || payment.status !== "resolved") throw new Error("Order must be paid to be able to send mail")
         
         const mail = await sendOrderConfirmationMail(payment)
         if (!mail) throw new Error("Mail could not be sent")
@@ -86,5 +86,32 @@ export const resendMail = async (req, res, next) => {
         return res.json({ success: true, message: "Mail sent successfully", mail })
     } catch(err) {
         next(err)
+    }
+}
+
+
+export const checkIfNewOrderAndSaveCookie = async (req, res, next) => {
+    try {
+        const { orderId } = req.params;
+        if (!orderId) throw new Error("No order provided");
+
+        const order = await Payment.findOne({ orderId });
+        if (!order) throw new Error("Order not found");
+
+        const orderPurchaseTime = (order.updatedAt).getTime();
+        const timeNow = (new Date()).getTime();
+        const timeSince = timeNow - orderPurchaseTime;
+        
+        if (order.status === "completed") {
+            if (timeSince < 8.64e+7) {
+                res.cookie("recentOrder", orderId, { httpOnly: true, maxAge: timeSince });
+                return res.json({ success: true, newOrder: true })
+            }
+        }
+
+        return res.json({ success: true, newOrder: false })
+
+    } catch(err) {
+        return next(err);
     }
 }
