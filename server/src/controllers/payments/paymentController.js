@@ -77,10 +77,13 @@ export const resendMail = async (req, res, next) => {
         const payment = await Payment.findOne({orderId});
         if (!payment) throw new Error("Payment not found");
         
-        if (payment.status !== "completed" || payment.status !== "resolved") throw new Error("Order must be paid to be able to send mail")
+        if (payment.status === "completed" || payment.status === "resolved") {
+            const mail = await sendOrderConfirmationMail(payment)
+            if (!mail) throw new Error("Mail could not be sent")
+        } else {
+            throw new Error("Order must be paid to be able to send mail")
+        }
         
-        const mail = await sendOrderConfirmationMail(payment)
-        if (!mail) throw new Error("Mail could not be sent")
 
         return res.json({ success: true, message: "Mail sent successfully", mail })
     } catch(err) {
