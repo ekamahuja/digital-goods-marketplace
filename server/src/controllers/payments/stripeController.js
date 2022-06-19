@@ -137,9 +137,22 @@ export const stripeWebhook = async (req, res, next) => {
         await paymentDocument.save();
         break;
       case 'charge.dispute.closed':
-        paymentDocument.status = "dispute-closed"
+        paymentDocument = await Payment.findOne({"stripePaymentIntentData.id": object.payment_intent })
+        
+        if (paymentDocument.status !== "dispute-reinstated") {
+          paymentDocument.status = "dispute-closed"
 
+          await paymentDocument.save();  
+        }
+        
         break;
+      case 'charge.dispute.funds_reinstated':
+        paymentDocument = await Payment.findOne({"stripePaymentIntentData.id": object.payment_intent })
+        paymentDocument.status = "dispute-reinstated"
+
+        await paymentDocument.save();
+        break;
+      break;
       case 'charge.dispute.created':
         paymentDocument = await Payment.findOne({"stripePaymentIntentData.id": object.payment_intent })
         paymentDocument.status = "dispute-opened"

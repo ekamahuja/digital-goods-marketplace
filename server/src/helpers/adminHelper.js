@@ -28,7 +28,7 @@ export async function getStats() {
 
 export async function getPaymentStats() {
     try {
-        const payments = await Payment.find({ $or: [{status: {$eq: "completed"}}, {status: {$eq: "dispute-blacklisted"}}] })
+        const payments = await Payment.find({ $or: [{status: {$eq: "completed"}}, {status: {$eq: "dispute-blacklisted"}}, {status: {$eq: "dispute-reinstated"}}] })
         const totalPayments = payments.length
         
         let totalPaymentsRevenue = 0
@@ -49,7 +49,7 @@ export async function getPaymentStats() {
             }
         })
 
-        const last24HourTotalPayments = await Payment.find({createdAt: {$gt: new Date(Date.now() - 86400000) }, $and: [{status: {$eq: "completed"}}]})
+        const last24HourTotalPayments = await Payment.find({createdAt: {$gt: new Date(Date.now() - 86400000) }, $or: [{status: {$eq: "completed"}}, {status: {$eq: "dispute-blacklisted"}}, {status: {$eq: "dispute-reinstated"}}]})
         const last24HourTotalPaymentsLength = last24HourTotalPayments.length
         let last24HourTotalPaymentsRevenue = 0
         last24HourTotalPayments.map((item) => {
