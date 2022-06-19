@@ -3,7 +3,7 @@ const stripe = Stripe(process.env.STRIPE_SECRET);
 import productData from "../../config/productData.js";
 import Payment from "../../schemas/paymentSchema.js";
 import { calculateFees, generateOrderId } from "../../helpers/paymentHelper.js";
-import { generateKeys, blacklistKeys } from "../../helpers/keyHelper.js";
+import { generateKeys, blacklistKeys, blacklistAllOrdersByEmail } from "../../helpers/keyHelper.js";
 import { sendOrderConfirmationMail } from "../../helpers/mailHelper.js";
 import { getIpData } from "../../helpers/paymentHelper.js";
 import { calculatePrices } from "../../helpers/affilateHelper.js"
@@ -94,14 +94,13 @@ export const stripeWebhook = async (req, res, next) => {
     const {object} = req.body.data
     const {type} = req.body
     const status = type.split(".")[1]
-
-    const paymentDocument = await Payment.findOne({stripePaymentIntentData: object.payment_intent})
-    paymentDocument.status = status
-    const pData = productData[paymentDocument.productId]
+    let paymentDocument = await Payment.findOne({stripePaymentIntentData: object.payment_intent})
+    // paymentDocument.status = status
+    
  
-
     switch (type) {
       case 'charge.succeeded':
+        const pData = productData[paymentDocument.productId]
         const paymentIntent = await stripe.paymentIntents.retrieve(object.payment_intent);
         const paymentMethod = await stripe.paymentMethods.retrieve(object.payment_method);
         const customer = await stripe.customers.retrieve(object.customer);
@@ -130,28 +129,35 @@ export const stripeWebhook = async (req, res, next) => {
 
         break;
       case 'charge.refunded':
+        paymentDocument = await Payment.findOne({"stripePaymentIntentData.id": object.payment_intent })
         paymentDocument.status = "refunded"
-        await blacklistKeys(paymentDocument.deliveredGoods)
 
+        await blacklistKeys(paymentDocument.deliveredGoods)
+        
+        await paymentDocument.save();
         break;
       case 'charge.dispute.closed':
         paymentDocument.status = "dispute-closed"
 
         break;
       case 'charge.dispute.created':
+        paymentDocument = await Payment.findOne({"stripePaymentIntentData.id": object.payment_intent })
         paymentDocument.status = "dispute-opened"
+
+        await blacklistAllOrdersByEmail(paymentDocument.customerEmail)
         await blacklistKeys(paymentDocument.deliveredGoods)
 
+        await paymentDocument.save();
         break;
       default:
         break;
     }
-    
+    console.log(paymentDocument.status)
     await paymentDocument.save()
     if (!paymentDocument) throw new Error("Something went wrong, please contact staff with your order ID")
 
     res.send()
-
+ 
   } catch(err) {
     res.status(400)
     next(err)

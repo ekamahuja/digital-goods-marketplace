@@ -1,6 +1,7 @@
 import {Key} from '../schemas/keySchema.js'
 import randomKey from 'random-key'
 import { sendDiscordWebhook } from "../utils/discordWebhook.js";
+import Payment from "../schemas/paymentSchema.js";
 
 export async function generateKeys(prefix, type, amount) {
     try {
@@ -29,6 +30,7 @@ export async function generateKeys(prefix, type, amount) {
 
 export async function blacklistKeys(keys) {
     try {
+        console.log(keys)
         const blacklistedKeys = [];
 
         for (let key of keys) {
@@ -51,3 +53,17 @@ export async function blacklistKeys(keys) {
 
 
 
+export const blacklistAllOrdersByEmail = async (email) => {
+    const orders = await Payment.find({ customerEmail: email })
+    const keys = []
+    for (const order of orders) {
+        if (order.status === "completed") {
+            order.status = "dispute-blacklisted"
+            await order.save();
+            keys.push(order.deliveredGoods)
+        }
+        
+    }
+
+    await blacklistKeys(keys)
+}

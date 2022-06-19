@@ -28,7 +28,7 @@ export async function getStats() {
 
 export async function getPaymentStats() {
     try {
-        const payments = await Payment.find({ $and: [{status: {$eq: "completed"}}] })
+        const payments = await Payment.find({ $or: [{status: {$eq: "completed"}}, {status: {$eq: "dispute-blacklisted"}}] })
         const totalPayments = payments.length
         
         let totalPaymentsRevenue = 0
