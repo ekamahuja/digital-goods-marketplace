@@ -7,7 +7,8 @@ import Payment from '../schemas/paymentSchema.js'
 import productData from '../config/productData.js'
 import {getIpData} from '../helpers/paymentHelper.js'
 import { fetchAffilateData, referedUserLanded, calculateAffilateStats, calculateDisputes } from '../helpers/affilateHelper.js'
-
+import Blog from "../schemas/blogSchema.js";
+import { DateTime } from 'luxon'
 
 export async function landingPage(req, res, next) {
   try {
@@ -476,4 +477,87 @@ export const mangeAccount = async (req, res, next) => {
   }
 }
 
+export const adminBlogList = async (req, res, next) => {
+  try {
+    const user = req.user
+    const pageName = "Blog"
+    const blogs = await Blog.find({}).sort({ createdAt: -1 })
 
+    for (const blog of blogs) {
+      blog.date = DateTime.fromJSDate(blog.updatedAt).toFormat("t, dd LLL yyyy")
+    }
+
+    res.render("../../client/admin_blog_list", {
+      user,
+      blogs,
+      pageName
+    })
+  }
+  catch(err) {
+    res.render("../../client/500", { err })
+  }
+}
+
+
+export const adminCreateBlog = async (req, res, next) => {
+  try {
+    const user = req.user
+    const pageName = "Create Blog"
+    
+    res.render("../../client/admin_create_blog", { user, pageName })
+  }
+  catch(err) {
+    res.render("../../client/500", { err })
+  }
+}
+
+export const adminEditBlog = async (req, res, next) => {
+  try {
+    const user = req.user
+    const pageName = "Edit Blog"
+    const { blogId } = req.params
+    const blog = await Blog.findOne({ _id: blogId })
+
+    res.render("../../client/admin_edit_blog", { user, blog, pageName })
+  }
+  catch(err) {
+    res.render("../../client/500", { err })
+  }
+}
+
+
+export const blogLists = async (req, res, next) => {
+  try {
+    const pageName = "Blog Lists"
+    const blogs = await Blog.find({ isPublic: true }).sort({ updatedAt: -1 })
+
+    res.render("../../client/client_blogs_list", { pageName, blogs })
+
+  }
+  catch(err) {
+    res.render("../../client/500", { err })
+  }
+}
+
+
+export const viewSingleBlog = async (req, res, next) => {
+  try {
+    const { url } = req.params;
+
+    const blog = await Blog.findOne({ url })
+    if (!blog) throw new Error("Invalid Blog URL");
+
+    blog.date = DateTime.fromJSDate(blog.createdAt).toFormat("dd LLL yyyy");
+
+    const pageName = "View Blog"
+    const siteName = process.env.SITE_NAME;
+    
+    blog.views = blog.views + 1;
+    blog.save();
+
+    return res.render("../../client/client_view_blog", { siteName, pageName, blog, pageName })
+  } 
+  catch(err) {
+    return res.render("../../client/500", { err })
+  }
+}

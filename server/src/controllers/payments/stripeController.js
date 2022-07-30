@@ -165,7 +165,7 @@ export const stripeWebhook = async (req, res, next) => {
       default:
         break;
     }
-    console.log(paymentDocument.status)
+
     await paymentDocument.save()
     if (!paymentDocument) throw new Error("Something went wrong, please contact staff with your order ID")
 

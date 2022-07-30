@@ -25,7 +25,12 @@ import {
   adminPayoutsPage,
   mangeAccount,
   affilateTipsPage,
-  feedbackLinkRedirect
+  feedbackLinkRedirect,
+  adminCreateBlog,
+  blogLists,
+  viewSingleBlog,
+  adminBlogList,
+  adminEditBlog
 } from "../controllers/viewController.js";
 
 
@@ -38,6 +43,9 @@ viewRoutes.get("/", landingPage);
 viewRoutes.get("/upgrade", upgradePage);
 viewRoutes.get("/keyinfo", keyInfoPage);
 viewRoutes.get("/replacement", replacementPage);
+
+viewRoutes.get("/blog", blogLists);
+viewRoutes.get('/blog/:url', viewSingleBlog);
 
 viewRoutes.get("/delete-replacement-token", deleteReplacementToken)
 
@@ -57,6 +65,10 @@ viewRoutes.get("/admin/keys", adminAndModeratorViewOnly, adminKeysPage);
 viewRoutes.get("/admin/payouts", adminViewOnly, adminPayoutsPage);
 viewRoutes.get("/admin/payments", adminViewOnly, adminPaymentsPage);
 viewRoutes.get("/admin/payments/:orderId", adminAndModeratorViewOnly, adminPaymentsDetatilsPage);
+
+viewRoutes.get('/:userRole/blog', adminViewOnly, adminBlogList);
+viewRoutes.get("/admin/blog/create", adminViewOnly, requireUser, adminCreateBlog);
+viewRoutes.get("/admin/blog/:blogId/edit", adminViewOnly, adminEditBlog);
 
 viewRoutes.get("/admin/support-responses", adminSupportResponsesPage);
 viewRoutes.get("/moderator/support-responses", adminSupportResponsesPage);

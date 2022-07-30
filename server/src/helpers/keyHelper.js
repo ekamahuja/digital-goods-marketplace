@@ -30,7 +30,6 @@ export async function generateKeys(prefix, type, amount) {
 
 export async function blacklistKeys(keys) {
     try {
-        console.log(keys)
         const blacklistedKeys = [];
 
         for (let key of keys) {
