@@ -37,8 +37,10 @@ export const searchPaymentData = async (req, res, next) => {
                 paymentData = await Payment.find({customerEmail: {$regex: new RegExp('^'+query+'.*','i')}}).exec()
             }
         } else if (role === "moderator") {
-            paymentData = await Payment.find({ orderId: query})
-            paymentData = paymentData || await Payment.find({ customerEmail: query })
+            paymentData = await Payment.find({ orderId: query })
+            if (!paymentData.length) {
+                paymentData = await Payment.find({ customerEmail: query })
+            }
         }
 
         return res.status(200).json({success: true, message: "Successfully fetched", payments: paymentData})
