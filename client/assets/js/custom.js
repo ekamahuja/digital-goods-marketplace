@@ -114,19 +114,6 @@ async function upgradeKey(key, email) {
 }
 
 
-
-
-
-
-
-
-
-
-// document.querySelector("#replacement-btn").addEventListener('click', function() {
-//     console.log("OK")
-// })
-
-
 async function getReplacement() {
     document.querySelector("#replacement-btn").disabled = true
     document.querySelector("#replacement-btn").innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Loading...'
@@ -144,8 +131,6 @@ async function getReplacement() {
 
     const request = await fetch("http://localhost:12345/api/replacement", options)
     const response = await request.json();
-
-    console.log(response)
 
     const messageType = (response.success) ? "success" : "error";
     toastr.message(response.message, messageType, 5000)

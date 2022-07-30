@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%- (user.role).charAt(0).toUpperCase() + (user.role).slice(1)%> <%- pageName %></title>
+    <link rel="stylesheet" href="./assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="./assets/css/all.min.css" />
+    <link rel="stylesheet" href="./assets/css/animate.css" />
+    <link rel="stylesheet" href="./assets/css/nice-select.css" />
+    <link rel="stylesheet" href="./assets/css/owl.min.css" />
+    <link rel="stylesheet" href="./assets/css/jquery-ui.min.css" />
+    <link rel="stylesheet" href="./assets/css/magnific-popup.css" />
+    <link rel="stylesheet" href="./assets/css/flaticon.css" />
+    <link rel="stylesheet" href="./assets/css/main.css" />
+    <link rel="stylesheet" href="./assets/css/admin.css" />
+    <link rel="stylesheet" href="./assets/css/blog.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/js-toastr@1.1.1/toast.css" />
+    <link rel="icon" type="image/png" href="/assets/images/logo.png" />
+  </head>
+  <body>
+    <%- include("./components/basic/preloader") %> 
+    <%- include("./components/navbars/adminNavbar") %> 
+    <%- include("./components/basic/pageHeader") %> 
+
+    <div class="box">
+        <div class="input">
+            <label for="title">Title</label>
+            <input type="text" id="title" name="title" placeholder="Title" />
+        </div>
+        <div class="input">
+            <label for="description">Description</label>
+            <textarea id="description" name="description" placeholder="Description"></textarea>
+        </div>
+        <div class="input">
+            <label for="content">Content (HTML)</label>
+            <textarea id="content" name="content" placeholder="Content"></textarea>
+        </div>
+        <div class="input">
+            <label for="image">Image (Imgur.com link)</label>
+            <input type="text" id="image" name="image" placeholder="Image link" />
+        </div>
+        <div class="input">
+            <label for="readTime">Read Time</label>
+            <input type="text" id="readTime" name="readTime" placeholder="3 Minute" />
+        </div>
+        <div class="input">
+            <label for="tags">Tags (Separated by commas)</label>
+            <input type="text" id="tags" name="tags" placeholder="Upgrader, reseller, cheap" />
+        </div>
+        <div class="input">
+            <label for="isPublic">Should this blog be public?</label>
+            <select id="isPublic" name="isPublic">
+                <option value="" disabled>Select Visibility</option>
+                <option value="true">Yes</option>
+                <option value="false">No</option>
+            </select>
+        </div> 
+        <button id="createBlog" class="btn btn-primary">Create Blog</button>
+    </div>
+
+    <%- include("./components/basic/scripts") %>
+    <script>
+        // select all inputs
+        const titleInput = document.querySelector("#title");
+        const descriptionInput = document.querySelector("#description");
+        const contentInput = document.querySelector("#content");
+        const imageInput = document.querySelector("#image");
+        const readTimeInput = document.querySelector("#readTime");
+        const tagsInput = document.querySelector("#tags");
+        const isPublicInput = document.querySelector("#isPublic");
+        const createBlogButton = document.querySelector("#createBlog");
+
+        // create blog button click event
+        createBlogButton.addEventListener("click", () => {
+            // get all inputs
+            const title = titleInput.value;
+            const description = descriptionInput.value;
+            const content = contentInput.value;
+            const image = imageInput.value;
+            const readTime = readTimeInput.value;
+            const tags = tagsInput.value;
+            const isPublic = isPublicInput.value;
+
+            // create blog
+            createBlog(title, description, content, image, readTime, tags, isPublic);
+        })
+
+        // create blog
+        const createBlog = async (title, description, content, image, readTime, tags, isPublic) => {
+            try {
+                // send api request to create blog
+                const request = await fetch("/admin/api/blog", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        title,
+                        description,
+                        content,
+                        image,
+                        readTime,
+                        tags,
+                        isPublic
+                    })
+                });
+
+                const { success, message } = await request.json();
+
+                toastr.message(message, success ? 'success' : 'error', 5000);
+                if (success) {
+                    window.location.href = "/admin/blog";
+                }
+
+            }
+            catch(err) {
+                toastr.message(err.message, "error", 5000)
+            }
+        }
+
+    </script>
+  </body>
+</html>

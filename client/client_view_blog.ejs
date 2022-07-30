@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="Description" content="Play millions of songs ad-free, on-demand, and offline without overpaying for Spotify premium.">
+    <meta name="Keywords" content="upgrader.pw, upgraderpw, spotify upgrader, spotify, spotify account upgrade, spotify family upgrade, spotify premium, lifetime spotify, cheap spotify, <%- blog.tags %>">
+    <meta property="og:title" content="Upgrader.PW - Spotify Upgrader">
+    <meta property="og:image" content="upgrader.pw/assets/images/img/favicon2-s.png">
+    <meta property="og:url" content="https://upgrader.pw">
+    <meta property="og:description" content="Upgrader.PW is a simple yet powerful site that allows you to upgrade to Spotify premium for just a few bucks!">
+    <meta name="theme-color" content="#ffba00">
+    <title><%- siteName %> - <%- blog.title %></title>
+    <link rel="stylesheet" href="./assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./assets/css/all.min.css">
+    <link rel="stylesheet" href="./assets/css/animate.css">
+    <link rel="stylesheet" href="./assets/css/nice-select.css">
+    <link rel="stylesheet" href="./assets/css/owl.min.css">
+    <link rel="stylesheet" href="./assets/css/jquery-ui.min.css">
+    <link rel="stylesheet" href="./assets/css/magnific-popup.css">
+    <link rel="stylesheet" href="./assets/css/flaticon.css">
+    <link rel="stylesheet" href="./assets/css/main.css">
+    <link rel="stylesheet" href="./assets/css/blog.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link rel="icon" type="image/png" href="/assets/images/logo.png">
+</head>
+<body data-spy="scroll" data-target="#faq-menu" data-offset="150">
+
+    <%- include("./components/basic/preloader") %>
+    <%- include("./components/navbars/userNavbar") %>
+
+    <!--============= Header Section Ends Here =============-->
+    <section class="page-header single-header blog-single-header bg_img oh" data-background="./assets/images/blog/page-header.jpg">
+        <div class="bottom-shape">
+            <img src="./assets/css/img/page-header2.png" alt="css">
+        </div>
+    </section>
+    <!--============= Header Section Ends Here =============-->
+
+    
+    <!--============= Blog Section Starts Here =============-->
+    <section class="blog-single-section padding-bottom">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <article>
+                        <div class="post-details">
+                            <div class="post-inner">
+                                <div class="post-header">
+                                    <div class="meta-post">
+                                        <a href="#0" class="read"><%- blog.date %></a>
+                                        <a href="#0" class="read"><%- blog.readTime %> read</a>
+                                    </div>
+                                    <h3 class="title">
+                                        <%- blog.title %>
+                                    </h3>
+                                </div>
+                                <div class="post-content">
+                                    <!-- <div class="entry-meta">
+                                        <div class="thumb">
+                                            <a href="#0">
+                                                <img src="./assets/images/logo.png" alt="blog">
+                                            </a>
+                                        </div>
+                                    </div> -->
+                                    <div class="entry-content">
+                                        <%- blog.content %>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tags-area">
+                                <div class="tags">
+                                    <span class="tags-padding">Tags:</span>
+                                    <div class="tags-item">
+                                        <% blog.tags.map(tag => { %>
+                                            <a href="#0"><%- tag %></a>
+                                        <% }) %>
+                                    </div>
+                                </div>
+                                <ul class="social-icons">
+                                    <li>
+                                        <a href="/#faq">
+                                            <i class="fa-solid fa-circle-question"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/discord" class="active">
+                                            <i class="fa-brands fa-discord"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/blog">
+                                            <i class="fa-solid fa-blog"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--============= Blog Section Ends Here =============-->
+
+
+
+    <%- include("./components/footers/userFooter") %>
+    <% const user = false %>
+    <%- include("./components/basic/scripts", { user }) %>
+
+</body>
+
+</html>

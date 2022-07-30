@@ -17639,3 +17639,11 @@ div[class*="col"]:nth-of-type(3n + 3) .pricing-item-20 {
         padding: 130px 0 75px;
     }
 }
+
+.new-link {
+    background-color: #ff554e;
+    font-weight: bold;
+    border-radius: 5px;
+    padding: 0px 5px;
+    color: #fff;
+}

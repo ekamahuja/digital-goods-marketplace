@@ -85,8 +85,6 @@ const payoutModal = async (payoutId) => {
 
     const { success, message, affilateData, userData, currentBalance } = await fetchUserData(payout.affilateCode)
     if (!success) throw new Error(message)
-    console.log(userData)
-    // console.log(userData)
 
     const payoutUser = document.querySelector("#payout-user")
     payoutUser.value = `${userData.firstName} ${userData.lastName} (${affilateData.affilateCode})`
@@ -194,7 +192,6 @@ confirmPayoutBtn.addEventListener("click", async () => {
 
 
 const updatePayoutStatus = async (payoutId, status, adminComments = null) => {
-    console.log(payoutId, status, adminComments)
     const data = await sendApiRequest(`/api/affilate/payout/update?id=${payoutId}&status=${status}&comment=${adminComments || null}`, null, "POST")
     return data;
 }

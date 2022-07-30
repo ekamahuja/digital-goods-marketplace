@@ -18,8 +18,6 @@ confirmBtn.addEventListener("click", async () => {
       body: JSON.stringify(params)
     }
 
-    console.log(params)
-
     const request = await fetch(`/api/affilate/update`, options);
     const { success, message } = await request.json();
 

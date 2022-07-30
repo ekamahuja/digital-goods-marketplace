@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%- (user.role).charAt(0).toUpperCase() + (user.role).slice(1)%> <%- pageName %></title>
+    <link rel="stylesheet" href="./assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="./assets/css/all.min.css" />
+    <link rel="stylesheet" href="./assets/css/animate.css" />
+    <link rel="stylesheet" href="./assets/css/nice-select.css" />
+    <link rel="stylesheet" href="./assets/css/owl.min.css" />
+    <link rel="stylesheet" href="./assets/css/jquery-ui.min.css" />
+    <link rel="stylesheet" href="./assets/css/magnific-popup.css" />
+    <link rel="stylesheet" href="./assets/css/flaticon.css" />
+    <link rel="stylesheet" href="./assets/css/main.css" />
+    <link rel="stylesheet" href="./assets/css/admin.css" />
+    <link rel="stylesheet" href="./assets/css/blog.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/js-toastr@1.1.1/toast.css" />
+    <link rel="icon" type="image/png" href="/assets/images/logo.png" />
+  </head>
+  <body>
+    <%- include("./components/basic/preloader") %> 
+    <%- include("./components/navbars/adminNavbar") %> 
+    <%- include("./components/basic/pageHeader") %> 
+
+    <div class="options">
+        <a href="/admin/blog/create" class="btn btn-primary">Create Blog</a>
+    </div>
+    <table>
+        <thead>
+            <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Public</th>
+            <th>Views</th>
+            <th>Last Updated</th>
+            <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% blogs.map((blog, index) => { %>
+            <tr>
+                <td><%- index + 1 %></td>
+                <td><%- blog.title %></td>
+                <td><%- blog.isPublic ? "Yes" : "No" %></td>
+                <td><%- blog.views %></td>
+                <td><%- blog.date %></td>
+                <td>
+                <a href="/blog/<%- blog.url %>" target="_blank" class="btn btn-secondary">
+                    <i class="fas fa-eye"></i>
+                </a>
+                <a href="/admin/blog/<%- blog._id %>/edit" class="btn btn-primary">
+                    <i class="fas fa-edit"></i>
+                </a>
+                <a href="#" class="btn btn-danger disabled-btn">
+                    <i class="fas fa-trash-alt"></i>
+                </a>
+                </td>
+            </tr>
+            <% }) %>
+        </tbody>
+    </table>
+
+    <%- include("./components/basic/scripts") %>
+  </body>
+</html>

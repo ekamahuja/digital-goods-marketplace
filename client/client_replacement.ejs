@@ -46,59 +46,7 @@
 
 
     <!--============= NavBar Section Starts Here =============-->
-    <header class="header-section header-white-dark">
-        <div class="container">
-            <div class="header-wrapper">
-                <div class="logo">
-                    <a href="/">
-                        <!-- <img src="./assets/images/logo/logo2.png" alt="logo"> -->
-                        <p class="logo-txt-upgrade-page">UPGRADER.PW</p>
-                    </a>
-                </div>
-                <ul class="menu">
-                    <li>
-                        <a href="/">Home</a>
-                    </li>
-                    <li>
-                        <a href="#0">Tools</a>
-                        <ul class="submenu">
-                            <li>
-                                <a href="/upgrade">Upgrade</a>
-                            </li>
-                            <li>
-                                <a href="/keyinfo">Key Info</a>
-                            </li>
-                            <li>
-                                <a href="/replacement">Replacements</a>
-                            </li>
-                            <li>
-                                <a href="/playlist-transfer">Playlist Transfer</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="/#pricing">Pricing</a>
-                    </li>
-                    
-            
-                    <li>
-                        <a href="/#faq">FAQs</a>
-                    </li>
-                    <li class="d-sm-none">
-                        <a href="/discord" class="m-0 header-button">Join Discord</a>
-                    </li>
-                </ul>
-                <div class="header-bar d-lg-none">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
-                <div class="header-right">
-                    <a href="/discord" class="header-button d-none d-sm-inline-block">Join Discord</a>
-                </div>
-            </div>
-        </div>
-    </header>
+    <%- include("./components/navbars/userNavbar") %>
     <!--============= NavBar Section Ends Here =============-->
 
 

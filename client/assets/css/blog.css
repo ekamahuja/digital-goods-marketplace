@@ -1,0 +1,105 @@
+p.logo-txt {
+    color: white;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+
+.tags-padding {
+    padding-right: 0.3rem;
+}
+
+.logo-txt-upgrade-page {
+    color: white;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.box {
+    width: 80%;
+    background-color: #fff;
+    border-radius: 5px;
+    margin: 3rem auto;
+    padding: 2rem;
+    border-radius: 0.3rem;
+}
+
+.input {
+    width: 100%;
+    border-radius: 0.3rem;
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.input label {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.input input, textarea, select {
+    border: 1px solid #ccc;
+    border-radius: 0.3rem;
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+    background-color: #fff;
+}
+
+.box button {
+    width: 100%;
+    border-radius: 0.3rem;
+    padding: 0.5rem;
+    background-color: #504c89;
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+}
+
+.box button:hover {
+    background-color: #3b319e;
+
+}
+
+
+table {
+    width: 80%;
+    border-collapse: collapse;
+    margin: 0 auto;
+    margin-top: 1rem;
+}
+
+
+table thead th {
+    /* padding: 1rem;
+    text-align: center; */
+    vertical-align: bottom;
+    border-bottom: 2px solid #dee2e6;
+    border-top: 1px solid #dee2e6;
+    padding: 0.75rem;
+}
+
+table tbody tr {
+
+}
+
+table tbody tr {
+    padding: 1rem;
+}
+
+table tbody tr td {
+    padding: 0.75rem;
+vertical-align: top;
+border-top: 1px solid #dee2e6;
+}
+
+.options {
+    max-width: 85%;
+    padding-top: 2rem;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.disabled-btn {
+    cursor: not-allowed;
+}
