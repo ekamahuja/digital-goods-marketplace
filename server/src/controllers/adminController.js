@@ -1,5 +1,4 @@
 import { Config } from '../schemas/configSchema.js'
-                                                                                                                                                                                                                                                                                                                                                                                                                                            
 
 export async function updateConfig(req, res, next) {
     try {

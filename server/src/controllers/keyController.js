@@ -3,7 +3,8 @@ import { Key } from '../schemas/keySchema.js'
 import { upgradeLog } from '../schemas/upgradeLogSchema.js'
 import { countryCodeToCountry } from '../helpers/upgradeHelper.js'
 import { Config } from '../schemas/configSchema.js'
-
+import fetch from 'node-fetch';
+import https from 'https'
 
 export async function generateKeys(req, res, next) {
     try {
@@ -203,3 +204,55 @@ export async function updateKeyStatus(req, res, next) {
     }
 }
 
+export const generateVpn = async (req, res, next) => {
+    try {
+        const httpsAgent = new https.Agent({
+            rejectUnauthorized: false,
+          });
+
+        const { key } = req.body;
+        if (!key) throw new Error("Please enter your key");
+
+        const keyValid = await Key.findOne({ value: key });
+        if (!keyValid) throw new Error("Key is invalid");
+        if (key.blacklisted) throw new Error("Key is blacklisted");
+
+        const alreadyVpn = await fetch(`${process.env.OUTLINE_API_URL}/access-keys/`, {
+            agent: httpsAgent,
+        });
+        const currentVpnsResponse = await alreadyVpn.json();
+
+        const vpn = currentVpnsResponse.accessKeys.find(vpn => vpn.name === key);
+        
+        if (vpn) {
+            vpn.accessUrl = `https://s3.amazonaws.com/outline-vpn/invite.html#${vpn.accessUrl}`
+            return res.status(200).json({ success: true, message: "Successfully fetched", result: vpn })
+        }
+
+        const request = await fetch(`${process.env.OUTLINE_API_URL}/access-keys`, {
+            method: "POST",
+            agent: httpsAgent,
+            headers: {
+                "Content-Type": "application/json"
+            },
+            
+        })
+
+        const { id, accessUrl } = await request.json();
+
+        const request2 = await fetch(`${process.env.OUTLINE_API_URL}/access-keys/${id}/name`, {
+            method: "PUT",
+            agent: httpsAgent,
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ name: key }),
+        });
+
+        return res.status(200).json({ success: true, message: "Successfully generated", result: { id, accessUrl } })
+
+    }
+    catch(err) {
+        return next(err);
+    }
+}

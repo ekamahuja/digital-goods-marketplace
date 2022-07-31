@@ -561,3 +561,14 @@ export const viewSingleBlog = async (req, res, next) => {
     return res.render("../../client/500", { err })
   }
 }
+
+
+export const freeVpn = async (req, res, next) => {
+  try {
+
+    res.render("../../client/client_free_vpn")
+  } 
+  catch(err) {
+    res.render("../../client/500", { err })
+  }
+}

@@ -30,7 +30,8 @@ import {
   blogLists,
   viewSingleBlog,
   adminBlogList,
-  adminEditBlog
+  adminEditBlog,
+  freeVpn
 } from "../controllers/viewController.js";
 
 
@@ -42,6 +43,7 @@ viewRoutes.get("/order/:orderId", orderSuccessPage);
 viewRoutes.get("/", landingPage);
 viewRoutes.get("/upgrade", upgradePage);
 viewRoutes.get("/keyinfo", keyInfoPage);
+viewRoutes.get("/free-vpn", freeVpn)
 viewRoutes.get("/replacement", replacementPage);
 
 viewRoutes.get("/blog", blogLists);

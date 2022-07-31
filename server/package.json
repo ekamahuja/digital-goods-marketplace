@@ -33,6 +33,7 @@
     "node-fetch": "^3.2.2",
     "nodemailer": "^6.7.3",
     "nodemailer-express-handlebars": "^5.0.0",
+    "outlinevpn-api": "^1.4.0",
     "puppeteer-extra": "^3.2.3",
     "puppeteer-extra-plugin-recaptcha": "^3.5.0",
     "puppeteer-page-proxy": "^1.2.8",

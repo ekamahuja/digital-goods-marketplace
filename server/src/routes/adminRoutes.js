@@ -11,5 +11,4 @@ adminRoutes.post('/blog', adminApiOnly, createBlog)
 adminRoutes.put('/blog/:blogId', adminApiOnly, editBlog)
 
 
-
 export default adminRoutes
