@@ -216,6 +216,7 @@ export const generateVpn = async (req, res, next) => {
         const keyValid = await Key.findOne({ value: key });
         if (!keyValid) throw new Error("Key is invalid");
         if (key.blacklisted) throw new Error("Key is blacklisted");
+        if (key.time === "onetime") throw new Error("One time keys do not come with this feature");
 
         const alreadyVpn = await fetch(`${process.env.OUTLINE_API_URL}/access-keys/`, {
             agent: httpsAgent,
