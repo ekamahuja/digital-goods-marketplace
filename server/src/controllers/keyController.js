@@ -238,7 +238,7 @@ export const generateVpn = async (req, res, next) => {
             
         })
 
-        const { id, accessUrl } = await request.json();
+        let { id, accessUrl } = await request.json();
 
         const request2 = await fetch(`${process.env.OUTLINE_API_URL}/access-keys/${id}/name`, {
             method: "PUT",
@@ -248,6 +248,9 @@ export const generateVpn = async (req, res, next) => {
             },
             body: JSON.stringify({ name: key }),
         });
+
+        accessUrl = `https://s3.amazonaws.com/outline-vpn/invite.html#${accessUrl}`
+        
 
         return res.status(200).json({ success: true, message: "Successfully generated", result: { id, accessUrl } })
 
